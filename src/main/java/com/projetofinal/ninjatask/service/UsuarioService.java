@@ -2,11 +2,14 @@ package com.projetofinal.ninjatask.service;
 
 import com.projetofinal.ninjatask.entity.Usuario;
 import com.projetofinal.ninjatask.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
-
+@Service
 public class UsuarioService {
+    @Autowired
     private UsuarioRepository usuarioRepository;
 
     public UsuarioService(){

@@ -1,11 +1,13 @@
 package com.projetofinal.ninjatask.repository;
 
 import com.projetofinal.ninjatask.entity.Tarefa;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class TarefaRepository {
     public Tarefa criarTarefa(Tarefa tarefa) {
         Connection connection = null;
@@ -99,9 +101,9 @@ public class TarefaRepository {
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-            preparedStatement.setInt(1, tarefa.getIdTarefa());
-            preparedStatement.setString(2, tarefa.getNome());
-            preparedStatement.setString(3, tarefa.getStatus());
+            preparedStatement.setInt(3, tarefa.getIdTarefa());
+            preparedStatement.setString(1, tarefa.getNome());
+            preparedStatement.setString(2, tarefa.getStatus());
 
             //executar
             preparedStatement.executeUpdate();

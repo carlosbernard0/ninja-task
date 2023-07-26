@@ -1,11 +1,12 @@
 package com.projetofinal.ninjatask.repository;
 
 import com.projetofinal.ninjatask.entity.Usuario;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@Repository
 public class UsuarioRepository {
     public Usuario cadastrarUsuario(Usuario usuario) {
         Connection connection = null;

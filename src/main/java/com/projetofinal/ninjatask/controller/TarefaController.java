@@ -3,6 +3,9 @@ package com.projetofinal.ninjatask.controller;
 
 import com.projetofinal.ninjatask.entity.Tarefa;
 import com.projetofinal.ninjatask.entity.Usuario;
+import com.projetofinal.ninjatask.service.TarefaService;
+import com.projetofinal.ninjatask.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,39 +13,35 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@Controller
 @RequestMapping("/tarefa")
 public class TarefaController {
 
-//    @GetMapping
-//    public Tarefa mostrarTarefa(){
-//
-//
-//        return ;
-//    }
+    @Autowired
+    private UsuarioController usuarioController;
 
+    @Autowired
+    private TarefaService tarefaService;
+    @PostMapping
+    public Tarefa inserirTarefa(@RequestBody Tarefa tarefa) throws Exception{
+        return tarefaService.salvarTarefa(tarefa);
+//        return tarefaSalva;
+    }
 
-//    @PostMapping
-//    public Tarefa inserir(@RequestBody Usuario usuario) throws Exception{
-//        Usuario usuarioSalvo = usuarioService.salvarUsuario(usuario);
-//        return usuarioSalvo;
-//    }
-//
-//    @GetMapping
-//    public List<Usuario> retornarTodosUsuarios() throws SQLException {
-//        List<Usuario> lista= usuarioService.listar();
+    @GetMapping
+    public List<Tarefa> retornarTodasAsTarefas() throws SQLException {
+        return tarefaService.listarTarefas();
 //        return lista;
-//    }
-//
-//    @PutMapping
-//    public boolean atualizarUsuario(@RequestBody Usuario usuario) throws Exception {
-//        boolean usuarioEditado =usuarioService.editarUsuario(usuario);
-//        return usuarioEditado;
-//    }
-//
-//    @DeleteMapping("/{id_usuario}")
-//    public boolean removerUsuario(@PathVariable("id_usuario") Integer id){
-//        boolean removido = usuarioService.excluirUsuario(id);
+    }
+
+    @PutMapping
+    public boolean atualizarTarefa(@RequestBody Tarefa tarefa) throws Exception {
+        return tarefaService.editarTarefa(tarefa);
+//        return tarefaEditada;
+    }
+
+    @DeleteMapping("/{id_tarefa}")
+    public boolean removerTarefa(@PathVariable("id_tarefa") Integer id){
+        return tarefaService.excluirTarefa(id);
 //        return removido;
-//    }
+    }
 }
