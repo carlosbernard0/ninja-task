@@ -1,10 +1,23 @@
 package com.projetofinal.ninjatask.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Date;
 
 public class Usuario {
+    @Schema(description = "codigo indentificador do usuario", example = "4")
     private Integer id_usuario;
-    private String nome_usuario, email_usuario, senha_usuario;
+
+    @Schema(description = "nome do usuario", example = "4")
+    private String nome_usuario;
+
+    @Schema(description = "email do usuario", example = "carlos@gmail.com")
+    private String email_usuario;
+
+    @Schema(description = "senha do usuario", example = "carlos123")
+    private String senha_usuario;
+
+    @Schema(description = "data de alteração do cliente", example = "2023-07-26")
     private Date data_registro;
 
     public Integer getId_usuario() {
