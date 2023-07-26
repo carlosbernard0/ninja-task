@@ -1,23 +1,33 @@
 package com.projetofinal.ninjatask.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 import java.util.Date;
 
+
 public class Usuario {
+
     @Schema(description = "codigo indentificador do usuario", example = "4")
     private Integer id_usuario;
 
     @Schema(description = "nome do usuario", example = "4")
+    @NotEmpty
+    @Size(min = 5, max = 20, message = "nome do cliente deve estar entre 5 e 20 caracteres")
     private String nome_usuario;
 
     @Schema(description = "email do usuario", example = "carlos@gmail.com")
     private String email_usuario;
 
     @Schema(description = "senha do usuario", example = "carlos123")
+    @NotEmpty
     private String senha_usuario;
 
     @Schema(description = "data de alteração do cliente", example = "2023-07-26")
+    @PastOrPresent
     private Date data_registro;
 
     public Integer getId_usuario() {

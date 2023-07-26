@@ -6,7 +6,9 @@ import com.projetofinal.ninjatask.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -14,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/usuario") //localhost:8080/usuario
+@Validated
 public class UsuarioController {
 
     @Autowired
@@ -30,7 +33,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "500", description = "deu erro no servidor")
     })
     @PostMapping
-    public Usuario inserirUsuario(@RequestBody Usuario usuario) throws BusinessException {
+    public Usuario inserirUsuario(@RequestBody @Valid Usuario usuario) throws BusinessException {
         return usuarioService.salvarUsuario(usuario);
 //        return usuarioSalvo;
     }
@@ -48,7 +51,7 @@ public class UsuarioController {
     }
 
     @PutMapping
-    public boolean atualizarUsuario(@RequestBody Usuario usuario) throws BusinessException {
+    public boolean atualizarUsuario(@RequestBody @Valid Usuario usuario) throws BusinessException {
         return usuarioService.editarUsuario(usuario);
 //        return usuarioEditado;
     }
