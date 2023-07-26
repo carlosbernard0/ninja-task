@@ -1,6 +1,7 @@
 package com.projetofinal.ninjatask.controller;
 
 import com.projetofinal.ninjatask.entity.Usuario;
+import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class UsuarioController {
         return "Hello World!";
     }
     @PostMapping
-    public Usuario inserirUsuario(@RequestBody Usuario usuario) throws Exception{
+    public Usuario inserirUsuario(@RequestBody Usuario usuario) throws BusinessException {
         return usuarioService.salvarUsuario(usuario);
 //        return usuarioSalvo;
     }
@@ -31,7 +32,7 @@ public class UsuarioController {
     }
 
     @PutMapping
-    public boolean atualizarUsuario(@RequestBody Usuario usuario) throws Exception {
+    public boolean atualizarUsuario(@RequestBody Usuario usuario) throws BusinessException {
         return usuarioService.editarUsuario(usuario);
 //        return usuarioEditado;
     }

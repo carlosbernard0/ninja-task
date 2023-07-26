@@ -1,6 +1,7 @@
 package com.projetofinal.ninjatask.service;
 
 import com.projetofinal.ninjatask.entity.Usuario;
+import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,18 +16,21 @@ public class UsuarioService {
     public UsuarioService(){
         usuarioRepository = new UsuarioRepository();
     }
-    public void validarUsuario(Usuario usuario) throws Exception {
+    public void validarUsuario(Usuario usuario) throws BusinessException {
         if (!usuario.getEmail_usuario().contains("@")){
-            throw new Exception("Precisa ter @");
+            throw new BusinessException("Precisa ter @");
         }
     }
-    public Usuario salvarUsuario(Usuario usuario) throws Exception{
+    public Usuario salvarUsuario(Usuario usuario) throws BusinessException{
         validarUsuario(usuario);
 
-        Usuario usuarioSalvo = usuarioRepository.cadastrarUsuario(usuario);
+
+//        Usuario usuarioSalvo = usuarioRepository.cadastrarUsuario(usuario);
 
         System.out.println("Usuario cadastrado service!");
-        return usuarioSalvo;
+//        return usuarioSalvo;
+        return usuarioRepository.cadastrarUsuario(usuario);
+
     }
 
     public List<Usuario> listar() throws SQLException {
@@ -35,7 +39,7 @@ public class UsuarioService {
         return lista;
     }
 
-    public boolean editarUsuario(Usuario usuario) throws Exception {
+    public boolean editarUsuario(Usuario usuario) throws BusinessException {
         validarUsuario(usuario);
         return usuarioRepository.editarUsuario(usuario);
     }
