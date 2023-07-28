@@ -3,6 +3,8 @@ package com.projetofinal.ninjatask.entity;
 public class Tarefa {
     private String nome, status;
     private Integer idTarefa;
+    private Caderno caderno;
+    private Integer idCaderno;
 
     public String getNome() {
         return nome;
@@ -28,13 +30,30 @@ public class Tarefa {
         this.idTarefa = idTarefa;
     }
 
+    public Caderno getCaderno() {
+        return caderno;
+    }
+
+    public void setCaderno(Caderno caderno) {
+        this.caderno = caderno;
+    }
+
+    public Integer getIdCaderno() {
+        return idCaderno;
+    }
+
+    public void setIdCaderno(Integer idCaderno) {
+        this.idCaderno = idCaderno;
+    }
 
     @Override
     public String toString() {
         return "Tarefa{" +
                 "nome='" + nome + '\'' +
                 ", status='" + status + '\'' +
-                ", idTarefa=" + idTarefa + '}';
+                ", idTarefa=" + idTarefa +
+                ", idCaderno=" + idCaderno +
+                ", caderno=" + caderno +'}';
     }
 
 }

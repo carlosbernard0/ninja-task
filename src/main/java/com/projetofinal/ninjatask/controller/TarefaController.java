@@ -17,7 +17,7 @@ import java.util.List;
 public class TarefaController {
 
     @Autowired
-    private UsuarioController usuarioController;
+    private CadernoController cadernoController;
 
     @Autowired
     private TarefaService tarefaService;
