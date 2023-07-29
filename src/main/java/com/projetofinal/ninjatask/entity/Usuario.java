@@ -5,10 +5,15 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 
 import java.util.Date;
 
-
+//@Getter
+//@Setter
+//@AllArgsConstructor
+//@NoArgsConstructor
+//@ToString
 public class Usuario {
 
     @Schema(description = "codigo indentificador do usuario", example = "4")

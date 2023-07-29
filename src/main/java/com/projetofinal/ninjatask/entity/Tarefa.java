@@ -1,5 +1,12 @@
 package com.projetofinal.ninjatask.entity;
 
+import lombok.*;
+
+//@Getter
+//@Setter
+//@ToString
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class Tarefa {
     private String nome, status;
     private Integer idTarefa;
@@ -55,5 +62,6 @@ public class Tarefa {
                 ", idCaderno=" + idCaderno +
                 ", caderno=" + caderno +'}';
     }
+
 
 }

@@ -1,13 +1,18 @@
 package com.projetofinal.ninjatask.entity;
 
 import com.projetofinal.ninjatask.entity.Usuario;
+import lombok.*;
 
+//@Getter
+//@Setter
+//@ToString
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class Caderno {
     private Integer idCaderno;
     private String nomeCaderno;
     private Integer idUsuario;
     private Usuario usuario;
-
 
     public Integer getIdUsuario() {
         return idUsuario;
@@ -38,7 +43,7 @@ public class Caderno {
     }
 
     public void setUsuario(Usuario usuario) {
-            this.usuario = usuario;
+        this.usuario = usuario;
     }
 
     @Override
@@ -47,7 +52,9 @@ public class Caderno {
                 "idCaderno=" + idCaderno +
                 ", nomeCaderno='" + nomeCaderno + '\'' +
                 ", idUsuario=" + idUsuario +
-//                ", usuario=" + usuario+
+                ", usuario=" + usuario+
                 '}';
     }
+
+
 }
