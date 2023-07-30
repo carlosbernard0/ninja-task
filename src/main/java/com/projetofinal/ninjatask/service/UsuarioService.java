@@ -17,7 +17,7 @@ public class UsuarioService {
         usuarioRepository = new UsuarioRepository();
     }
     public void validarUsuario(Usuario usuario) throws BusinessException {
-        if (!usuario.getEmail_usuario().contains("@")){
+        if (!usuario.getEmailUsuario().contains("@")){
             throw new BusinessException("Precisa ter @");
         }
     }

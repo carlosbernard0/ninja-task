@@ -30,13 +30,13 @@ public class UsuarioRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setInt(1, idUsuario);
-            preparedStatement.setString(2, usuario.getNome_usuario());
-            preparedStatement.setString(3, usuario.getEmail_usuario());
-            preparedStatement.setString(4, usuario.getSenha_usuario());
-            preparedStatement.setDate(5, new Date(usuario.getData_registro().getTime()));
+            preparedStatement.setString(2, usuario.getNomeUsuario());
+            preparedStatement.setString(3, usuario.getEmailUsuario());
+            preparedStatement.setString(4, usuario.getSenhaUsuario());
+            preparedStatement.setDate(5, new Date(usuario.getDataRegistro().getTime()));
 
             preparedStatement.executeUpdate();
-            usuario.setId_usuario(idUsuario);
+            usuario.setIdUsuario(idUsuario);
 
 //            int resposta = preparedStatement.executeUpdate();
 //            System.out.println("salvarUsuarioDB.resposta: " + resposta);
@@ -73,11 +73,11 @@ public class UsuarioRepository {
 
             while (resultSet.next()) {
                 Usuario usuario = new Usuario();
-                usuario.setId_usuario(resultSet.getInt("id_usuario"));
-                usuario.setNome_usuario(resultSet.getString("nome_usuario"));
-                usuario.setEmail_usuario(resultSet.getString("email_usuario"));
-                usuario.setSenha_usuario(resultSet.getString("senha_usuario"));
-                usuario.setData_registro(resultSet.getDate("data_registro"));
+                usuario.setIdUsuario(resultSet.getInt("id_usuario"));
+                usuario.setNomeUsuario(resultSet.getString("nome_usuario"));
+                usuario.setEmailUsuario(resultSet.getString("email_usuario"));
+                usuario.setSenhaUsuario(resultSet.getString("senha_usuario"));
+                usuario.setDataRegistro(resultSet.getDate("data_registro"));
 
                 listaDeUsuarios.add(usuario);
             }
@@ -108,11 +108,11 @@ public class UsuarioRepository {
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-            preparedStatement.setString(1, usuario.getNome_usuario());
-            preparedStatement.setString(2, usuario.getEmail_usuario());
-            preparedStatement.setString(3, usuario.getSenha_usuario());
-            preparedStatement.setDate(4, new Date(usuario.getData_registro().getTime()));
-            preparedStatement.setInt(5,usuario.getId_usuario());
+            preparedStatement.setString(1, usuario.getNomeUsuario());
+            preparedStatement.setString(2, usuario.getEmailUsuario());
+            preparedStatement.setString(3, usuario.getSenhaUsuario());
+            preparedStatement.setDate(4, new Date(usuario.getDataRegistro().getTime()));
+            preparedStatement.setInt(5,usuario.getIdUsuario());
 
             //executar
             preparedStatement.executeUpdate();

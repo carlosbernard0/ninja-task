@@ -31,7 +31,7 @@ public class CadernoRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, idCaderno);
             preparedStatement.setString(2, caderno.getNomeCaderno());
-            preparedStatement.setInt(3, caderno.getUsuario().getId_usuario());
+            preparedStatement.setInt(3, caderno.getUsuario().getIdUsuario());
 
             preparedStatement.executeUpdate();
             caderno.setIdCaderno(idCaderno);
@@ -138,9 +138,9 @@ public class CadernoRepository {
                 caderno.setNomeCaderno(resultSet.getString("nome_caderno"));
                 caderno.setIdUsuario(resultSet.getInt("id_usuario"));
                 Usuario usuario = new Usuario();
-                usuario.setId_usuario(resultSet.getInt("id_usuario"));
-                usuario.setNome_usuario(resultSet.getString("nome_usuario"));
-                usuario.setEmail_usuario(resultSet.getString("email_usuario"));
+                usuario.setIdUsuario(resultSet.getInt("id_usuario"));
+                usuario.setNomeUsuario(resultSet.getString("nome_usuario"));
+                usuario.setEmailUsuario(resultSet.getString("email_usuario"));
                 caderno.setUsuario(usuario);
                 listaDeCaderno.add(caderno);
             }
