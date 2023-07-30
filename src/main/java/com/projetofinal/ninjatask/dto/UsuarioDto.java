@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 public class UsuarioDto {
     @Schema(description = "codigo indentificador do usuario", example = "4")
-    private Integer idUsuario;
+    private Integer usuarioDto;
 
     @Schema(description = "nome do usuario", example = "4")
     @NotEmpty

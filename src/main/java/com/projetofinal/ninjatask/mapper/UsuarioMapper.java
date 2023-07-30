@@ -7,6 +7,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface UsuarioMapper {
     // converter dto em entity
+
     Usuario converterParaEntity(UsuarioDto dto);
 
     //converter entity em dto
