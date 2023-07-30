@@ -68,9 +68,13 @@ public class CadernoRepository {
 
             while (resultSet.next()) {
                 Caderno caderno = new Caderno();
+                Usuario usuario= new Usuario();
                 caderno.setIdCaderno(resultSet.getInt("id_caderno"));
                 caderno.setNomeCaderno(resultSet.getString("nome_caderno"));
-                caderno.setIdUsuario(resultSet.getInt("id_usuario"));
+//                caderno.setUsuario(resultSet.getInt("id_usuario"));
+                usuario.getIdUsuario();
+                caderno.setUsuario(usuario);
+//                caderno.setUsuario(usuario.setIdUsuario());
                 listaDeCaderno.add(caderno);
             }
 
@@ -136,7 +140,7 @@ public class CadernoRepository {
                 Caderno caderno = new Caderno();
                 caderno.setIdCaderno(resultSet.getInt("id_caderno"));
                 caderno.setNomeCaderno(resultSet.getString("nome_caderno"));
-                caderno.setIdUsuario(resultSet.getInt("id_usuario"));
+//                caderno.setIdUsuario(resultSet.getInt("id_usuario"));
                 Usuario usuario = new Usuario();
                 usuario.setIdUsuario(resultSet.getInt("id_usuario"));
                 usuario.setNomeUsuario(resultSet.getString("nome_usuario"));

@@ -15,7 +15,7 @@ public class UsuarioDto {
 
     @Schema(description = "nome do usuario", example = "4")
     @NotEmpty
-    @Size(min = 5, max = 20, message = "nome do cliente deve estar entre 5 e 20 caracteres")
+    @Size(min = 5, max = 20, message = "nome do usuario deve estar entre 5 e 20 caracteres")
     private String nomeUsuario;
 
     @Schema(description = "email do usuario", example = "carlos@gmail.com")
@@ -25,7 +25,7 @@ public class UsuarioDto {
     @NotEmpty
     private String senhaUsuario;
 
-    @Schema(description = "data de alteração do cliente", example = "2023-07-26")
+    @Schema(description = "data de alteração do usuario", example = "2023-07-26")
     @PastOrPresent
     private Date dataRegistro;
 

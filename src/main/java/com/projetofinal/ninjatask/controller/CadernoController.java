@@ -1,9 +1,13 @@
 package com.projetofinal.ninjatask.controller;
 
+import com.projetofinal.ninjatask.dto.CadernoDto;
 import com.projetofinal.ninjatask.entity.Caderno;
 import com.projetofinal.ninjatask.entity.Tarefa;
 import com.projetofinal.ninjatask.repository.TarefaRepository;
 import com.projetofinal.ninjatask.service.CadernoService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,16 +16,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/caderno")
+@RequiredArgsConstructor
 public class CadernoController {
-    @Autowired
-    private CadernoService cadernoService;
+    private final CadernoService cadernoService;
+
     @PostMapping
-    public Caderno inserirCaderno(@RequestBody Caderno caderno){
+    public CadernoDto inserirCaderno(@RequestBody CadernoDto caderno){
         return cadernoService.salvarCaderno(caderno);
     }
 
     @GetMapping
-    public List<Caderno> retornarTodosOsCadernos() throws SQLException {
+    public List<CadernoDto> retornarTodosOsCadernos() throws SQLException {
         return cadernoService.listar();
     }
 
