@@ -12,26 +12,14 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @ToString
 public class Usuario {
 
-    @Schema(description = "codigo indentificador do usuario", example = "4")
     private Integer idUsuario;
-
-    @Schema(description = "nome do usuario", example = "4")
-    @NotEmpty
-    @Size(min = 5, max = 20, message = "nome do cliente deve estar entre 5 e 20 caracteres")
     private String nomeUsuario;
-
-    @Schema(description = "email do usuario", example = "carlos@gmail.com")
     private String emailUsuario;
-
-    @Schema(description = "senha do usuario", example = "carlos123")
-    @NotEmpty
     private String senhaUsuario;
-
-    @Schema(description = "data de alteração do cliente", example = "2023-07-26")
-    @PastOrPresent
     private Date dataRegistro;
 
 }
