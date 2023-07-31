@@ -14,5 +14,7 @@ public interface UsuarioMapper {
     Usuario converterParaEntity(UsuarioDto dto);
 
     //converter entity em dto
+//    @Mapping(target = "dataRegistro", ignore = true)
+//    @Mapping(target = "senhaUsuario", ignore = true)
     UsuarioDto converterParaDto(Usuario entity);
 }

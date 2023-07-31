@@ -62,7 +62,7 @@ public class CadernoRepository {
             connection = ConexaoDB.getConnection();
 
 //            String sql = "SELECT * FROM CADERNO";
-            String sql = "SELECT c.*, u.ID_USUARIO , u.NOME_USUARIO, u.EMAIL_USUARIO\n" +
+            String sql = "SELECT c.*, u.ID_USUARIO , u.NOME_USUARIO, u.EMAIL_USUARIO, u.SENHA_USUARIO, u.DATA_REGISTRO\n" +
                     "    FROM CADERNO c \n" +
                     "   \tright JOIN USUARIO u ON (u.ID_USUARIO = c.ID_USUARIO)\n" +
                     "    WHERE u.ID_USUARIO = 2";
@@ -81,6 +81,8 @@ public class CadernoRepository {
                 caderno.setNomeCaderno(resultSet.getString("nome_caderno"));
 //                caderno.setUsuario(resultSet.getInt("id_usuario"));
                 usuario.setIdUsuario(resultSet.getInt("id_usuario"));
+                usuario.setSenhaUsuario(resultSet.getString("senha_usuario"));
+                usuario.setDataRegistro(resultSet.getDate("data_registro"));
 //                usuario.getIdUsuario();
 //                caderno.setUsuario(usuario);
 

@@ -13,9 +13,11 @@ public interface CadernoMapper {
 //    @Mapping(source = "usuarioLista", target = "usuario")
 //    @Mapping(target = "senhaUsuario", ignore = true)
 //    @Mapping(target = "dataRegistro", ignore = true)
+//@Mapping(target = "dataRegistro", ignore = true)
     Caderno converterParaEntity(CadernoDto dto);
 
     //converter entity em dto
 //    @Mapping(source = "usuario", target = "usuarioLista")
+//    @Mapping(target = "dataRegistro", ignore = true)
     CadernoDto converterParaDto(Caderno entity);
 }
