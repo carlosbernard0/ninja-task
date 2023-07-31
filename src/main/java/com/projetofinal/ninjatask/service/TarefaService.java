@@ -22,31 +22,31 @@ public class TarefaService {
     public TarefaDto salvarTarefa(TarefaDto tarefaDto){
 
         //converter para entity
-//        Tarefa tarefaConvertida = tarefaMapper.converterParaEntity(tarefaDto);
+        Tarefa tarefaConvertida = tarefaMapper.converterParaEntity(tarefaDto);
 
-        //salvar no banco
-//        Tarefa tarefaSalva = tarefaRepository.criarTarefa(tarefaConvertida);
+//        salvar no banco
+        Tarefa tarefaSalva = tarefaRepository.criarTarefa(tarefaConvertida);
 
         //converter para dto
-//        TarefaDto tarefaRetornada = tarefaMapper.converterParaDto(tarefaSalva);
+        TarefaDto tarefaRetornada = tarefaMapper.converterParaDto(tarefaSalva);
 
-//        return tarefaRetornada;
-        return null;
+        return tarefaRetornada;
+//        return null;
     }
 
     public List<TarefaDto> listarTarefas()throws SQLException {
-//        List<TarefaDto> listaDtos = this.tarefaRepository.listarTarefas().stream()
-//                .map(entity -> tarefaMapper.converterParaDto(entity))
-//                .toList();
-//        return listaDtos;
-        return null;
+        List<TarefaDto> listaDtos = this.tarefaRepository.listarTarefas().stream()
+                .map(entity -> tarefaMapper.converterParaDto(entity))
+                .toList();
+        return listaDtos;
+//        return null;
     }
 
     public boolean editarTarefa(TarefaDto tarefaDto) throws Exception {
-//        Tarefa tarefaConvertida = tarefaMapper.converterParaEntity(tarefaDto);
+        Tarefa tarefaConvertida = tarefaMapper.converterParaEntity(tarefaDto);
 //
-//        return tarefaRepository.editarTarefa(tarefaConvertida);
-            return false;
+        return tarefaRepository.editarTarefa(tarefaConvertida);
+//            return false;
     }
 
     public boolean excluirTarefa(Integer idTarefa){

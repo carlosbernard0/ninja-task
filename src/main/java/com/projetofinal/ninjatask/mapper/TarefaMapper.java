@@ -12,11 +12,11 @@ public interface TarefaMapper {
 
 //    @Mapping(source = "idTarefaDto", target = "idTarefa")
 //    @Mapping(source = "cadernoDto.caderno", target = "caderno.idCaderno")
-//    Tarefa converterParaEntity(TarefaDto dto);
+    Tarefa converterParaEntity(TarefaDto dto);
 
 //    @Mapping(source = "idTarefa", target = "idTarefaDto")
 //    @Mapping(source = "caderno.idCaderno", target = "cadernoDto.caderno")
-//    TarefaDto converterParaDto(Tarefa entity);
+    TarefaDto converterParaDto(Tarefa entity);
 
 
 

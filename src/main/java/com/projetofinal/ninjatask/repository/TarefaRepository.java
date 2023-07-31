@@ -1,6 +1,8 @@
 package com.projetofinal.ninjatask.repository;
 
+import com.projetofinal.ninjatask.entity.Caderno;
 import com.projetofinal.ninjatask.entity.Tarefa;
+import com.projetofinal.ninjatask.entity.Usuario;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -60,18 +62,38 @@ public class TarefaRepository {
             connection = ConexaoDB.getConnection();
 
 
-            String sql = "select * from tarefa";
+//            String sql = "select * from tarefa";
+            String sql = "\t\n" +
+                    "SELECT t.*, c.ID_CADERNO ,c.NOME_CADERNO ,c.ID_USUARIO\n" +
+                    "    FROM TAREFA t \n" +
+                    "   \tright JOIN CADERNO c ON (t.ID_CADERNO = c.ID_CADERNO)\n" +
+                    "    WHERE c.ID_CADERNO  = 11";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
 
-
-            ResultSet resultSet = connection.createStatement().executeQuery(sql);
+//            ResultSet resultSet = connection.createStatement().executeQuery(sql);
 
             while (resultSet.next()) {
                 Tarefa tarefa = new Tarefa();
+                Caderno caderno = new Caderno();
+                Usuario usuario = new Usuario();
+
+//                usuario.setIdUsuario(resultSet.getInt("id_usuario"));
+//                usuario.setNomeUsuario(resultSet.getString("nome_usuario"));
+//                usuario.setEmailUsuario(resultSet.getString("email_usuario"));
+
+                caderno.setIdCaderno(resultSet.getInt("id_caderno"));
+                caderno.setNomeCaderno(resultSet.getString("nome_caderno"));
+                caderno.setUsuario(usuario);
+//                usuario.setIdUsuario(resultSet.getInt("id_usuario"));
+//                caderno.setUsuario(resultSet.getInt("id_usuario"));
+
+
                 tarefa.setIdTarefa(resultSet.getInt("id_tarefa"));
                 tarefa.setNome(resultSet.getString("nome_tarefa"));
                 tarefa.setStatus(resultSet.getString("status_tarefa"));
 
-
+                tarefa.setCaderno(caderno);
                 listaDeTarefas.add(tarefa);
             }
 

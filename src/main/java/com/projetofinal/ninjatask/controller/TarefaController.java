@@ -18,7 +18,6 @@ import java.util.List;
 @RequestMapping("/tarefa")
 @RequiredArgsConstructor
 public class TarefaController {
-    private  final CadernoController cadernoController;
     private final TarefaService tarefaService;
 
     @PostMapping
