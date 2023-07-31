@@ -10,7 +10,7 @@ public class CadernoDto {
     @Schema(description = "codigo indentificador do caderno", example = "4")
     private Integer caderno;
 
-    @Schema(description = "nome do caderno", example = "4")
+    @Schema(description = "nome do caderno", example = "caderno de tarefas")
     @NotEmpty
     @Size(min = 5, max = 20, message = "nome do caderno deve estar entre 5 e 20 caracteres")
     private String nomeCaderno;
