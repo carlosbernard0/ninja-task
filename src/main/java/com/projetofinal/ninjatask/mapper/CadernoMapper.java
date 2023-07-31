@@ -10,14 +10,12 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface CadernoMapper {
 
-    @Mapping(source = "caderno", target = "idCaderno")
 //    @Mapping(source = "usuarioLista", target = "usuario")
-    @Mapping(source = "usuarioId.usuarioDto", target = "usuario.idUsuario")
+//    @Mapping(target = "senhaUsuario", ignore = true)
+//    @Mapping(target = "dataRegistro", ignore = true)
     Caderno converterParaEntity(CadernoDto dto);
 
     //converter entity em dto
-    @Mapping(source = "idCaderno", target = "caderno")
 //    @Mapping(source = "usuario", target = "usuarioLista")
-    @Mapping(source = "usuario.idUsuario", target = "usuarioId.usuarioDto")
     CadernoDto converterParaDto(Caderno entity);
 }

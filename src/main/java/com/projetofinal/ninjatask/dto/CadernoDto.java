@@ -8,12 +8,12 @@ import lombok.Data;
 @Data
 public class CadernoDto {
     @Schema(description = "codigo indentificador do caderno", example = "4")
-    private Integer caderno;
+    private Integer idCaderno;
 
     @Schema(description = "nome do caderno", example = "caderno de tarefas")
     @NotEmpty
     @Size(min = 5, max = 20, message = "nome do caderno deve estar entre 5 e 20 caracteres")
     private String nomeCaderno;
 
-    private UsuarioDto usuarioId;
+    private UsuarioDto usuario;
 }
