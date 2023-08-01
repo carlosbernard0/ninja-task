@@ -13,7 +13,7 @@ public class UsuarioDto {
     @Schema(description = "codigo indentificador do usuario", example = "4")
     private Integer idUsuario;
 
-    @Schema(description = "nome do usuario", example = "4")
+    @Schema(description = "nome do usuario", example = "travis scott")
     @NotEmpty
     @Size(min = 5, max = 20, message = "nome do usuario deve estar entre 5 e 20 caracteres")
     private String nomeUsuario;

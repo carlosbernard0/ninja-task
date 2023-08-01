@@ -3,6 +3,7 @@ package com.projetofinal.ninjatask.controller;
 import com.projetofinal.ninjatask.dto.UsuarioDto;
 import com.projetofinal.ninjatask.entity.Usuario;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
+import com.projetofinal.ninjatask.service.EmailService;
 import com.projetofinal.ninjatask.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,11 +23,20 @@ import java.util.List;
 @RequiredArgsConstructor
 @Validated
 public class UsuarioController {
+    private final EmailService emailService;
 
     private final UsuarioService usuarioService;
+
+    @Value("${ambiente.api.nome}")
+    private String nomeApi;
     @GetMapping("/hello")
     public String metodoTeste(){
-        return "Hello World!";
+        return nomeApi;
+    }
+
+    @PostMapping("/email-simples")
+    public void enviarEmailSimples(String para, String assunto, String texto) {
+        this.emailService.enviarEmailSimples(para, assunto, texto);
     }
 
     @Operation(summary = "inserir novo usuario", description = "este processo cria um novo usuario na base de dados")

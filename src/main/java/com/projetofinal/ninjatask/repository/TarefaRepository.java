@@ -62,40 +62,35 @@ public class TarefaRepository {
             connection = ConexaoDB.getConnection();
 
 
-//            String sql = "select * from tarefa";
             String sql = "\t\n" +
-                    "SELECT t.*, c.ID_CADERNO ,c.NOME_CADERNO ,c.ID_USUARIO\n" +
+                    "SELECT t.*, c.ID_CADERNO ,c.NOME_CADERNO ,c.ID_USUARIO, u.ID_USUARIO, u.NOME_USUARIO, u.EMAIL_USUARIO\n" +
                     "    FROM TAREFA t \n" +
                     "   \tright JOIN CADERNO c ON (t.ID_CADERNO = c.ID_CADERNO)\n" +
+                    "   \tleft JOIN USUARIO u ON (c.ID_USUARIO = u.ID_USUARIO)\n" +
                     "    WHERE c.ID_CADERNO  = 11";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
-
-//            ResultSet resultSet = connection.createStatement().executeQuery(sql);
 
             while (resultSet.next()) {
                 Tarefa tarefa = new Tarefa();
                 Caderno caderno = new Caderno();
                 Usuario usuario = new Usuario();
 
-//                usuario.setIdUsuario(resultSet.getInt("id_usuario"));
-//                usuario.setNomeUsuario(resultSet.getString("nome_usuario"));
-//                usuario.setEmailUsuario(resultSet.getString("email_usuario"));
-//                usuario.setSenhaUsuario(resultSet.getString("senha_usuario"));
-//                usuario.setDataRegistro(resultSet.getDate("data_registro"));
+                usuario.setIdUsuario(resultSet.getInt("id_usuario"));
+                usuario.setNomeUsuario(resultSet.getString("nome_usuario"));
+                usuario.setEmailUsuario(resultSet.getString("email_usuario"));
+                usuario.setSenhaUsuario(resultSet.getString("senha_usuario"));
+                usuario.setDataRegistro(resultSet.getDate("data_registro"));
 
                 caderno.setIdCaderno(resultSet.getInt("id_caderno"));
                 caderno.setNomeCaderno(resultSet.getString("nome_caderno"));
                 caderno.setUsuario(usuario);
-//                usuario.setIdUsuario(resultSet.getInt("id_usuario"));
-//                caderno.setUsuario(resultSet.getInt("id_usuario"));
 
-
+                tarefa.setCaderno(caderno);
                 tarefa.setIdTarefa(resultSet.getInt("id_tarefa"));
                 tarefa.setNome(resultSet.getString("nome_tarefa"));
                 tarefa.setStatus(resultSet.getString("status_tarefa"));
 
-                tarefa.setCaderno(caderno);
                 listaDeTarefas.add(tarefa);
             }
 
