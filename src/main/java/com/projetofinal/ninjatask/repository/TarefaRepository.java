@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -70,6 +71,11 @@ public class TarefaRepository {
                     "    WHERE c.ID_CADERNO  = 11";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
+
+//            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+//            preparedStatement.setInt(1, idCaderno);
+//
+//            ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 Tarefa tarefa = new Tarefa();
@@ -144,6 +150,66 @@ public class TarefaRepository {
         }
     }
 
+    public List<Tarefa> listarTarefasPorCaderno(Integer idCaderno) throws SQLException {
+        List<Tarefa> listaDeTarefas = new ArrayList<>();
+        Connection connection = null;
+        try {
+            connection = ConexaoDB.getConnection();
+
+
+            String sql = "\t\n" +
+                    "SELECT t.*, c.ID_CADERNO ,c.NOME_CADERNO ,c.ID_USUARIO, u.ID_USUARIO, u.NOME_USUARIO, u.EMAIL_USUARIO\n" +
+                    "    FROM TAREFA t \n" +
+                    "   \tright JOIN CADERNO c ON (t.ID_CADERNO = c.ID_CADERNO)\n" +
+                    "   \tleft JOIN USUARIO u ON (c.ID_USUARIO = u.ID_USUARIO)\n" +
+                    "    WHERE c.ID_CADERNO  = ?";
+//            Statement statement = connection.createStatement();
+////            ResultSet resultSet = statement.executeQuery(sql);
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, idCaderno);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Tarefa tarefa = new Tarefa();
+                Caderno caderno = new Caderno();
+                Usuario usuario = new Usuario();
+
+                usuario.setIdUsuario(resultSet.getInt("id_usuario"));
+                usuario.setNomeUsuario(resultSet.getString("nome_usuario"));
+                usuario.setEmailUsuario(resultSet.getString("email_usuario"));
+//                usuario.setSenhaUsuario(resultSet.getString("senha_usuario"));
+//                usuario.setDataRegistro(resultSet.getDate("data_registro"));
+
+                caderno.setUsuario(usuario);
+                caderno.setIdCaderno(resultSet.getInt("id_caderno"));
+                caderno.setNomeCaderno(resultSet.getString("nome_caderno"));
+
+
+                tarefa.setCaderno(caderno);
+                tarefa.setIdTarefa(resultSet.getInt("id_tarefa"));
+                tarefa.setNome(resultSet.getString("nome_tarefa"));
+                tarefa.setStatus(resultSet.getString("status_tarefa"));
+
+                listaDeTarefas.add(tarefa);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return listaDeTarefas;
+        }
+
+    }
+
     public boolean excluirTarefa(Integer idTarefa){
         Connection connection = null;
         try {
@@ -172,7 +238,6 @@ public class TarefaRepository {
         }
 
     }
-
 
 
 }

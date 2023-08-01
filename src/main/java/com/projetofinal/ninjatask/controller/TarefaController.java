@@ -9,6 +9,7 @@ import com.projetofinal.ninjatask.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -17,6 +18,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/tarefa")
 @RequiredArgsConstructor
+@Validated
+
 public class TarefaController {
     private final TarefaService tarefaService;
 
@@ -32,6 +35,11 @@ public class TarefaController {
 //        return lista;
     }
 
+    @GetMapping("listar-por-caderno")
+    public List<TarefaDto> retornarTarefasPorCaderno(@RequestParam("idCaderno") Integer idCaderno) throws SQLException {
+        return tarefaService.listarTarefas();
+//        return lista;
+    }
     @PutMapping
     public boolean atualizarTarefa(@RequestBody TarefaDto tarefaDto) throws Exception {
         return tarefaService.editarTarefa(tarefaDto);
