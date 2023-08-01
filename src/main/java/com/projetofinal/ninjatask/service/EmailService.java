@@ -24,7 +24,7 @@ public class EmailService {
     private final JavaMailSender emailSender;
     private final freemarker.template.Configuration fmConfiguration;
 
-//    @Value("${}")
+    @Value("${spring.mail.username}")
     private String from;
 
     public void enviarEmailSimples(String emailDestino, String assunto, String texto){

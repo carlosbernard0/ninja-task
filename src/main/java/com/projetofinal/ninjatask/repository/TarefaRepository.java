@@ -79,12 +79,13 @@ public class TarefaRepository {
                 usuario.setIdUsuario(resultSet.getInt("id_usuario"));
                 usuario.setNomeUsuario(resultSet.getString("nome_usuario"));
                 usuario.setEmailUsuario(resultSet.getString("email_usuario"));
-                usuario.setSenhaUsuario(resultSet.getString("senha_usuario"));
-                usuario.setDataRegistro(resultSet.getDate("data_registro"));
+//                usuario.setSenhaUsuario(resultSet.getString("senha_usuario"));
+//                usuario.setDataRegistro(resultSet.getDate("data_registro"));
 
+                caderno.setUsuario(usuario);
                 caderno.setIdCaderno(resultSet.getInt("id_caderno"));
                 caderno.setNomeCaderno(resultSet.getString("nome_caderno"));
-                caderno.setUsuario(usuario);
+
 
                 tarefa.setCaderno(caderno);
                 tarefa.setIdTarefa(resultSet.getInt("id_tarefa"));
