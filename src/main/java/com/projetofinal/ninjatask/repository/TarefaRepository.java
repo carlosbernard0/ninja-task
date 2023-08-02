@@ -17,8 +17,8 @@ public class TarefaRepository {
         try {
             connection = ConexaoDB.getConnection();
 
-            String sql = "INSERT INTO TAREFA (ID_TAREFA, NOME_TAREFA, STATUS_TAREFA)" +
-                    "VALUES (?,?,?)";
+            String sql = "INSERT INTO TAREFA (ID_TAREFA, NOME_TAREFA, STATUS_TAREFA, ID_CADERNO)" +
+                    "VALUES (?,?,?,?)";
 
             String sqlSequence = "select seq_tarefa.nextval proxval from DUAL";
 
@@ -36,6 +36,7 @@ public class TarefaRepository {
             preparedStatement.setInt(1, idTarefa);
             preparedStatement.setString(2, tarefa.getNome());
             preparedStatement.setString(3, tarefa.getStatus());
+            preparedStatement.setInt(4,tarefa.getCaderno().getIdCaderno());
 ;
             preparedStatement.executeUpdate();
             tarefa.setIdTarefa(idTarefa);
@@ -160,9 +161,10 @@ public class TarefaRepository {
             String sql = "\t\n" +
                     "SELECT t.*, c.ID_CADERNO ,c.NOME_CADERNO ,c.ID_USUARIO, u.ID_USUARIO, u.NOME_USUARIO, u.EMAIL_USUARIO\n" +
                     "    FROM TAREFA t \n" +
-                    "   \tright JOIN CADERNO c ON (t.ID_CADERNO = c.ID_CADERNO)\n" +
-                    "   \tleft JOIN USUARIO u ON (c.ID_USUARIO = u.ID_USUARIO)\n" +
-                    "    WHERE c.ID_CADERNO  = ?";
+                    "   left JOIN CADERNO c ON (t.ID_CADERNO = c.ID_CADERNO) \n" +
+                    "   LEFT  JOIN USUARIO u ON (c.ID_USUARIO = u.ID_USUARIO)\n" +
+                    "    WHERE c.ID_CADERNO = ?\n" +
+                    "    ";
 //            Statement statement = connection.createStatement();
 ////            ResultSet resultSet = statement.executeQuery(sql);
 

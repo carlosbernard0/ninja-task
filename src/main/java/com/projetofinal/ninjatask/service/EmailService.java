@@ -27,6 +27,13 @@ public class EmailService {
     @Value("${spring.mail.username}")
     private String from;
 
+//    public void sendEmail(String emailDestino, String assunto, String texto){
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setFrom("ninjataskgerenciadordetarefas@gmail.com");
+//        message.setTo(emailDestino);
+//        message
+//    }
+
     public void enviarEmailSimples(String emailDestino, String assunto, String texto){
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom(from);
