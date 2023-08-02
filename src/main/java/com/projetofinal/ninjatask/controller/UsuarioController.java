@@ -8,8 +8,10 @@ import com.projetofinal.ninjatask.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +24,7 @@ import java.util.List;
 @RequestMapping("/usuario") //localhost:8080/usuario
 @RequiredArgsConstructor
 @Validated
+@Slf4j
 public class UsuarioController {
     private final EmailService emailService;
 
@@ -35,9 +38,15 @@ public class UsuarioController {
     }
 
     @PostMapping("/email-simples")
-    public void enviarEmailSimples(String para, String assunto, String texto) {
+    public void enviarEmailSimples(String para, String assunto, String texto)throws MessagingException {
         this.emailService.enviarEmailSimples(para, assunto, texto);
     }
+
+    @PostMapping("/email-com-template")
+    public void enviarEmailComTemplate(String para, String assunto, String texto)throws MessagingException {
+        this.emailService.enviarEmailComTemplate(para, assunto, texto);
+    }
+
 
     @Operation(summary = "inserir novo usuario", description = "este processo cria um novo usuario na base de dados")
     @ApiResponses(value = {

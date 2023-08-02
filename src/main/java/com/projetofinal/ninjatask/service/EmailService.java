@@ -26,14 +26,6 @@ public class EmailService {
 
     @Value("${spring.mail.username}")
     private String from;
-
-//    public void sendEmail(String emailDestino, String assunto, String texto){
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setFrom("ninjataskgerenciadordetarefas@gmail.com");
-//        message.setTo(emailDestino);
-//        message
-//    }
-
     public void enviarEmailSimples(String emailDestino, String assunto, String texto){
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom(from);
@@ -44,32 +36,33 @@ public class EmailService {
         this.emailSender.send(mailMessage);
     }
 
-//    public void enviarEmailComTemplate(String emailDestino, String assunto, String texto) {
-//        MimeMessage mimeMessage = emailSender.createMimeMessage();
-//        try {
-//
-//            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-//
-//            mimeMessageHelper.setFrom(from);
-//            mimeMessageHelper.setTo(emailDestino);
-//            mimeMessageHelper.setSubject(assunto);
-//            String email = gerarConteudoComTemplate("Teste", from);
-//            mimeMessageHelper.setText(email, true);
-//
-//            emailSender.send(mimeMessageHelper.getMimeMessage());
-//        } catch (MessagingException | IOException | TemplateException e) {
-//            e.printStackTrace();
-//        }
-//
-//    public String gerarConteudoComTemplate(String nome, String email) throws IOException, TemplateException {
-//        Map<String, Object> dados = new HashMap<>();
-//        dados.put("nome", nome);
-//        dados.put("email", email);
-//
-//        Template template = fmConfiguration.getTemplate("template-email.html");
-//        String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, dados);
-//        return html;
-//    }
+    public void enviarEmailComTemplate(String emailDestino, String assunto, String texto) {
+        MimeMessage mimeMessage = emailSender.createMimeMessage();
+        try {
+
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+
+            mimeMessageHelper.setFrom(from);
+            mimeMessageHelper.setTo(emailDestino);
+            mimeMessageHelper.setSubject(assunto);
+            String email = gerarConteudoComTemplate("Teste", from);
+            mimeMessageHelper.setText(email, true);
+
+            emailSender.send(mimeMessageHelper.getMimeMessage());
+        } catch (MessagingException | IOException | TemplateException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public String gerarConteudoComTemplate(String nome, String email) throws IOException, TemplateException {
+        Map<String, Object> dados = new HashMap<>();
+        dados.put("nome", nome);
+        dados.put("email", email);
+
+        Template template = fmConfiguration.getTemplate("template-email.html");
+        String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, dados);
+        return html;
+    }
 
 
 }
