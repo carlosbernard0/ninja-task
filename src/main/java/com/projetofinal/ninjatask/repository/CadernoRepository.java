@@ -61,11 +61,11 @@ public class CadernoRepository {
             //abrir conexao
             connection = ConexaoDB.getConnection();
 
-//            String sql = "SELECT * FROM CADERNO";
-            String sql = "SELECT c.*, u.ID_USUARIO , u.NOME_USUARIO, u.EMAIL_USUARIO, u.SENHA_USUARIO, u.DATA_REGISTRO\n" +
-                    "    FROM CADERNO c \n" +
-                    "   \tright JOIN USUARIO u ON (u.ID_USUARIO = c.ID_USUARIO)\n" +
-                    "    WHERE u.ID_USUARIO = 2";
+            String sql = "SELECT * FROM CADERNO";
+//            String sql = "SELECT c.*, u.ID_USUARIO , u.NOME_USUARIO, u.EMAIL_USUARIO, u.SENHA_USUARIO, u.DATA_REGISTRO\n" +
+//                    "    FROM CADERNO c \n" +
+//                    "   \tright JOIN USUARIO u ON (u.ID_USUARIO = c.ID_USUARIO)\n" +
+//                    "    WHERE u.ID_USUARIO = 2";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
 //
@@ -81,15 +81,15 @@ public class CadernoRepository {
                 caderno.setNomeCaderno(resultSet.getString("nome_caderno"));
 //                caderno.setUsuario(resultSet.getInt("id_usuario"));
                 usuario.setIdUsuario(resultSet.getInt("id_usuario"));
-                usuario.setSenhaUsuario(resultSet.getString("senha_usuario"));
-                usuario.setDataRegistro(resultSet.getDate("data_registro"));
+//                usuario.setSenhaUsuario(resultSet.getString("senha_usuario"));
+//                usuario.setDataRegistro(resultSet.getDate("data_registro"));
 //                usuario.getIdUsuario();
 //                caderno.setUsuario(usuario);
 
 //                Usuario usuario1 = new Usuario();
 //                usuario.setIdUsuario(resultSet.getInt("id_usuario"));
-                usuario.setNomeUsuario(resultSet.getString("nome_usuario"));
-                usuario.setEmailUsuario(resultSet.getString("email_usuario"));
+//                usuario.setNomeUsuario(resultSet.getString("nome_usuario"));
+//                usuario.setEmailUsuario(resultSet.getString("email_usuario"));
                 caderno.setUsuario(usuario);
 //                caderno.setUsuario(usuario.setIdUsuario());
                 listaDeCaderno.add(caderno);

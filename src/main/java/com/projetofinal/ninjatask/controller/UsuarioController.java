@@ -32,16 +32,25 @@ public class UsuarioController {
 
     @Value("${ambiente.api.nome}")
     private String nomeApi;
-    @GetMapping("/hello")
-    public String metodoTeste(){
-        return nomeApi;
-    }
 
-    @PostMapping("/email-simples")
-    public void enviarEmailSimples(String para, String assunto, String texto)throws MessagingException {
-        this.emailService.enviarEmailSimples(para, assunto, texto);
-    }
+//    @GetMapping("/hello")
+//    public String metodoTeste(){
+//        return nomeApi;
+//    }
 
+    //email simples
+//    @PostMapping("/email-simples")
+//    public void enviarEmailSimples(String para, String assunto, String texto)throws MessagingException {
+//        this.emailService.enviarEmailSimples(para, assunto, texto);
+//    }
+
+
+    @Operation(summary = "enviar email para o usuario", description = "este processo envia um email com template")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Deu certo"),
+            @ApiResponse(responseCode = "400", description = "Erro na validação dos dados"),
+            @ApiResponse(responseCode = "500", description = "deu erro no servidor")
+    })
     @PostMapping("/email-com-template")
     public void enviarEmailComTemplate(String para, String assunto, String texto)throws MessagingException {
         this.emailService.enviarEmailComTemplate(para, assunto, texto);
@@ -72,12 +81,24 @@ public class UsuarioController {
         return lista;
     }
 
+    @Operation(summary = "editar usuario", description = "este processo faz a edição de um usuario na base de dados")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Deu certo"),
+            @ApiResponse(responseCode = "400", description = "Erro na validação dos dados"),
+            @ApiResponse(responseCode = "500", description = "deu erro no servidor")
+    })
     @PutMapping
     public boolean atualizarUsuario(@RequestBody @Valid UsuarioDto usuario) throws BusinessException {
         return usuarioService.editarUsuario(usuario);
 //        return usuarioEditado;
     }
 
+    @Operation(summary = "excluir usuario", description = "este processo exclui um usuario na base de dados")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Deu certo"),
+            @ApiResponse(responseCode = "400", description = "Erro na validação dos dados"),
+            @ApiResponse(responseCode = "500", description = "deu erro no servidor")
+    })
     @DeleteMapping("/{id_usuario}")
     public boolean removerUsuario(@PathVariable("id_usuario") Integer id){
         return usuarioService.excluirUsuario(id);

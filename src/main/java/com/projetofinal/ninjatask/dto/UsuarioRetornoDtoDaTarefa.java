@@ -2,14 +2,11 @@ package com.projetofinal.ninjatask.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-import java.util.Date;
-
 @Data
-public class UsuarioRetornoDto {
+public class UsuarioRetornoDtoDaTarefa {
     @Schema(description = "codigo indentificador do usuario", example = "4")
     private Integer idUsuario;
 
