@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class UsuarioRetornoDtoDaTarefa {
+public class UsuarioRetornoDto {
     @Schema(description = "codigo indentificador do usuario", example = "4")
     private Integer idUsuario;
 

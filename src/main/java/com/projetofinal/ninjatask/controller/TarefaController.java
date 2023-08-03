@@ -51,10 +51,9 @@ public class TarefaController {
             @ApiResponse(responseCode = "400", description = "Erro na validação dos dados"),
             @ApiResponse(responseCode = "500", description = "deu erro no servidor")
     })
-    @GetMapping("listar-por-caderno")
+    @GetMapping("listar-tarefas-por-caderno")
     public List<TarefaDto> retornarTarefasPorCaderno(@RequestParam("idCaderno") Integer idCaderno) throws SQLException {
-        return tarefaService.listarTarefas();
-//        return lista;
+        return tarefaService.listarPorCaderno(idCaderno);
     }
 
     @Operation(summary = "editar tarefa", description = "este processo edita a tarefa da base de dados")

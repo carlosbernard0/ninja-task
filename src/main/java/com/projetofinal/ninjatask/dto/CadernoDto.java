@@ -15,5 +15,5 @@ public class CadernoDto {
     @Size(min = 5, max = 20, message = "nome do caderno deve estar entre 5 e 20 caracteres")
     private String nomeCaderno;
 
-    private UsuarioRetornoDtoDaTarefa usuario;
+    private UsuarioRetornoDto usuario;
 }
