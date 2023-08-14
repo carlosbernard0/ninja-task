@@ -1,17 +1,11 @@
 package com.projetofinal.ninjatask.controller;
 
 import com.projetofinal.ninjatask.dto.CadernoDto;
-import com.projetofinal.ninjatask.entity.Caderno;
-import com.projetofinal.ninjatask.entity.Tarefa;
-import com.projetofinal.ninjatask.repository.TarefaRepository;
 import com.projetofinal.ninjatask.service.CadernoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
