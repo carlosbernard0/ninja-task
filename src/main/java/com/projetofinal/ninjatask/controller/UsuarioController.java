@@ -1,7 +1,6 @@
 package com.projetofinal.ninjatask.controller;
 
 import com.projetofinal.ninjatask.dto.UsuarioDto;
-import com.projetofinal.ninjatask.entity.Usuario;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.service.EmailService;
 import com.projetofinal.ninjatask.service.UsuarioService;
@@ -12,7 +11,6 @@ import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -88,8 +86,8 @@ public class UsuarioController {
             @ApiResponse(responseCode = "500", description = "deu erro no servidor")
     })
     @PutMapping
-    public boolean atualizarUsuario(@RequestBody @Valid UsuarioDto usuario) throws BusinessException {
-        return usuarioService.editarUsuario(usuario);
+    public UsuarioDto atualizarUsuario(@RequestBody @Valid UsuarioDto usuario) throws BusinessException {
+        return usuarioService.salvarUsuario(usuario);
 //        return usuarioEditado;
     }
 
@@ -100,8 +98,8 @@ public class UsuarioController {
             @ApiResponse(responseCode = "500", description = "deu erro no servidor")
     })
     @DeleteMapping("/{id_usuario}")
-    public boolean removerUsuario(@PathVariable("id_usuario") Integer id){
-        return usuarioService.excluirUsuario(id);
+    public void removerUsuario(@PathVariable("id_usuario") Integer id){
+         usuarioService.excluirUsuario(id);
 //        return removido;
     }
 }

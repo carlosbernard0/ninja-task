@@ -2,16 +2,11 @@ package com.projetofinal.ninjatask.controller;
 
 
 import com.projetofinal.ninjatask.dto.TarefaDto;
-import com.projetofinal.ninjatask.entity.Tarefa;
-import com.projetofinal.ninjatask.entity.Usuario;
 import com.projetofinal.ninjatask.service.TarefaService;
-import com.projetofinal.ninjatask.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

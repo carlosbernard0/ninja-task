@@ -1,12 +1,10 @@
 package com.projetofinal.ninjatask.service;
 
 import com.projetofinal.ninjatask.dto.CadernoDto;
-import com.projetofinal.ninjatask.entity.Caderno;
-import com.projetofinal.ninjatask.entity.Usuario;
+import com.projetofinal.ninjatask.entity.CadernoEntity;
 import com.projetofinal.ninjatask.mapper.CadernoMapper;
 import com.projetofinal.ninjatask.repository.CadernoRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,11 +16,11 @@ public class CadernoService {
     private final CadernoMapper cadernoMapper;
 
     public CadernoDto salvarCaderno(CadernoDto cadernoDto){
-        Caderno cadernoConvertido = cadernoMapper.converterParaEntity(cadernoDto);
+        CadernoEntity cadernoEntityConvertido = cadernoMapper.converterParaEntity(cadernoDto);
 
-        Caderno cadernoSalvo = cadernoRepository.criarCaderno(cadernoConvertido);
+        CadernoEntity cadernoEntitySalvo = cadernoRepository.criarCaderno(cadernoEntityConvertido);
 
-        CadernoDto cadernoRetornado = cadernoMapper.converterParaDto(cadernoSalvo);
+        CadernoDto cadernoRetornado = cadernoMapper.converterParaDto(cadernoEntitySalvo);
 
         return cadernoRetornado;
     }

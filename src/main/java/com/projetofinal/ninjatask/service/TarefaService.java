@@ -1,11 +1,9 @@
 package com.projetofinal.ninjatask.service;
 
 import com.projetofinal.ninjatask.dto.TarefaDto;
-import com.projetofinal.ninjatask.entity.Tarefa;
+import com.projetofinal.ninjatask.entity.TarefaEntity;
 import com.projetofinal.ninjatask.mapper.TarefaMapper;
-import com.projetofinal.ninjatask.repository.TarefaRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -22,13 +20,13 @@ public class TarefaService {
     public TarefaDto salvarTarefa(TarefaDto tarefaDto){
 
         //converter para entity
-        Tarefa tarefaConvertida = tarefaMapper.converterParaEntity(tarefaDto);
+        TarefaEntity tarefaEntityConvertida = tarefaMapper.converterParaEntity(tarefaDto);
 
 //        salvar no banco
-        Tarefa tarefaSalva = tarefaRepository.criarTarefa(tarefaConvertida);
+        TarefaEntity tarefaEntitySalva = tarefaRepository.criarTarefa(tarefaEntityConvertida);
 
         //converter para dto
-        TarefaDto tarefaRetornada = tarefaMapper.converterParaDto(tarefaSalva);
+        TarefaDto tarefaRetornada = tarefaMapper.converterParaDto(tarefaEntitySalva);
 
         return tarefaRetornada;
 //        return null;
@@ -36,7 +34,7 @@ public class TarefaService {
 
     public List<TarefaDto> listarTarefas()throws SQLException {
         List<TarefaDto> listaDtos = this.tarefaRepository.listarTarefas().stream()
-                .map(entity -> tarefaMapper.converterParaDto((Tarefa) entity))
+                .map(entity -> tarefaMapper.converterParaDto((TarefaEntity) entity))
                 .toList();
         return listaDtos;
 //        return null;
@@ -50,9 +48,9 @@ public class TarefaService {
 
 
     public boolean editarTarefa(TarefaDto tarefaDto) throws Exception {
-        Tarefa tarefaConvertida = tarefaMapper.converterParaEntity(tarefaDto);
+        TarefaEntity tarefaEntityConvertida = tarefaMapper.converterParaEntity(tarefaDto);
 //
-        return tarefaRepository.editarTarefa(tarefaConvertida);
+        return tarefaRepository.editarTarefa(tarefaEntityConvertida);
 //            return false;
     }
 

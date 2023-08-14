@@ -1,11 +1,8 @@
 package com.projetofinal.ninjatask.mapper;
 
 import com.projetofinal.ninjatask.dto.CadernoDto;
-import com.projetofinal.ninjatask.dto.UsuarioDto;
-import com.projetofinal.ninjatask.entity.Caderno;
-import com.projetofinal.ninjatask.entity.Usuario;
+import com.projetofinal.ninjatask.entity.CadernoEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface CadernoMapper {
@@ -14,10 +11,10 @@ public interface CadernoMapper {
 //    @Mapping(target = "senhaUsuario", ignore = true)
 //    @Mapping(target = "dataRegistro", ignore = true)
 //@Mapping(target = "dataRegistro", ignore = true)
-    Caderno converterParaEntity(CadernoDto dto);
+    CadernoEntity converterParaEntity(CadernoDto dto);
 
     //converter entity em dto
 //    @Mapping(source = "usuario", target = "usuarioLista")
 //    @Mapping(target = "dataRegistro", ignore = true)
-    CadernoDto converterParaDto(Caderno entity);
+    CadernoDto converterParaDto(CadernoEntity entity);
 }

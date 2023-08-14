@@ -1,12 +1,11 @@
 package com.projetofinal.ninjatask.service;
 
 import com.projetofinal.ninjatask.dto.UsuarioDto;
-import com.projetofinal.ninjatask.entity.Usuario;
+import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.UsuarioMapper;
 import com.projetofinal.ninjatask.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -25,36 +24,24 @@ public class UsuarioService {
     }
     public UsuarioDto salvarUsuario(UsuarioDto usuario) throws BusinessException{
         validarUsuario(usuario);
-
         //converter dto para entity
-        Usuario usuarioConvertido = usuarioMapper.converterParaEntity(usuario);
-
-        Usuario usuarioSalvo = usuarioRepository.cadastrarUsuario(usuarioConvertido);
-
+        UsuarioEntity usuarioEntityConvertido = usuarioMapper.toEntity(usuario);
+        UsuarioEntity usuarioEntitySalvo = usuarioRepository.save(usuarioEntityConvertido);
         //converter entity para dto
-        UsuarioDto usuarioRetornado = usuarioMapper.converterParaDto(usuarioSalvo);
+        UsuarioDto usuarioRetornado = usuarioMapper.toDTO(usuarioEntitySalvo);
         return usuarioRetornado;
 
     }
 
     public List<UsuarioDto> listar() throws SQLException {
-        List<UsuarioDto> listaDeDtos = this.usuarioRepository.listarUsuario().stream()
-                .map(entity -> usuarioMapper.converterParaDto(entity))
-                .toList();
-        return listaDeDtos;
-    }
-
-    public boolean editarUsuario(UsuarioDto usuarioDto) throws BusinessException {
-        validarUsuario(usuarioDto);
-        Usuario usuarioConvertido = usuarioMapper.converterParaEntity(usuarioDto);
-
-
-        return usuarioRepository.editarUsuario(usuarioConvertido);
+        List<UsuarioEntity> listaUsuario = usuarioRepository.findAll();
+        List <UsuarioDto> dtos = listaUsuario.stream().map(entity -> usuarioMapper.toDTO(entity)).toList();
+        return dtos;
     }
 
 
 
-    public boolean excluirUsuario(Integer idUsuario){
-        return this.usuarioRepository.excluirUsuario(idUsuario);
+    public void excluirUsuario(Integer idUsuario){
+        usuarioRepository.deleteById(idUsuario);
     }
 }
