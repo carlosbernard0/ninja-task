@@ -28,28 +28,28 @@ public class TarefaController {
             @ApiResponse(responseCode = "500", description = "deu erro no servidor")
     })
     @PostMapping
-    public TarefaDto inserirTarefa(@RequestBody TarefaDto tarefaDto) throws Exception{
-        return tarefaService.salvarTarefa(tarefaDto);
+    public TarefaDto inserirTarefa(@RequestBody TarefaDto dto) throws Exception{
+        return tarefaService.salvarTarefa(dto);
 //        return tarefaSalva;
     }
 
     //listar tarefas
-//    @GetMapping
-//    public List<TarefaDto> retornarTodasAsTarefas() throws SQLException {
-//        return tarefaService.listarTarefas();
-////        return lista;
-//    }
-
-    @Operation(summary = "listar tarefas por caderno", description = "este processo mostra as tarefas que esta no caderno selecionado na base de dados")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Deu certo"),
-            @ApiResponse(responseCode = "400", description = "Erro na validação dos dados"),
-            @ApiResponse(responseCode = "500", description = "deu erro no servidor")
-    })
-    @GetMapping("listar-tarefas-por-caderno")
-    public List<TarefaDto> retornarTarefasPorCaderno(@RequestParam("idCaderno") Integer idCaderno) throws SQLException {
-        return tarefaService.listarPorCaderno(idCaderno);
+    @GetMapping
+    public List<TarefaDto> listarTarefas() throws SQLException {
+        return tarefaService.listarTarefas();
+//        return lista;
     }
+
+//    @Operation(summary = "listar tarefas por caderno", description = "este processo mostra as tarefas que esta no caderno selecionado na base de dados")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "Deu certo"),
+//            @ApiResponse(responseCode = "400", description = "Erro na validação dos dados"),
+//            @ApiResponse(responseCode = "500", description = "deu erro no servidor")
+//    })
+//    @GetMapping("listar-tarefas-por-caderno")
+//    public List<TarefaDto> retornarTarefasPorCaderno(@RequestParam("idCaderno") Integer idCaderno) throws SQLException {
+//        return tarefaService.listarPorCaderno(idCaderno);
+//    }
 
     @Operation(summary = "editar tarefa", description = "este processo edita a tarefa da base de dados")
     @ApiResponses(value = {
@@ -58,8 +58,8 @@ public class TarefaController {
             @ApiResponse(responseCode = "500", description = "deu erro no servidor")
     })
     @PutMapping
-    public boolean atualizarTarefa(@RequestBody TarefaDto tarefaDto) throws Exception {
-        return tarefaService.editarTarefa(tarefaDto);
+    public TarefaDto atualizarTarefa(@RequestBody TarefaDto dto) throws Exception {
+        return tarefaService.salvarTarefa(dto);
 //        return tarefaEditada;
     }
 
@@ -70,8 +70,8 @@ public class TarefaController {
             @ApiResponse(responseCode = "500", description = "deu erro no servidor")
     })
     @DeleteMapping("/{id_tarefa}")
-    public boolean removerTarefa(@PathVariable("id_tarefa") Integer id){
-        return tarefaService.excluirTarefa(id);
+    public void removerTarefa(@PathVariable("id_tarefa") Integer id){
+        tarefaService.excluirTarefa(id);
 //        return removido;
     }
 }

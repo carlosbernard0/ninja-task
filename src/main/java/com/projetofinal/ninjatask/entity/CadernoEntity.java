@@ -3,6 +3,8 @@ package com.projetofinal.ninjatask.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Entity(name = "Caderno")
 @Getter
 @Setter
@@ -18,6 +20,12 @@ public class CadernoEntity {
     @Column(name = "nome_caderno")
     private String nomeCaderno;
 
-    //Fazer Join depois
-    private UsuarioEntity usuarioEntity;
+    //muitos CADERNOS para um USUARIO
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+    private UsuarioEntity usuario;
+
+    //um CADERNO para varias TAREFAS
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "caderno")
+    private Set<TarefaEntity> tarefas;
 }

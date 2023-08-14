@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity(name = "Usuario")
 @Getter
@@ -26,4 +27,7 @@ public class UsuarioEntity {
     private String senhaUsuario;
     @Column(name = "data_registro")
     private Date dataRegistro;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
+    private Set<CadernoEntity> cadernos;
 }

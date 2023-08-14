@@ -35,7 +35,7 @@ public class CadernoController {
             @ApiResponse(responseCode = "500", description = "deu erro no servidor")
     })
     @GetMapping
-    public List<CadernoDto> retornarTodosOsCadernos() throws SQLException {
+    public List<CadernoDto> listarCadernos() throws SQLException {
         return cadernoService.listar();
     }
 
@@ -46,7 +46,7 @@ public class CadernoController {
             @ApiResponse(responseCode = "500", description = "deu erro no servidor")
     })
     @DeleteMapping("/{id_caderno}")
-    public boolean removerCaderno(@PathVariable("id_caderno") Integer id){
-        return cadernoService.excluirCaderno(id);
+    public void removerCaderno(@PathVariable("id_caderno") Integer id){
+        cadernoService.excluirCaderno(id);
     }
 }
