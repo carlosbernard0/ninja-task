@@ -47,8 +47,8 @@ public class TarefaController {
 //            @ApiResponse(responseCode = "500", description = "deu erro no servidor")
 //    })
 //    @GetMapping("listar-tarefas-por-caderno")
-//    public List<TarefaDto> retornarTarefasPorCaderno(@RequestParam("idCaderno") Integer idCaderno) throws SQLException {
-//        return tarefaService.listarPorCaderno(idCaderno);
+//    public List<TarefaDto> retornarTarefasPorCaderno(@RequestParam("caderno") Integer caderno) throws SQLException {
+//        return (List<TarefaDto>) tarefaService.listarPorCadernoDto(caderno);
 //    }
 
     @Operation(summary = "editar tarefa", description = "este processo edita a tarefa da base de dados")
@@ -60,7 +60,6 @@ public class TarefaController {
     @PutMapping
     public TarefaDto atualizarTarefa(@RequestBody TarefaDto dto) throws Exception {
         return tarefaService.salvarTarefa(dto);
-//        return tarefaEditada;
     }
 
     @Operation(summary = "excluir tarefa", description = "este processo exclui a tarefa da base de dados")
@@ -72,6 +71,5 @@ public class TarefaController {
     @DeleteMapping("/{id_tarefa}")
     public void removerTarefa(@PathVariable("id_tarefa") Integer id){
         tarefaService.excluirTarefa(id);
-//        return removido;
     }
 }

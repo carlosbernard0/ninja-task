@@ -1,7 +1,6 @@
 package com.projetofinal.ninjatask.service;
 
 import com.projetofinal.ninjatask.dto.TarefaDto;
-import com.projetofinal.ninjatask.entity.CadernoEntity;
 import com.projetofinal.ninjatask.entity.TarefaEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.TarefaMapper;
@@ -46,12 +45,13 @@ public class TarefaService {
 
     //FAZER O LISTAR POR CADERNO
 
-//    public List<TarefaDto> listarPorCaderno(Integer idCaderno) throws SQLException {
-////        List<TarefaEntity> lista = tarefaRepository.findById(idCaderno);
-//        List<TarefaDto> listarDto = lista.stream()
-//                .map(entidade -> tarefaMapper.toDto(entidade))
-//                .toList();
-//        return listarDto;
+//    public TarefaDto listarPorCadernoDto(Integer caderno) throws SQLException {
+//        List<TarefaEntity> entity = listarPorCaderno(caderno);
+//        return tarefaMapper.toDto((TarefaEntity) entity);
+//    }
+//
+//    private List<TarefaEntity> listarPorCaderno(Integer caderno) throws SQLException {
+//        return tarefaRepository.findBycaderno(caderno);
 //    }
 
 
