@@ -107,7 +107,7 @@ public class UsuarioController {
 
     // FAZENDO COM O Service A PAGINAÇÃO
     @GetMapping("/listarPaginado")
-    public PaginaDTO<UsuarioEntity> listarPaginado(Integer paginaSolicitada, Integer tamanhoPorPagina){
+    public PaginaDTO<UsuarioDTO> listarPaginado(Integer paginaSolicitada, Integer tamanhoPorPagina){
         return usuarioService.listarPaginado(paginaSolicitada, tamanhoPorPagina);
     }
 

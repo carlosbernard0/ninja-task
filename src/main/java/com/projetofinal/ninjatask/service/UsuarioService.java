@@ -46,14 +46,14 @@ public class UsuarioService {
         usuarioRepository.deleteById(idUsuario);
     }
 
-    public PaginaDTO<UsuarioEntity> listarPaginado(Integer paginaSolicitada, Integer tamanhoPorPagina){
+    public PaginaDTO<UsuarioDTO> listarPaginado(Integer paginaSolicitada, Integer tamanhoPorPagina){
         PageRequest pageRequest = PageRequest.of(paginaSolicitada, tamanhoPorPagina);
         Page<UsuarioEntity> paginaRecuperada = usuarioRepository.findAll(pageRequest);
         return new PaginaDTO<>(paginaRecuperada.getTotalElements(),
                 paginaRecuperada.getTotalPages(),
                 paginaSolicitada,
                 tamanhoPorPagina,
-                paginaRecuperada.getContent());
+                paginaRecuperada.getContent().stream().map(entity-> usuarioMapper.toDTO(entity)).toList());
     }
 
 }
