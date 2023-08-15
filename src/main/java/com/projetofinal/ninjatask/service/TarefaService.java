@@ -73,14 +73,14 @@ public class TarefaService {
         tarefaRepository.deleteById(id);
     }
 
-    public PaginaDTO<TarefaEntity> listarPaginado(Integer paginaSolicitada, Integer tamanhoPorPagina){
+    public PaginaDTO<TarefaDTO> listarPaginado(Integer paginaSolicitada, Integer tamanhoPorPagina){
         PageRequest pageRequest = PageRequest.of(paginaSolicitada, tamanhoPorPagina);
         Page<TarefaEntity> paginaRecuperada = tarefaRepository.findAll(pageRequest);
         return new PaginaDTO<>(paginaRecuperada.getTotalElements(),
                 paginaRecuperada.getTotalPages(),
                 paginaSolicitada,
                 tamanhoPorPagina,
-                paginaRecuperada.getContent());
+                paginaRecuperada.getContent().stream().map(entity -> tarefaMapper.toDto(entity)).toList());
     }
 
 }

@@ -77,7 +77,7 @@ public class TarefaController {
     }
 
     @GetMapping("/listarPaginado")
-    public PaginaDTO<TarefaEntity> listarPaginado(Integer paginaSolicitada, Integer tamanhoPorPagina){
+    public PaginaDTO<TarefaDTO> listarPaginado(Integer paginaSolicitada, Integer tamanhoPorPagina){
         return tarefaService.listarPaginado(paginaSolicitada, tamanhoPorPagina);
     }
 
