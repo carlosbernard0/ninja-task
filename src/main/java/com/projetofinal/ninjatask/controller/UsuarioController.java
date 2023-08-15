@@ -1,5 +1,6 @@
 package com.projetofinal.ninjatask.controller;
 
+import com.projetofinal.ninjatask.dto.PaginaDTO;
 import com.projetofinal.ninjatask.dto.UsuarioDTO;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
@@ -29,7 +30,6 @@ import java.util.List;
 @Slf4j
 public class UsuarioController {
     private final EmailService emailService;
-    private final UsuarioRepository usuarioRepository;
     private final UsuarioService usuarioService;
 
     @Value("${ambiente.api.nome}")
@@ -105,18 +105,10 @@ public class UsuarioController {
          usuarioService.excluirUsuario(id);
     }
 
-    // FAZENDO COM O REPOSITORY A PAGINAÇÃO
+    // FAZENDO COM O Service A PAGINAÇÃO
     @GetMapping("/listarPaginado")
-    public Page<UsuarioEntity> listarPaginado(Integer paginaSolicitada, Integer tamanhoPorPagina){
-        PageRequest pageRequest = PageRequest.of(paginaSolicitada, tamanhoPorPagina);
-        Page<UsuarioEntity> all = usuarioRepository.findAll(pageRequest);
-        return all;
+    public PaginaDTO<UsuarioEntity> listarPaginado(Integer paginaSolicitada, Integer tamanhoPorPagina){
+        return usuarioService.listarPaginado(paginaSolicitada, tamanhoPorPagina);
     }
 
-
-    // FAZENDO COM O SERVICE A PAGINAÇÃO
-//    @GetMapping("/listarPaginado")
-//    public Page<UsuarioEntity> listarPaginado(Integer paginaSolicitada, Integer tamanhoPorPagina){
-//       return usuarioService.listarPaginado(paginaSolicitada, tamanhoPorPagina);
-//    }
 }

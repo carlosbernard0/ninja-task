@@ -1,5 +1,6 @@
 package com.projetofinal.ninjatask.service;
 
+import com.projetofinal.ninjatask.dto.PaginaDTO;
 import com.projetofinal.ninjatask.dto.UsuarioDTO;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
@@ -45,12 +46,14 @@ public class UsuarioService {
         usuarioRepository.deleteById(idUsuario);
     }
 
-    public Page<UsuarioEntity> listarPaginado(Integer paginaSolicitada, Integer tamanhoPorPagina){
+    public PaginaDTO<UsuarioEntity> listarPaginado(Integer paginaSolicitada, Integer tamanhoPorPagina){
         PageRequest pageRequest = PageRequest.of(paginaSolicitada, tamanhoPorPagina);
-        Page<UsuarioEntity> listaUsuario = usuarioRepository.findAll(pageRequest);
-        Page<UsuarioDTO> dtos = (Page<UsuarioDTO>) listaUsuario.stream().map(entity -> usuarioMapper.toDTO(entity)).toList();
-
-        return listaUsuario;
+        Page<UsuarioEntity> paginaRecuperada = usuarioRepository.findAll(pageRequest);
+        return new PaginaDTO<>(paginaRecuperada.getTotalElements(),
+                paginaRecuperada.getTotalPages(),
+                paginaSolicitada,
+                tamanhoPorPagina,
+                paginaRecuperada.getContent());
     }
 
 }

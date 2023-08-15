@@ -1,5 +1,6 @@
 package com.projetofinal.ninjatask.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,6 +29,7 @@ public class UsuarioEntity {
     @Column(name = "data_registro")
     private Date dataRegistro;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
     private Set<CadernoEntity> cadernos;
 }
