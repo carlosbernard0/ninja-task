@@ -1,6 +1,6 @@
 package com.projetofinal.ninjatask.service;
 
-import com.projetofinal.ninjatask.dto.TarefaDto;
+import com.projetofinal.ninjatask.dto.TarefaDTO;
 import com.projetofinal.ninjatask.entity.TarefaEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.TarefaMapper;
@@ -19,7 +19,7 @@ public class TarefaService {
     private final TarefaMapper tarefaMapper;
 
 
-    public TarefaDto salvarTarefa(TarefaDto dto){
+    public TarefaDTO salvarTarefa(TarefaDTO dto){
 
         //converter para entity
         TarefaEntity entity = tarefaMapper.toEntity(dto);
@@ -28,15 +28,15 @@ public class TarefaService {
         TarefaEntity salvo = tarefaRepository.save(entity);
 
         //converter para dto
-        TarefaDto salvoDto = tarefaMapper.toDto(salvo);
+        TarefaDTO salvoDto = tarefaMapper.toDto(salvo);
 
         return salvoDto;
 //        return null;
     }
 
-    public List<TarefaDto> listarTarefas()throws SQLException {
+    public List<TarefaDTO> listarTarefas()throws SQLException {
         List<TarefaEntity> listaTarefas = tarefaRepository.findAll();
-        List<TarefaDto> listaDtos = listaTarefas.stream()
+        List<TarefaDTO> listaDtos = listaTarefas.stream()
                 .map(entity -> tarefaMapper.toDto((TarefaEntity) entity))
                 .toList();
         return listaDtos;
@@ -55,7 +55,7 @@ public class TarefaService {
 //    }
 
 
-    public TarefaDto buscarPorIdDto(Integer id) throws BusinessException{
+    public TarefaDTO buscarPorIdDto(Integer id) throws BusinessException{
         TarefaEntity entity = buscarPorId(id);
         return tarefaMapper.toDto(entity);
     }

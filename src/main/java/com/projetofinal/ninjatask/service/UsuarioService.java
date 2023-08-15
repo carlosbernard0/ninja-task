@@ -1,6 +1,6 @@
 package com.projetofinal.ninjatask.service;
 
-import com.projetofinal.ninjatask.dto.UsuarioDto;
+import com.projetofinal.ninjatask.dto.UsuarioDTO;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.UsuarioMapper;
@@ -17,31 +17,31 @@ public class UsuarioService {
 
     private final UsuarioMapper usuarioMapper;
 
-    public void validarUsuario(UsuarioDto usuario) throws BusinessException {
+    public void validarUsuario(UsuarioDTO usuario) throws BusinessException {
         if (!usuario.getEmailUsuario().contains("@")){
             throw new BusinessException("Precisa ter @");
         }
     }
-    public UsuarioDto salvarUsuario(UsuarioDto usuario) throws BusinessException{
+    public UsuarioDTO salvarUsuario(UsuarioDTO usuario) throws BusinessException{
         validarUsuario(usuario);
         //converter dto para entity
         UsuarioEntity usuarioEntityConvertido = usuarioMapper.toEntity(usuario);
         UsuarioEntity usuarioEntitySalvo = usuarioRepository.save(usuarioEntityConvertido);
         //converter entity para dto
-        UsuarioDto usuarioRetornado = usuarioMapper.toDTO(usuarioEntitySalvo);
+        UsuarioDTO usuarioRetornado = usuarioMapper.toDTO(usuarioEntitySalvo);
         return usuarioRetornado;
 
     }
 
-    public List<UsuarioDto> listar() throws SQLException {
+    public List<UsuarioDTO> listar() throws SQLException {
         List<UsuarioEntity> listaUsuario = usuarioRepository.findAll();
-        List <UsuarioDto> dtos = listaUsuario.stream().map(entity -> usuarioMapper.toDTO(entity)).toList();
+        List <UsuarioDTO> dtos = listaUsuario.stream().map(entity -> usuarioMapper.toDTO(entity)).toList();
         return dtos;
     }
-
-
 
     public void excluirUsuario(Integer idUsuario){
         usuarioRepository.deleteById(idUsuario);
     }
+
+//    public List<UsuarioEntity>
 }

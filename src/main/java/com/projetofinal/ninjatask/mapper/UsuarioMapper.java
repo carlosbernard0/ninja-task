@@ -1,6 +1,6 @@
 package com.projetofinal.ninjatask.mapper;
 
-import com.projetofinal.ninjatask.dto.UsuarioDto;
+import com.projetofinal.ninjatask.dto.UsuarioDTO;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import org.mapstruct.Mapper;
 
@@ -10,10 +10,10 @@ public interface UsuarioMapper {
 
 //    @Mapping(target = "senhaUsuario", ignore = true)
 //    @Mapping(target = "dataRegistro", ignore = true)
-    UsuarioEntity toEntity(UsuarioDto dto);
+    UsuarioEntity toEntity(UsuarioDTO dto);
 
     //converter entity em dto
 //    @Mapping(target = "dataRegistro", ignore = true)
 //    @Mapping(target = "senhaUsuario", ignore = true)
-    UsuarioDto toDTO(UsuarioEntity entity);
+    UsuarioDTO toDTO(UsuarioEntity entity);
 }

@@ -1,7 +1,6 @@
 package com.projetofinal.ninjatask.service;
 
-import com.projetofinal.ninjatask.controller.CadernoController;
-import com.projetofinal.ninjatask.dto.CadernoDto;
+import com.projetofinal.ninjatask.dto.CadernoDTO;
 import com.projetofinal.ninjatask.entity.CadernoEntity;
 import com.projetofinal.ninjatask.mapper.CadernoMapper;
 import com.projetofinal.ninjatask.repository.CadernoRepository;
@@ -17,17 +16,17 @@ public class CadernoService {
     private final CadernoRepository cadernoRepository;
     private final CadernoMapper cadernoMapper;
 
-    public CadernoDto salvarCaderno(@RequestBody CadernoDto dto){
+    public CadernoDTO salvarCaderno(@RequestBody CadernoDTO dto){
         CadernoEntity entity = cadernoMapper.toEntity(dto);
         CadernoEntity salvo = cadernoRepository.save(entity);
-        CadernoDto dtoSalvo = cadernoMapper.toDto(salvo);
+        CadernoDTO dtoSalvo = cadernoMapper.toDto(salvo);
 
         return dtoSalvo;
     }
 
-    public List<CadernoDto> listar(){
+    public List<CadernoDTO> listar(){
         List<CadernoEntity> listaCadernos = cadernoRepository.findAll();
-        List<CadernoDto> listaDtos = listaCadernos.stream()
+        List<CadernoDTO> listaDtos = listaCadernos.stream()
                 .map(entity -> cadernoMapper.toDto(entity))
                 .toList();
         return listaDtos;

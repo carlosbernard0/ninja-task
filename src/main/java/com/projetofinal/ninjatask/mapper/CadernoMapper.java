@@ -1,6 +1,6 @@
 package com.projetofinal.ninjatask.mapper;
 
-import com.projetofinal.ninjatask.dto.CadernoDto;
+import com.projetofinal.ninjatask.dto.CadernoDTO;
 import com.projetofinal.ninjatask.entity.CadernoEntity;
 import org.mapstruct.Mapper;
 
@@ -11,10 +11,10 @@ public interface CadernoMapper {
 //    @Mapping(target = "senhaUsuario", ignore = true)
 //    @Mapping(target = "dataRegistro", ignore = true)
 //@Mapping(target = "dataRegistro", ignore = true)
-    CadernoEntity toEntity(CadernoDto dto);
+    CadernoEntity toEntity(CadernoDTO dto);
 
     //converter entity em dto
 //    @Mapping(source = "usuario", target = "usuarioLista")
 //    @Mapping(target = "dataRegistro", ignore = true)
-    CadernoDto toDto(CadernoEntity entity);
+    CadernoDTO toDto(CadernoEntity entity);
 }

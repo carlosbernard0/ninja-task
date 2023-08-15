@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-public class TarefaDto {
+public class TarefaDTO {
     @Schema(description = "codigo indentificador da tarefa", example = "1")
     private Integer idTarefa;
 
@@ -14,5 +14,5 @@ public class TarefaDto {
     @Schema(description = "status da tarefa", example = "pendente")
     private String status;
 
-    private CadernoDto caderno;
+    private CadernoDTO caderno;
 }

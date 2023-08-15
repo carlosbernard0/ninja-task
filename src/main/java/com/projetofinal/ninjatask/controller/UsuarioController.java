@@ -1,6 +1,6 @@
 package com.projetofinal.ninjatask.controller;
 
-import com.projetofinal.ninjatask.dto.UsuarioDto;
+import com.projetofinal.ninjatask.dto.UsuarioDTO;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.service.EmailService;
 import com.projetofinal.ninjatask.service.UsuarioService;
@@ -62,8 +62,8 @@ public class UsuarioController {
             @ApiResponse(responseCode = "500", description = "deu erro no servidor")
     })
     @PostMapping
-    public UsuarioDto inserirUsuario(@RequestBody @Valid UsuarioDto usuario) throws BusinessException {
-        UsuarioDto usuarioSalvo = usuarioService.salvarUsuario(usuario);
+    public UsuarioDTO inserirUsuario(@RequestBody @Valid UsuarioDTO usuario) throws BusinessException {
+        UsuarioDTO usuarioSalvo = usuarioService.salvarUsuario(usuario);
         return usuarioSalvo;
     }
 
@@ -74,8 +74,8 @@ public class UsuarioController {
             @ApiResponse(responseCode = "500", description = "deu erro no servidor")
     })
     @GetMapping
-    public List<UsuarioDto> retornarTodosUsuarios() throws SQLException {
-        List<UsuarioDto> lista = usuarioService.listar();
+    public List<UsuarioDTO> retornarTodosUsuarios() throws SQLException {
+        List<UsuarioDTO> lista = usuarioService.listar();
         return lista;
     }
 
@@ -86,7 +86,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "500", description = "deu erro no servidor")
     })
     @PutMapping
-    public UsuarioDto atualizarUsuario(@RequestBody @Valid UsuarioDto usuario) throws BusinessException {
+    public UsuarioDTO atualizarUsuario(@RequestBody @Valid UsuarioDTO usuario) throws BusinessException {
         return usuarioService.salvarUsuario(usuario);
 //        return usuarioEditado;
     }

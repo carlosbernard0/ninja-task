@@ -1,7 +1,7 @@
 package com.projetofinal.ninjatask.controller;
 
 
-import com.projetofinal.ninjatask.dto.TarefaDto;
+import com.projetofinal.ninjatask.dto.TarefaDTO;
 import com.projetofinal.ninjatask.service.TarefaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,14 +28,14 @@ public class TarefaController {
             @ApiResponse(responseCode = "500", description = "deu erro no servidor")
     })
     @PostMapping
-    public TarefaDto inserirTarefa(@RequestBody TarefaDto dto) throws Exception{
+    public TarefaDTO inserirTarefa(@RequestBody TarefaDTO dto) throws Exception{
         return tarefaService.salvarTarefa(dto);
 //        return tarefaSalva;
     }
 
     //listar tarefas
     @GetMapping
-    public List<TarefaDto> listarTarefas() throws SQLException {
+    public List<TarefaDTO> listarTarefas() throws SQLException {
         return tarefaService.listarTarefas();
 //        return lista;
     }
@@ -58,7 +58,7 @@ public class TarefaController {
             @ApiResponse(responseCode = "500", description = "deu erro no servidor")
     })
     @PutMapping
-    public TarefaDto atualizarTarefa(@RequestBody TarefaDto dto) throws Exception {
+    public TarefaDTO atualizarTarefa(@RequestBody TarefaDTO dto) throws Exception {
         return tarefaService.salvarTarefa(dto);
     }
 

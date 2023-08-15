@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class CadernoDto {
+public class CadernoDTO {
     @Schema(description = "codigo indentificador do caderno", example = "4")
     private Integer idCaderno;
 
@@ -15,5 +15,5 @@ public class CadernoDto {
     @Size(min = 5, max = 20, message = "nome do caderno deve estar entre 5 e 20 caracteres")
     private String nomeCaderno;
 
-    private UsuarioRetornoDto usuario;
+    private UsuarioRetornoDTO usuario;
 }
