@@ -1,7 +1,10 @@
 package com.projetofinal.ninjatask.controller;
 
 
+import com.projetofinal.ninjatask.dto.PaginaDTO;
 import com.projetofinal.ninjatask.dto.TarefaDTO;
+import com.projetofinal.ninjatask.entity.TarefaEntity;
+import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.service.TarefaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -72,4 +75,11 @@ public class TarefaController {
     public void removerTarefa(@PathVariable("id_tarefa") Integer id){
         tarefaService.excluirTarefa(id);
     }
+
+    @GetMapping("/listarPaginado")
+    public PaginaDTO<TarefaEntity> listarPaginado(Integer paginaSolicitada, Integer tamanhoPorPagina){
+        return tarefaService.listarPaginado(paginaSolicitada, tamanhoPorPagina);
+    }
+
+
 }

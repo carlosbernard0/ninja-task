@@ -1,5 +1,6 @@
 package com.projetofinal.ninjatask.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class TarefaEntity {
     @Column(name = "status_tarefa")
     private String status;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_caderno", referencedColumnName = "id_caderno")
     private CadernoEntity caderno;

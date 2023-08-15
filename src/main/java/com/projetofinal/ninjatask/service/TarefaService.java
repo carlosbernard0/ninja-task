@@ -1,11 +1,15 @@
 package com.projetofinal.ninjatask.service;
 
+import com.projetofinal.ninjatask.dto.PaginaDTO;
 import com.projetofinal.ninjatask.dto.TarefaDTO;
 import com.projetofinal.ninjatask.entity.TarefaEntity;
+import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.TarefaMapper;
 import com.projetofinal.ninjatask.repository.TarefaRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -65,12 +69,18 @@ public class TarefaService {
                 .orElseThrow(()-> new BusinessException("Mentoria não existe")); // caso colocar id: 4 vai retornar a mensagem
     }
 
-
-
-
     public void excluirTarefa(Integer id){
         tarefaRepository.deleteById(id);
     }
 
+    public PaginaDTO<TarefaEntity> listarPaginado(Integer paginaSolicitada, Integer tamanhoPorPagina){
+        PageRequest pageRequest = PageRequest.of(paginaSolicitada, tamanhoPorPagina);
+        Page<TarefaEntity> paginaRecuperada = tarefaRepository.findAll(pageRequest);
+        return new PaginaDTO<>(paginaRecuperada.getTotalElements(),
+                paginaRecuperada.getTotalPages(),
+                paginaSolicitada,
+                tamanhoPorPagina,
+                paginaRecuperada.getContent());
+    }
 
 }
