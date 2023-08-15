@@ -6,6 +6,8 @@ import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.UsuarioMapper;
 import com.projetofinal.ninjatask.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -43,5 +45,12 @@ public class UsuarioService {
         usuarioRepository.deleteById(idUsuario);
     }
 
-//    public List<UsuarioEntity>
+    public Page<UsuarioEntity> listarPaginado(Integer paginaSolicitada, Integer tamanhoPorPagina){
+        PageRequest pageRequest = PageRequest.of(paginaSolicitada, tamanhoPorPagina);
+        Page<UsuarioEntity> listaUsuario = usuarioRepository.findAll(pageRequest);
+        Page<UsuarioDTO> dtos = (Page<UsuarioDTO>) listaUsuario.stream().map(entity -> usuarioMapper.toDTO(entity)).toList();
+
+        return listaUsuario;
+    }
+
 }
