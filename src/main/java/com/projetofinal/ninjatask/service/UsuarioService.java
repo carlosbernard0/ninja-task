@@ -25,6 +25,7 @@ public class UsuarioService {
             throw new BusinessException("Precisa ter @");
         }
     }
+
     public UsuarioDTO salvarUsuario(UsuarioDTO usuario) throws BusinessException{
         validarUsuario(usuario);
         //converter dto para entity

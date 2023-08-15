@@ -1,5 +1,6 @@
 package com.projetofinal.ninjatask.service;
 
+import com.projetofinal.ninjatask.dto.CadernoDTO;
 import com.projetofinal.ninjatask.dto.PaginaDTO;
 import com.projetofinal.ninjatask.dto.TarefaDTO;
 import com.projetofinal.ninjatask.entity.TarefaEntity;
@@ -18,13 +19,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TarefaService {
-
+    private final CadernoService cadernoService;
     private final TarefaRepository tarefaRepository;
     private final TarefaMapper tarefaMapper;
 
 
-    public TarefaDTO salvarTarefa(TarefaDTO dto){
-
+    public TarefaDTO salvarTarefa(TarefaDTO dto) throws BusinessException {
+        cadernoService.validarIdCaderno(dto.getCaderno().getIdCaderno());
         //converter para entity
         TarefaEntity entity = tarefaMapper.toEntity(dto);
 
@@ -57,7 +58,6 @@ public class TarefaService {
 //    private List<TarefaEntity> listarPorCaderno(Integer caderno) throws SQLException {
 //        return tarefaRepository.findBycaderno(caderno);
 //    }
-
 
     public TarefaDTO buscarPorIdDto(Integer id) throws BusinessException{
         TarefaEntity entity = buscarPorId(id);

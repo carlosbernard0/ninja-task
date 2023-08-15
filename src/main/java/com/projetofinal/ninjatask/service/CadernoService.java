@@ -2,6 +2,7 @@ package com.projetofinal.ninjatask.service;
 
 import com.projetofinal.ninjatask.dto.CadernoDTO;
 import com.projetofinal.ninjatask.entity.CadernoEntity;
+import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.CadernoMapper;
 import com.projetofinal.ninjatask.repository.CadernoRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +26,12 @@ public class CadernoService {
         return dtoSalvo;
     }
 
+    public boolean validarIdCaderno(Integer id) throws BusinessException {
+        if(cadernoRepository.findById(id) == null){
+            throw new BusinessException("ID inválido, caderno inexistente!");
+        }
+        return true;
+    }
     public List<CadernoDTO> listar(){
         List<CadernoEntity> listaCadernos = cadernoRepository.findAll();
         List<CadernoDTO> listaDtos = listaCadernos.stream()
