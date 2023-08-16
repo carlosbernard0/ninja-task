@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 public class CadernoDTO {
-    @Schema(description = "codigo indentificador do caderno", example = "4")
+    @Schema(description = "codigo indentificador do caderno", example = "1")
     private Integer idCaderno;
 
     @Schema(description = "nome do caderno", example = "caderno de tarefas")

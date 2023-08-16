@@ -1,6 +1,7 @@
 package com.projetofinal.ninjatask.service;
 
 import com.projetofinal.ninjatask.dto.PaginaDTO;
+import com.projetofinal.ninjatask.dto.RelatorioUsuariosCadernosDTO;
 import com.projetofinal.ninjatask.dto.UsuarioDTO;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
@@ -56,5 +57,10 @@ public class UsuarioService {
                 tamanhoPorPagina,
                 paginaRecuperada.getContent().stream().map(entity-> usuarioMapper.toDTO(entity)).toList());
     }
+
+    public List<RelatorioUsuariosCadernosDTO> relatorio() {
+        return usuarioRepository.buscarUsuariosCadernosETarefas();
+    }
+
 
 }

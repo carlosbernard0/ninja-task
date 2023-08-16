@@ -1,6 +1,7 @@
 package com.projetofinal.ninjatask.controller;
 
 import com.projetofinal.ninjatask.dto.PaginaDTO;
+import com.projetofinal.ninjatask.dto.RelatorioUsuariosCadernosDTO;
 import com.projetofinal.ninjatask.dto.UsuarioDTO;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
@@ -31,6 +32,7 @@ import java.util.List;
 public class UsuarioController {
     private final EmailService emailService;
     private final UsuarioService usuarioService;
+    private UsuarioRepository usuarioRepository;
 
     @Value("${ambiente.api.nome}")
     private String nomeApi;
@@ -110,5 +112,13 @@ public class UsuarioController {
     public PaginaDTO<UsuarioDTO> listarPaginado(Integer paginaSolicitada, Integer tamanhoPorPagina){
         return usuarioService.listarPaginado(paginaSolicitada, tamanhoPorPagina);
     }
+
+
+    @GetMapping("/relatorio")
+    public List<RelatorioUsuariosCadernosDTO> gerarRelatorio(){
+        return usuarioService.relatorio();
+
+    }
+
 
 }

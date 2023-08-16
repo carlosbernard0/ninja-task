@@ -7,10 +7,10 @@ import lombok.Data;
 
 @Data
 public class UsuarioRetornoDTO {
-    @Schema(description = "codigo indentificador do usuario", example = "4")
+    @Schema(description = "codigo indentificador do usuario", example = "1")
     private Integer idUsuario;
 
-    @Schema(description = "nome do usuario", example = "travis scott")
+    @Schema(description = "nome do usuario", example = "travis ")
     @NotEmpty
     @Size(min = 5, max = 20, message = "nome do usuario deve estar entre 5 e 20 caracteres")
     private String nomeUsuario;

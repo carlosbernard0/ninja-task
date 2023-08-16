@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Data
 public class UsuarioDTO {
-    @Schema(description = "codigo indentificador do usuario", example = "4")
+    @Schema(description = "codigo indentificador do usuario", example = "1")
     private Integer idUsuario;
 
     @Schema(description = "nome do usuario", example = "travis scott")

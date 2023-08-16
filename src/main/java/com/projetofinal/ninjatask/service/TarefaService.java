@@ -48,8 +48,8 @@ public class TarefaService {
 //        return null;
     }
 
-    //FAZER O LISTAR POR CADERNO
-
+//    FAZER O LISTAR POR CADERNO
+//
 //    public TarefaDto listarPorCadernoDto(Integer caderno) throws SQLException {
 //        List<TarefaEntity> entity = listarPorCaderno(caderno);
 //        return tarefaMapper.toDto((TarefaEntity) entity);
