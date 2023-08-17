@@ -3,6 +3,7 @@ package com.projetofinal.ninjatask.service;
 import com.projetofinal.ninjatask.dto.PaginaDTO;
 import com.projetofinal.ninjatask.dto.RelatorioUsuariosCadernosDTO;
 import com.projetofinal.ninjatask.dto.UsuarioDTO;
+import com.projetofinal.ninjatask.entity.CadernoEntity;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.UsuarioMapper;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UsuarioService {
@@ -37,7 +40,13 @@ public class UsuarioService {
         return usuarioRetornado;
 
     }
-
+    public boolean validarIdUsuario(Integer id) throws BusinessException {
+        Optional<UsuarioEntity> usuarioOptional = usuarioRepository.findById(id);
+        if (!usuarioOptional.isPresent()) {
+            throw new BusinessException("ID inválido, usuário inexistente!");
+        }
+        return true;
+    }
     public List<UsuarioDTO> listar() throws SQLException {
         List<UsuarioEntity> listaUsuario = usuarioRepository.findAll();
         List <UsuarioDTO> dtos = listaUsuario.stream().map(entity -> usuarioMapper.toDTO(entity)).toList();

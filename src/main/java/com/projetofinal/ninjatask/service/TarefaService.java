@@ -20,12 +20,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TarefaService {
     private final CadernoService cadernoService;
+    private final UsuarioService usuarioService;
     private final TarefaRepository tarefaRepository;
     private final TarefaMapper tarefaMapper;
 
 
     public TarefaDTO salvarTarefa(TarefaDTO dto) throws BusinessException {
         cadernoService.validarIdCaderno(dto.getCaderno().getIdCaderno());
+        usuarioService.validarIdUsuario(dto.getCaderno().getUsuario().getIdUsuario());
         //converter para entity
         TarefaEntity entity = tarefaMapper.toEntity(dto);
 

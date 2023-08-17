@@ -1,6 +1,7 @@
 package com.projetofinal.ninjatask.controller;
 
 import com.projetofinal.ninjatask.dto.CadernoDTO;
+import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.service.CadernoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,7 +25,7 @@ public class CadernoController {
             @ApiResponse(responseCode = "500", description = "deu erro no servidor")
     })
     @PostMapping
-    public CadernoDTO inserirCaderno(@RequestBody CadernoDTO caderno){
+    public CadernoDTO inserirCaderno(@RequestBody CadernoDTO caderno) throws BusinessException {
         return cadernoService.salvarCaderno(caderno);
     }
 

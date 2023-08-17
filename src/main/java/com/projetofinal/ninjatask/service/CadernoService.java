@@ -17,8 +17,11 @@ import java.util.Optional;
 public class CadernoService {
     private final CadernoRepository cadernoRepository;
     private final CadernoMapper cadernoMapper;
+    private final UsuarioService usuarioService;
 
-    public CadernoDTO salvarCaderno(@RequestBody CadernoDTO dto){
+    public CadernoDTO salvarCaderno(@RequestBody CadernoDTO dto) throws BusinessException {
+        usuarioService.validarIdUsuario(dto.getUsuario().getIdUsuario());
+
         CadernoEntity entity = cadernoMapper.toEntity(dto);
         CadernoEntity salvo = cadernoRepository.save(entity);
         CadernoDTO dtoSalvo = cadernoMapper.toDto(salvo);
@@ -27,7 +30,8 @@ public class CadernoService {
     }
 
     public boolean validarIdCaderno(Integer id) throws BusinessException {
-        if(cadernoRepository.findById(id) == null){
+        Optional<CadernoEntity> cadernoOptional = cadernoRepository.findById(id);
+        if (!cadernoOptional.isPresent()) {
             throw new BusinessException("ID inválido, caderno inexistente!");
         }
         return true;
