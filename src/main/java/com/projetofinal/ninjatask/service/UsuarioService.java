@@ -1,9 +1,9 @@
 package com.projetofinal.ninjatask.service;
 
+import com.projetofinal.ninjatask.dto.AutenticacaoDTO;
 import com.projetofinal.ninjatask.dto.PaginaDTO;
 import com.projetofinal.ninjatask.dto.RelatorioUsuariosCadernosDTO;
 import com.projetofinal.ninjatask.dto.UsuarioDTO;
-import com.projetofinal.ninjatask.entity.CadernoEntity;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.UsuarioMapper;
@@ -24,6 +24,15 @@ public class UsuarioService {
 
     private final UsuarioMapper usuarioMapper;
 
+    public String fazerLogin(AutenticacaoDTO autenticacaoDTO) throws BusinessException{
+        Optional<UsuarioEntity>usuarioEntityOptional = usuarioRepository.findByEmailUsuarioAndSenhaUsuario(autenticacaoDTO.getEmailUsuario(), autenticacaoDTO.getSenhaUsuario());
+        if(usuarioEntityOptional.isEmpty()){
+            throw new BusinessException("E-mail e Senha Inválidos");
+        }
+        UsuarioEntity usuario = usuarioEntityOptional.get();
+        String tokenGerado = usuario.getEmailUsuario() + "-"+usuario.getSenhaUsuario();
+        return tokenGerado;
+    }
     public void validarUsuario(UsuarioDTO usuario) throws BusinessException {
         if (!usuario.getEmailUsuario().contains("@")){
             throw new BusinessException("Precisa ter @");

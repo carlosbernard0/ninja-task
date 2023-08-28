@@ -1,10 +1,8 @@
 package com.projetofinal.ninjatask.service;
 
-import com.projetofinal.ninjatask.dto.CadernoDTO;
 import com.projetofinal.ninjatask.dto.PaginaDTO;
 import com.projetofinal.ninjatask.dto.TarefaDTO;
 import com.projetofinal.ninjatask.entity.TarefaEntity;
-import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.TarefaMapper;
 import com.projetofinal.ninjatask.repository.TarefaRepository;
