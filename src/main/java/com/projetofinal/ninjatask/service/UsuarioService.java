@@ -79,6 +79,15 @@ public class UsuarioService {
     public List<RelatorioUsuariosCadernosDTO> relatorio() {
         return usuarioRepository.buscarUsuariosCadernosETarefas();
     }
+    public UsuarioEntity validarToken(String token) throws BusinessException {
+        if(token == null){
+            throw new BusinessException("Token Inexistente");
+        }
+        String tokenLimpo = token.replace("Bearer " ,"");
+        String emailESenha[] = tokenLimpo.split("-");
 
+        Optional <UsuarioEntity> usuarioEntityOptional = usuarioRepository.findByEmailUsuarioAndSenhaUsuario(emailESenha[0],emailESenha[1]);
+        return usuarioEntityOptional.orElseThrow(() -> new BusinessException("Usuário Inexistente"));
+    }
 
 }
