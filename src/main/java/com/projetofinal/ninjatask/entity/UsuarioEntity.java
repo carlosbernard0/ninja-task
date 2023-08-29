@@ -12,8 +12,6 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@ToString
 public class UsuarioEntity {
     @Id
     @Column(name = "id_usuario")
