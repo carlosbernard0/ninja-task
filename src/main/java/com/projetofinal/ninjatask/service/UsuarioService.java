@@ -8,12 +8,17 @@ import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.UsuarioMapper;
 import com.projetofinal.ninjatask.repository.UsuarioRepository;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,14 +29,36 @@ public class UsuarioService {
 
     private final UsuarioMapper usuarioMapper;
 
+    @Value("${jwt.validade.token}")
+    private String validadeJWT;
+
+    @Value("${jwt.secret}")
+    private String secret;
+
+
     public String fazerLogin(AutenticacaoDTO autenticacaoDTO) throws BusinessException{
         Optional<UsuarioEntity>usuarioEntityOptional = usuarioRepository.findByEmailUsuarioAndSenhaUsuario(autenticacaoDTO.getEmailUsuario(), autenticacaoDTO.getSenhaUsuario());
         if(usuarioEntityOptional.isEmpty()){
             throw new BusinessException("E-mail e Senha Inválidos");
         }
         UsuarioEntity usuario = usuarioEntityOptional.get();
-        String tokenGerado = usuario.getEmailUsuario() + "-"+usuario.getSenhaUsuario();
-        return tokenGerado;
+//        String tokenGerado = usuario.getEmailUsuario() + "-"+usuario.getSenhaUsuario();
+//        return tokenGerado;
+
+        Date dataAtual = new Date();
+        Date dataExpiracao = new Date(dataAtual.getTime() + Long.parseLong(validadeJWT));
+
+        //1 dia
+
+        String jwtGerado =Jwts.builder()
+                .setIssuer("ninja-task")
+                .setSubject(usuario.getIdUsuario().toString())
+                .setIssuedAt(dataAtual)
+                .setExpiration(dataExpiracao)
+                .signWith(SignatureAlgorithm.HS256, secret)
+                .compact();
+
+        return jwtGerado;
     }
     public void validarUsuario(UsuarioDTO usuario) throws BusinessException {
         if (!usuario.getEmailUsuario().contains("@")){
