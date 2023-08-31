@@ -8,6 +8,7 @@ import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.UsuarioMapper;
 import com.projetofinal.ninjatask.repository.UsuarioRepository;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.Data;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -111,9 +113,16 @@ public class UsuarioService {
             throw new BusinessException("Token Inexistente");
         }
         String tokenLimpo = token.replace("Bearer " ,"");
-        String emailESenha[] = tokenLimpo.split("-");
+        Claims claims = Jwts.parser()
+                .setSigningKey(secret) //utiliza a secret
+                .parseClaimsJws(tokenLimpo) //decriptografa e valida o token...
+                .getBody(); //recupera o payload
 
-        Optional <UsuarioEntity> usuarioEntityOptional = usuarioRepository.findByEmailUsuarioAndSenhaUsuario(emailESenha[0],emailESenha[1]);
+        String subject = claims.getSubject(); // id do usuario
+
+//        String emailESenha[] = tokenLimpo.split("-"); //nao é mais utilizavel
+
+        Optional <UsuarioEntity> usuarioEntityOptional = usuarioRepository.findById(Integer.parseInt(subject));
         return usuarioEntityOptional.orElseThrow(() -> new BusinessException("Usuário Inexistente"));
     }
 
