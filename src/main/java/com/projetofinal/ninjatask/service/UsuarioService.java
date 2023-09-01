@@ -11,9 +11,8 @@ import com.projetofinal.ninjatask.repository.UsuarioRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,14 +24,20 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final AuthenticationManager authenticationManager;
+
+    public UsuarioService(@Lazy UsuarioRepository usuarioRepository,
+                          @Lazy AuthenticationManager authenticationManager, UsuarioMapper usuarioMapper){
+        this.usuarioRepository= usuarioRepository;
+        this.authenticationManager = authenticationManager;
+        this.usuarioMapper = usuarioMapper;
+    }
+
 
     private final UsuarioMapper usuarioMapper;
 
@@ -137,8 +142,8 @@ public class UsuarioService {
         return usuarioEntityOptional.orElseThrow(() -> new BusinessException("Usuário Inexistente"));
     }
 
-    public Optional<UsuarioEntity> findByLogin(String login){
-        return usuarioRepository.findByLogin(login);
+    public Optional<UsuarioEntity> findByEmailUsuario(String emailUsuario){
+        return usuarioRepository.findByEmailUsuario(emailUsuario    );
     }
 
 }
