@@ -3,7 +3,11 @@ package com.projetofinal.ninjatask.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
 
@@ -12,7 +16,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioEntity {
+public class UsuarioEntity implements UserDetails {
     @Id
     @Column(name = "id_usuario")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gerador_usuario")
@@ -30,4 +34,39 @@ public class UsuarioEntity {
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
     private Set<CadernoEntity> cadernos;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public String getPassword() {
+        return senhaUsuario;
+    }
+
+    @Override
+    public String getUsername() {
+        return emailUsuario;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

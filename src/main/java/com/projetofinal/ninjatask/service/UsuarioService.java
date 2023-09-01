@@ -16,6 +16,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -28,6 +32,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
+    private final AuthenticationManager authenticationManager;
 
     private final UsuarioMapper usuarioMapper;
 
@@ -39,28 +44,34 @@ public class UsuarioService {
 
 
     public String fazerLogin(AutenticacaoDTO autenticacaoDTO) throws BusinessException{
-        Optional<UsuarioEntity>usuarioEntityOptional = usuarioRepository.findByEmailUsuarioAndSenhaUsuario(autenticacaoDTO.getEmailUsuario(), autenticacaoDTO.getSenhaUsuario());
-        if(usuarioEntityOptional.isEmpty()){
+        UsernamePasswordAuthenticationToken dtoDoSpring = new UsernamePasswordAuthenticationToken(
+                autenticacaoDTO.getEmailUsuario(),
+                autenticacaoDTO.getSenhaUsuario()
+        );
+        try {
+            Authentication autenticacao = authenticationManager.authenticate(dtoDoSpring);
+
+            Object usuarioAutenticado = autenticacao.getPrincipal();
+            UsuarioEntity usuarioEntity = (UsuarioEntity) usuarioAutenticado;
+
+            Date dataAtual = new Date();
+            Date dataExpiracao = new Date(dataAtual.getTime() + Long.parseLong(validadeJWT));
+
+            //1 dia
+
+            String jwtGerado =Jwts.builder()
+                    .setIssuer("ninja-task")
+                    .setSubject(usuarioEntity.getIdUsuario().toString())
+                    .setIssuedAt(dataAtual)
+                    .setExpiration(dataExpiracao)
+                    .signWith(SignatureAlgorithm.HS256, secret)
+                    .compact();
+
+            return jwtGerado;
+        }catch (AuthenticationException ex){
             throw new BusinessException("E-mail e Senha Inválidos");
+
         }
-        UsuarioEntity usuario = usuarioEntityOptional.get();
-//        String tokenGerado = usuario.getEmailUsuario() + "-"+usuario.getSenhaUsuario();
-//        return tokenGerado;
-
-        Date dataAtual = new Date();
-        Date dataExpiracao = new Date(dataAtual.getTime() + Long.parseLong(validadeJWT));
-
-        //1 dia
-
-        String jwtGerado =Jwts.builder()
-                .setIssuer("ninja-task")
-                .setSubject(usuario.getIdUsuario().toString())
-                .setIssuedAt(dataAtual)
-                .setExpiration(dataExpiracao)
-                .signWith(SignatureAlgorithm.HS256, secret)
-                .compact();
-
-        return jwtGerado;
     }
     public void validarUsuario(UsuarioDTO usuario) throws BusinessException {
         if (!usuario.getEmailUsuario().contains("@")){
@@ -124,6 +135,10 @@ public class UsuarioService {
 
         Optional <UsuarioEntity> usuarioEntityOptional = usuarioRepository.findById(Integer.parseInt(subject));
         return usuarioEntityOptional.orElseThrow(() -> new BusinessException("Usuário Inexistente"));
+    }
+
+    public Optional<UsuarioEntity> findByLogin(String login){
+        return usuarioRepository.findByLogin(login);
     }
 
 }
