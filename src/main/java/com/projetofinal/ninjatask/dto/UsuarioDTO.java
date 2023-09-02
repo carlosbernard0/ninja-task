@@ -15,7 +15,7 @@ public class UsuarioDTO {
 
     @Schema(description = "nome do usuario", example = "travis scott")
     @NotEmpty
-    @Size(min = 5, max = 20, message = "nome do usuario deve estar entre 5 e 20 caracteres")
+    @Size(min = 4, max = 20, message = "nome do usuario deve estar entre 5 e 20 caracteres")
     private String nomeUsuario;
 
     @Schema(description = "email do usuario", example = "carlos@gmail.com")

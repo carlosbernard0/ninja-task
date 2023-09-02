@@ -11,6 +11,6 @@ public class CriadorDeSenhas {
         //$2a$10$iPMYfy.92BUxSyZ3DaKgT.aN/i.ybPW7H7b89txrOaGeEvs0n4p9W
 
         boolean senhaCorreta =bCryptPasswordEncoder.matches("senha123", "$2a$10$iPMYfy.92BUxSyZ3DaKgT.aN/i.ybPW7H7b89txrOaGeEvs0n4p9W");
-        System.out.println(senhaCorreta);
+            System.out.println(senhaCorreta);
     }
-}
+}   
