@@ -31,9 +31,16 @@ public class UsuarioEntity implements UserDetails {
     @Column(name = "data_registro")
     private Date dataRegistro;
 
+
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
     private Set<CadernoEntity> cadernos;
+
+    @ManyToMany
+    @JoinTable(name = "Usuario_Cargo",
+            joinColumns = @JoinColumn(name = "id_usuario"),
+            inverseJoinColumns = @JoinColumn(name = "id_cargo"))
+    public Set<CargoEntity> cargos;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
