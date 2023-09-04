@@ -1,6 +1,7 @@
-package com.projetofinal.ninjatask.service;
+package com.projetofinal.ninjatask.security;
 
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
+import com.projetofinal.ninjatask.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsChecker;
