@@ -59,6 +59,9 @@ public class UsuarioService {
             Object usuarioAutenticado = autenticacao.getPrincipal();
             UsuarioEntity usuarioEntity = (UsuarioEntity) usuarioAutenticado;
 
+            List<String> nomeDosCargos = usuarioEntity.getCargos().stream()
+                    .map(cargo -> cargo.getNome()).toList();
+
             Date dataAtual = new Date();
             Date dataExpiracao = new Date(dataAtual.getTime() + Long.parseLong(validadeJWT));
 
@@ -66,6 +69,7 @@ public class UsuarioService {
 
             String jwtGerado =Jwts.builder()
                     .setIssuer("ninja-task")
+                    .claim("CARGOS", nomeDosCargos)
                     .setSubject(usuarioEntity.getIdUsuario().toString())
                     .setIssuedAt(dataAtual)
                     .setExpiration(dataExpiracao)
