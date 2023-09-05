@@ -19,6 +19,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -95,11 +96,15 @@ public class UsuarioService {
                 .getBody(); //recupera o payload
 
         String idUsuario = claims.getSubject(); // id do usuario
+        List<String> cargos = claims.get("CARGOS", List.class);
+
+        List<SimpleGrantedAuthority> listaDeCargos = cargos.stream()
+                .map(cargoStr -> new SimpleGrantedAuthority(cargoStr))
+                .toList();
 
         UsernamePasswordAuthenticationToken tokenSpring = new UsernamePasswordAuthenticationToken(idUsuario, null,
-                Collections.emptyList());
+                listaDeCargos);
 
-//        Optional <UsuarioEntity> usuarioEntityOptional = usuarioRepository.findById(Integer.parseInt(subject));
         return tokenSpring;
     }
 

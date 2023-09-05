@@ -3,13 +3,14 @@ package com.projetofinal.ninjatask.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Set;
 
 @Getter
 @Setter
 @Entity(name = "Cargo")
-public class CargoEntity {
+public class CargoEntity implements GrantedAuthority {
     @Id
     @Column(name = "id_cargo")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CARGO_SEQUENCIA")
@@ -23,4 +24,9 @@ public class CargoEntity {
             joinColumns = @JoinColumn(name = "id_cargo"),
             inverseJoinColumns = @JoinColumn(name = "id_usuario"))
     public Set<UsuarioEntity> usuarios;
+
+    @Override
+    public String getAuthority() {
+        return nome;
+    }
 }
