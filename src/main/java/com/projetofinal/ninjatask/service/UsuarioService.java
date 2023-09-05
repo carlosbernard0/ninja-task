@@ -22,6 +22,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -82,6 +83,26 @@ public class UsuarioService {
 
         }
     }
+
+    public UsernamePasswordAuthenticationToken validarToken(String token){
+        if(token == null){
+            return null;
+        }
+        String tokenLimpo = token.replace("Bearer " ,"");
+        Claims claims = Jwts.parser()
+                .setSigningKey(secret) //utiliza a secret
+                .parseClaimsJws(tokenLimpo) //decriptografa e valida o token...
+                .getBody(); //recupera o payload
+
+        String idUsuario = claims.getSubject(); // id do usuario
+
+        UsernamePasswordAuthenticationToken tokenSpring = new UsernamePasswordAuthenticationToken(idUsuario, null,
+                Collections.emptyList());
+
+//        Optional <UsuarioEntity> usuarioEntityOptional = usuarioRepository.findById(Integer.parseInt(subject));
+        return tokenSpring;
+    }
+
     public void validarUsuario(UsuarioDTO usuario) throws BusinessException {
         if (!usuario.getEmailUsuario().contains("@")){
             throw new BusinessException("Precisa ter @");
@@ -127,23 +148,6 @@ public class UsuarioService {
 
     public List<RelatorioUsuariosCadernosDTO> relatorio() {
         return usuarioRepository.buscarUsuariosCadernosETarefas();
-    }
-    public UsuarioEntity validarToken(String token) throws BusinessException {
-        if(token == null){
-            throw new BusinessException("Token Inexistente");
-        }
-        String tokenLimpo = token.replace("Bearer " ,"");
-        Claims claims = Jwts.parser()
-                .setSigningKey(secret) //utiliza a secret
-                .parseClaimsJws(tokenLimpo) //decriptografa e valida o token...
-                .getBody(); //recupera o payload
-
-        String subject = claims.getSubject(); // id do usuario
-
-//        String emailESenha[] = tokenLimpo.split("-"); //nao é mais utilizavel
-
-        Optional <UsuarioEntity> usuarioEntityOptional = usuarioRepository.findById(Integer.parseInt(subject));
-        return usuarioEntityOptional.orElseThrow(() -> new BusinessException("Usuário Inexistente"));
     }
 
     public Optional<UsuarioEntity> findByEmailUsuario(String emailUsuario){

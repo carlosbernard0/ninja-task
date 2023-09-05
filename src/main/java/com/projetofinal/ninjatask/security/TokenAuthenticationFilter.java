@@ -26,16 +26,14 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
 
-        //primeiro verifica o Token
         String tokenBearer = request.getHeader("Authorization");
-        try {
-            UsuarioEntity usuario = usuarioService.validarToken(tokenBearer);
-            UsernamePasswordAuthenticationToken tokenSpring = new UsernamePasswordAuthenticationToken(usuario, null, Collections.emptyList());
-            SecurityContextHolder.getContext().setAuthentication(tokenSpring);
-        } catch (BusinessException e) {
-            SecurityContextHolder.getContext().setAuthentication(null); // não está Logado
-        }
-        //Depois valida
+
+        //validar o token
+        UsernamePasswordAuthenticationToken tokenSpring = usuarioService.validarToken(tokenBearer);
+        //set na autenticao dentro do spring
+        SecurityContextHolder.getContext().setAuthentication(tokenSpring);
+
+        //executar o proximo filtro
         filterChain.doFilter(request, response);
     }
 }
