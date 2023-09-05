@@ -169,9 +169,11 @@ public class UsuarioService {
         return Integer.parseInt(idUsuarioString);
     }
 
-    public UsuarioEntity recuperarUsuarioLogado() throws BusinessException {
+    public UsuarioDTO recuperarUsuarioLogado() throws BusinessException {
         Integer idUsuarioLogado =recuperarIdUsuarioLogado();
-        return usuarioRepository.findById(idUsuarioLogado).orElseThrow(() -> new BusinessException("Usuario não encontrado!"));
+        UsuarioEntity idUsuarioEntity = usuarioRepository.findById(idUsuarioLogado).orElseThrow(() -> new BusinessException("Usuario não encontrado!"));
+        UsuarioDTO idUsuarioDTOLogado = usuarioMapper.toDTO(idUsuarioEntity);
+        return idUsuarioDTOLogado;
     }
 
 }

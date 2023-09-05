@@ -20,7 +20,7 @@ public class AutenticacaoController {
     }
 
     @GetMapping("/usuario-logado")
-    public UsuarioEntity recuperarUsuarioLogado() throws BusinessException {
+    public UsuarioDTO recuperarUsuarioLogado() throws BusinessException {
         return usuarioService.recuperarUsuarioLogado();
     }
 }
