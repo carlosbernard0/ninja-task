@@ -30,6 +30,7 @@ public class SecurityConfiguration {
         http.cors(Customizer.withDefaults());
         http.authorizeHttpRequests((authz) ->
                 authz.requestMatchers("/autenticacao/**").permitAll()
+                        //regras especificas acima das regras gerais
                         .requestMatchers(HttpMethod.POST, "/usuario/**").hasRole("ADMIN")// apenas o cargo ADMIN poderá fazer o POST no usuario
                         .requestMatchers(HttpMethod.DELETE, "/usuario/**").hasRole("DEV")// apenas o cargo DEV podera fazer DELETE no usuario
                         .requestMatchers("/usuario/**").hasRole("DEV") //ROLE_DEV

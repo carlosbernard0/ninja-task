@@ -36,6 +36,7 @@ public class UsuarioEntity implements UserDetails {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
     private Set<CadernoEntity> cadernos;
 
+
     @ManyToMany
     @JoinTable(name = "Usuario_Cargo",
             joinColumns = @JoinColumn(name = "id_usuario"),

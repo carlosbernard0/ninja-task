@@ -8,6 +8,7 @@ import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.UsuarioMapper;
 import com.projetofinal.ninjatask.repository.UsuarioRepository;
+import com.projetofinal.ninjatask.security.SecurityConfiguration;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,6 +21,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -157,6 +160,18 @@ public class UsuarioService {
 
     public Optional<UsuarioEntity> findByEmailUsuario(String emailUsuario){
         return usuarioRepository.findByEmailUsuario(emailUsuario    );
+    }
+
+    public Integer recuperarIdUsuarioLogado(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object idUsuario = authentication.getPrincipal();
+        String idUsuarioString = (String) idUsuario;
+        return Integer.parseInt(idUsuarioString);
+    }
+
+    public UsuarioEntity recuperarUsuarioLogado() throws BusinessException {
+        Integer idUsuarioLogado =recuperarIdUsuarioLogado();
+        return usuarioRepository.findById(idUsuarioLogado).orElseThrow(() -> new BusinessException("Usuario não encontrado!"));
     }
 
 }

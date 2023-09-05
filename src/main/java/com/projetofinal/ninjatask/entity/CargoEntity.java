@@ -1,5 +1,6 @@
 package com.projetofinal.ninjatask.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,7 @@ public class CargoEntity implements GrantedAuthority {
     @Column(name = "nome")
     private String nome;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "Usuario_Cargo",
             joinColumns = @JoinColumn(name = "id_cargo"),
