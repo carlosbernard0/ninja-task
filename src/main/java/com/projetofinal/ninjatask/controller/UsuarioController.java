@@ -93,7 +93,7 @@ public class UsuarioController {
     })
     @PutMapping
     public UsuarioDTO atualizarUsuario(@RequestBody @Valid UsuarioDTO usuario) throws BusinessException {
-        return usuarioService.salvarUsuario(usuario);
+        return usuarioService.editarUsuario(usuario);
     }
 
     @Operation(summary = "excluir usuario", description = "este processo exclui um usuario na base de dados")

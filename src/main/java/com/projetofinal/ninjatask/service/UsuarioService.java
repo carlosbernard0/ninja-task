@@ -8,7 +8,7 @@ import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.UsuarioMapper;
 import com.projetofinal.ninjatask.repository.UsuarioRepository;
-import com.projetofinal.ninjatask.security.SecurityConfiguration;
+import com.projetofinal.ninjatask.testesenha.CriadorDeSenhas;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -21,12 +21,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -118,15 +117,49 @@ public class UsuarioService {
         }
     }
 
+
+    public boolean validarEmailExistente(String Email) throws BusinessException {
+        Optional<UsuarioEntity> emailExistente = usuarioRepository.findByEmailUsuario(Email);
+        if (emailExistente.isPresent()) {
+            throw new BusinessException("Email já cadastrado");
+        }
+        return true;
+    }
+
     public UsuarioDTO salvarUsuario(UsuarioDTO usuario) throws BusinessException{
         validarUsuario(usuario);
         //converter dto para entity
         UsuarioEntity usuarioEntityConvertido = usuarioMapper.toEntity(usuario);
+        // Verificar Existência E-mail
+        validarEmailExistente(usuario.getEmailUsuario());
+                //Converter Senha
+        String senha = usuarioEntityConvertido.getSenhaUsuario();
+        String senhaCriptografada = converterSenha(senha);
+        usuarioEntityConvertido.setSenhaUsuario(senhaCriptografada);
         UsuarioEntity usuarioEntitySalvo = usuarioRepository.save(usuarioEntityConvertido);
         //converter entity para dto
         UsuarioDTO usuarioRetornado = usuarioMapper.toDTO(usuarioEntitySalvo);
         return usuarioRetornado;
+    }
 
+    public UsuarioDTO editarUsuario(UsuarioDTO usuario) throws BusinessException{
+        validarUsuario(usuario);
+        //converter dto para entity
+        UsuarioEntity usuarioEntityConvertido = usuarioMapper.toEntity(usuario);
+        //Converter Senha
+        String senha = usuarioEntityConvertido.getSenhaUsuario();
+        String senhaCriptografada = converterSenha(senha);
+        usuarioEntityConvertido.setSenhaUsuario(senhaCriptografada);
+        UsuarioEntity usuarioEntitySalvo = usuarioRepository.save(usuarioEntityConvertido);
+        //converter entity para dto
+        UsuarioDTO usuarioRetornado = usuarioMapper.toDTO(usuarioEntitySalvo);
+        return usuarioRetornado;
+    }
+
+    public String converterSenha(String senha){
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String senhaCriptografada = bCryptPasswordEncoder.encode(senha);
+        return senhaCriptografada;
     }
     public boolean validarIdUsuario(Integer id) throws BusinessException {
         Optional<UsuarioEntity> usuarioOptional = usuarioRepository.findById(id);
