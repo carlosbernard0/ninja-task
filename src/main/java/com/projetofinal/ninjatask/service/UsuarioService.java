@@ -159,7 +159,7 @@ public class UsuarioService {
     }
 
     public Optional<UsuarioEntity> findByEmailUsuario(String emailUsuario){
-        return usuarioRepository.findByEmailUsuario(emailUsuario    );
+        return usuarioRepository.findByEmailUsuario(emailUsuario);
     }
 
     public Integer recuperarIdUsuarioLogado(){
