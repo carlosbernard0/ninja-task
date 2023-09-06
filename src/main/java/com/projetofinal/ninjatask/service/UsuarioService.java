@@ -35,6 +35,8 @@ import java.util.Optional;
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final AuthenticationManager authenticationManager;
+    private final UsuarioMapper usuarioMapper;
+
 
     public UsuarioService(@Lazy UsuarioRepository usuarioRepository,
                           @Lazy AuthenticationManager authenticationManager, UsuarioMapper usuarioMapper){
@@ -44,7 +46,6 @@ public class UsuarioService {
     }
 
 
-    private final UsuarioMapper usuarioMapper;
 
     @Value("${jwt.validade.token}")
     private String validadeJWT;

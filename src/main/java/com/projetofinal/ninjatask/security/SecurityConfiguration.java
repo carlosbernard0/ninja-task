@@ -31,9 +31,8 @@ public class SecurityConfiguration {
         http.authorizeHttpRequests((authz) ->
                 authz.requestMatchers("/autenticacao/**").permitAll()
                         //regras especificas acima das regras gerais
-                        .requestMatchers(HttpMethod.POST, "/usuario/**").hasRole("ADMIN")// apenas o cargo ADMIN poderá fazer o POST no usuario
                         .requestMatchers(HttpMethod.DELETE, "/usuario/**").hasRole("DEV")// apenas o cargo DEV podera fazer DELETE no usuario
-                        .requestMatchers("/usuario/**").hasRole("DEV") //ROLE_DEV
+                        .requestMatchers("/usuario/**").hasAnyRole("DEV","CLIENTE") //ROLE_DEV
                         .requestMatchers("/caderno/**").hasAnyRole("DEV","CLIENTE") //ROLE_DEV
                         .requestMatchers("/tarefa/**").hasAnyRole("CLIENTE","DEV") //ROLE_DEV
                 .anyRequest().authenticated()); //Só Acessa se tiver autenticado

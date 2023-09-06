@@ -8,7 +8,11 @@ public class CriadorDeSenhas {
 
 //        String senhaCriptografada = bCryptPasswordEncoder.encode("senha123");
 //        System.out.println(senhaCriptografada);
-        //$2a$10$z2vQCWrdJkwRwk9Shz0O7eatjMdw.PxsSRrgE9ONMVfJTW8XrSDum
+        //$2a$10$z2vQCWrdJkwRwk9Shz0O7eatjMdw.PxsSRrgE9ONMVfJTW8XrSDum SENHA DO CARLOS
+
+
+
+
 
         boolean senhaCorreta =bCryptPasswordEncoder.matches("senha123", "$2a$10$z2vQCWrdJkwRwk9Shz0O7eatjMdw.PxsSRrgE9ONMVfJTW8XrSDum");
             System.out.println(senhaCorreta);
