@@ -32,6 +32,7 @@ public class SecurityConfiguration {
                 authz.requestMatchers("/autenticacao/**").permitAll()
                         //regras especificas acima das regras gerais
                         .requestMatchers(HttpMethod.DELETE, "/usuario/**").hasRole("DEV")// apenas o cargo DEV podera fazer DELETE no usuario
+                        .requestMatchers(HttpMethod.POST, "/usuario/**").hasRole("DEV")// apenas o cargo DEV podera fazer DELETE no usuario
                         .requestMatchers("/usuario/**").hasAnyRole("DEV","CLIENTE") //ROLE_DEV
                         .requestMatchers("/caderno/**").hasAnyRole("DEV","CLIENTE") //ROLE_DEV
                         .requestMatchers("/tarefa/**").hasAnyRole("CLIENTE","DEV") //ROLE_DEV
