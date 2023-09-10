@@ -1,20 +1,15 @@
 package com.projetofinal.ninjatask.dto;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Date;
 
 @Data
-public class UsuarioDTO {
+public class UsuarioDTOSemSenha {
     @Schema(description = "codigo indentificador do usuario", example = "1")
     private Integer idUsuario;
 
@@ -26,11 +21,6 @@ public class UsuarioDTO {
     @Schema(description = "email do usuario", example = "carlos@gmail.com")
     private String emailUsuario;
 
-//    @JsonIgnore
-//    @JsonIgnoreProperties
-    @Schema(description = "senha do usuario", example = "senha")
-    @NotEmpty
-    private String senhaUsuario;
 
     @Schema(description = "data de alteração do usuario", example = "2023-07-26")
     @PastOrPresent

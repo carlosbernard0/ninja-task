@@ -3,6 +3,7 @@ package com.projetofinal.ninjatask.controller;
 import com.projetofinal.ninjatask.dto.PaginaDTO;
 import com.projetofinal.ninjatask.dto.RelatorioUsuariosCadernosDTO;
 import com.projetofinal.ninjatask.dto.UsuarioDTO;
+import com.projetofinal.ninjatask.dto.UsuarioDTOSemSenha;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.repository.UsuarioRepository;
@@ -79,9 +80,17 @@ public class UsuarioController {
             @ApiResponse(responseCode = "200", description = "Deu certo"),
             @ApiResponse(responseCode = "500", description = "deu erro no servidor")
     })
+    //GET ANTIGO QUE RETORNA A SENHA JUNTO
+//    @GetMapping
+//    public List<UsuarioDTO> retornarTodosUsuarios() throws SQLException {
+//        List<UsuarioDTO> lista = usuarioService.listar();
+//        return lista;
+//    }
+
+    //GET DO MODULO 6 QUE NAO RETORNA A SENHA
     @GetMapping
-    public List<UsuarioDTO> retornarTodosUsuarios() throws SQLException {
-        List<UsuarioDTO> lista = usuarioService.listar();
+    public List<UsuarioDTOSemSenha> retornarTodosUsuarios() throws SQLException {
+        List<UsuarioDTOSemSenha> lista = usuarioService.listar();
         return lista;
     }
 

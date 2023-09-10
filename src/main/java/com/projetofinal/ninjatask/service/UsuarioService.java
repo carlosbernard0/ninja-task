@@ -1,9 +1,8 @@
 package com.projetofinal.ninjatask.service;
 
-import com.projetofinal.ninjatask.dto.AutenticacaoDTO;
-import com.projetofinal.ninjatask.dto.PaginaDTO;
-import com.projetofinal.ninjatask.dto.RelatorioUsuariosCadernosDTO;
-import com.projetofinal.ninjatask.dto.UsuarioDTO;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+import com.projetofinal.ninjatask.dto.*;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.UsuarioMapper;
@@ -168,9 +167,14 @@ public class UsuarioService {
         }
         return true;
     }
-    public List<UsuarioDTO> listar() throws SQLException {
+//    public List<UsuarioDTO> listar() throws SQLException {
+//        List<UsuarioEntity> listaUsuario = usuarioRepository.findAll();
+//        List <UsuarioDTO> dtos = listaUsuario.stream().map(entity -> usuarioMapper.toDTO(entity)).toList();
+//        return dtos;
+//    }
+    public List<UsuarioDTOSemSenha> listar() throws SQLException {
         List<UsuarioEntity> listaUsuario = usuarioRepository.findAll();
-        List <UsuarioDTO> dtos = listaUsuario.stream().map(entity -> usuarioMapper.toDTO(entity)).toList();
+        List <UsuarioDTOSemSenha> dtos = listaUsuario.stream().map(entity -> usuarioMapper.toDTOSemSenha(entity)).toList();
         return dtos;
     }
 
