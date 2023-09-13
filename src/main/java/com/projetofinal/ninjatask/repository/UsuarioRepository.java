@@ -2,6 +2,8 @@ package com.projetofinal.ninjatask.repository;
 
 import com.projetofinal.ninjatask.dto.RelatorioUsuariosCadernosDTO;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -23,4 +25,7 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity ,Integer>
             "   inner join u.cadernos c" +
             "   inner join c.tarefas t")
     List<RelatorioUsuariosCadernosDTO> buscarUsuariosCadernosETarefas();
+
+    Page<UsuarioEntity> findAllByAtivoTrue(Pageable paginacao);
+
 }

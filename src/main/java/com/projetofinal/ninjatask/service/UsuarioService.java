@@ -1,13 +1,10 @@
 package com.projetofinal.ninjatask.service;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import com.projetofinal.ninjatask.dto.*;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.UsuarioMapper;
 import com.projetofinal.ninjatask.repository.UsuarioRepository;
-import com.projetofinal.ninjatask.testesenha.CriadorDeSenhas;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -181,6 +178,13 @@ public class UsuarioService {
     public void excluirUsuario(Integer idUsuario){
         usuarioRepository.deleteById(idUsuario);
     }
+
+    public void destivarUsuario(Integer idUsuario){
+        UsuarioEntity usuario = usuarioRepository.getReferenceById(idUsuario);
+        usuario.excluir();
+    }
+
+
 
     public PaginaDTO<UsuarioDTO> listarPaginado(Integer paginaSolicitada, Integer tamanhoPorPagina){
         PageRequest pageRequest = PageRequest.of(paginaSolicitada, tamanhoPorPagina);

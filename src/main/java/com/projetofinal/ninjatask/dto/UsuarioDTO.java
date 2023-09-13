@@ -26,8 +26,6 @@ public class UsuarioDTO {
     @Schema(description = "email do usuario", example = "carlos@gmail.com")
     private String emailUsuario;
 
-//    @JsonIgnore
-//    @JsonIgnoreProperties
     @Schema(description = "senha do usuario", example = "senha")
     @NotEmpty
     private String senhaUsuario;
@@ -35,5 +33,8 @@ public class UsuarioDTO {
     @Schema(description = "data de alteração do usuario", example = "2023-07-26")
     @PastOrPresent
     private Date dataRegistro;
+
+    @Schema(description = "usuario ativo se for 1")
+    private Boolean ativo;
 
 }

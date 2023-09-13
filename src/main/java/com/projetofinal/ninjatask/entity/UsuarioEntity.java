@@ -30,6 +30,8 @@ public class UsuarioEntity implements UserDetails {
     private String senhaUsuario;
     @Column(name = "data_registro")
     private Date dataRegistro;
+    @Column(name = "ativo")
+    private Boolean ativo;
 
 
     @JsonIgnore
@@ -76,5 +78,9 @@ public class UsuarioEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void excluir() {
+        this.ativo = false;
     }
 }

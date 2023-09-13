@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -105,15 +106,21 @@ public class UsuarioController {
         return usuarioService.editarUsuario(usuario);
     }
 
-    @Operation(summary = "excluir usuario", description = "este processo exclui um usuario na base de dados")
+    @Operation(summary = "desativar usuario", description = "este processo exclui um usuario na base de dados")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Deu certo"),
             @ApiResponse(responseCode = "400", description = "Erro na validação dos dados"),
             @ApiResponse(responseCode = "500", description = "deu erro no servidor")
     })
+
+//    @DeleteMapping("/{id_usuario}")
+//    public void removerUsuario(@PathVariable("id_usuario") Integer id){
+//         usuarioService.excluirUsuario(id);
+//    }
+
     @DeleteMapping("/{id_usuario}")
-    public void removerUsuario(@PathVariable("id_usuario") Integer id){
-         usuarioService.excluirUsuario(id);
+    public void desativarUsuario(@PathVariable("id_usuario") Integer id){
+        usuarioService.destivarUsuario(id);
     }
 
     // FAZENDO COM O Service A PAGINAÇÃO

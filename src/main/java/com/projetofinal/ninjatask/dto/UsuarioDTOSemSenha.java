@@ -26,4 +26,8 @@ public class UsuarioDTOSemSenha {
     @PastOrPresent
     private Date dataRegistro;
 
+    @Schema(description = "usuario ativo se for 1")
+    private Boolean ativo;
+
+
 }
