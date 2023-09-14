@@ -26,6 +26,6 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity ,Integer>
             "   inner join c.tarefas t")
     List<RelatorioUsuariosCadernosDTO> buscarUsuariosCadernosETarefas();
 
-    Page<UsuarioEntity> findAllByAtivoTrue(Pageable paginacao);
+//    Page<UsuarioEntity> findAllByAtivoTrue(Pageable paginacao);
 
 }

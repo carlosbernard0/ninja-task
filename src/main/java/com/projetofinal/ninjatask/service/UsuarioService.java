@@ -181,7 +181,12 @@ public class UsuarioService {
 
     public void destivarUsuario(Integer idUsuario){
         UsuarioEntity usuario = usuarioRepository.getReferenceById(idUsuario);
-        usuario.excluir();
+        usuario.setAtivo(false);
+        usuarioRepository.save(usuario);
+
+//        UsuarioDTOSemSenha usuarioDTOSemSenha = usuarioMapper.toDTOSemSenha(usuario);
+//        usuarioDTOSemSenha.setAtivo(false);
+
     }
 
 
