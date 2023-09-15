@@ -132,10 +132,17 @@ public class UsuarioService {
         String senha = usuarioEntityConvertido.getSenhaUsuario();
         String senhaCriptografada = converterSenha(senha);
         usuarioEntityConvertido.setSenhaUsuario(senhaCriptografada);
+
+
+
         UsuarioEntity usuarioEntitySalvo = usuarioRepository.save(usuarioEntityConvertido);
         //converter entity para dto
         UsuarioDTO usuarioRetornado = usuarioMapper.toDTO(usuarioEntitySalvo);
         return usuarioRetornado;
+    }
+
+    public void cargoAutomatico(UsuarioEntity usuario){
+        usuario.getIdUsuario();
     }
 
     public UsuarioDTO editarUsuario(UsuarioDTO usuario) throws BusinessException{
