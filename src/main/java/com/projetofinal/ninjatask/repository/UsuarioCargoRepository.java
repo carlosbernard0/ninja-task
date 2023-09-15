@@ -1,7 +1,10 @@
 package com.projetofinal.ninjatask.repository;
 
 import com.projetofinal.ninjatask.entity.CargoEntity;
+import com.projetofinal.ninjatask.entity.UsuarioCargoEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-//public interface CargoRepository extends JpaRepository<CargoEntity, Integer> {
-//}
+@Repository
+public interface UsuarioCargoRepository extends JpaRepository<UsuarioCargoEntity, Integer> {
+}

@@ -1,9 +1,12 @@
 package com.projetofinal.ninjatask.service;
 
 import com.projetofinal.ninjatask.dto.*;
+import com.projetofinal.ninjatask.entity.CargoEntity;
+import com.projetofinal.ninjatask.entity.UsuarioCargoEntity;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.UsuarioMapper;
+import com.projetofinal.ninjatask.repository.UsuarioCargoRepository;
 import com.projetofinal.ninjatask.repository.UsuarioRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -23,19 +26,22 @@ import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
+    private final UsuarioCargoRepository usuarioCargoRepository;
     private final AuthenticationManager authenticationManager;
     private final UsuarioMapper usuarioMapper;
 
 
     public UsuarioService(@Lazy UsuarioRepository usuarioRepository,
-                          @Lazy AuthenticationManager authenticationManager, UsuarioMapper usuarioMapper){
+                          UsuarioCargoRepository usuarioCargoRepository, @Lazy AuthenticationManager authenticationManager, UsuarioMapper usuarioMapper){
         this.usuarioRepository= usuarioRepository;
+        this.usuarioCargoRepository = usuarioCargoRepository;
         this.authenticationManager = authenticationManager;
         this.usuarioMapper = usuarioMapper;
     }
@@ -128,22 +134,39 @@ public class UsuarioService {
         UsuarioEntity usuarioEntityConvertido = usuarioMapper.toEntity(usuario);
         // Verificar Existência E-mail
         validarEmailExistente(usuario.getEmailUsuario());
-                //Converter Senha
+        //Converter Senha
         String senha = usuarioEntityConvertido.getSenhaUsuario();
         String senhaCriptografada = converterSenha(senha);
         usuarioEntityConvertido.setSenhaUsuario(senhaCriptografada);
-
-
-
         UsuarioEntity usuarioEntitySalvo = usuarioRepository.save(usuarioEntityConvertido);
-        //converter entity para dto
+
+        // Inicialize a lista de cargos se for nula
+        if (usuarioEntitySalvo.getCargos() == null) {
+            usuarioEntitySalvo.setCargos(new HashSet<>());
+        }
+
+        // Criar uma instância do CargoEntity com o ID do cargo igual a 3
+        CargoEntity cargo = new CargoEntity();
+        cargo.setIdCargo(3); // Certifique-se de que a entidade CargoEntity tenha um setter para o ID do cargo
+
+        // Adicionar o cargo à lista de cargos do usuário
+        usuarioEntitySalvo.getCargos().add(cargo);
+
+        // Atualizar o usuário para salvar a relação com o cargo
+        usuarioEntitySalvo = usuarioRepository.save(usuarioEntitySalvo);
+
+        // Converter Entity para DTO
         UsuarioDTO usuarioRetornado = usuarioMapper.toDTO(usuarioEntitySalvo);
         return usuarioRetornado;
     }
 
-    public void cargoAutomatico(UsuarioEntity usuario){
-        usuario.getIdUsuario();
-    }
+//    public UsuarioCargoEntity cargoAutomatico(UsuarioEntity usuarioEntitySalvo){
+//        UsuarioCargoEntity usuarioCargoEntity = null;
+//        usuarioCargoEntity.setIdUsuario(usuarioEntitySalvo.getIdUsuario());
+//        usuarioCargoEntity.setIdCargo(String.valueOf(3));
+//        usuarioCargoRepository.save(usuarioCargoEntity);
+//        return usuarioCargoEntity;
+//    }
 
     public UsuarioDTO editarUsuario(UsuarioDTO usuario) throws BusinessException{
         validarUsuario(usuario);
