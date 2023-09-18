@@ -202,6 +202,8 @@ public class UsuarioService {
     public List<UsuarioDTOSemSenha> listar() throws SQLException {
         List<UsuarioEntity> listaUsuario = usuarioRepository.findAll();
         List <UsuarioDTOSemSenha> dtos = listaUsuario.stream().map(entity -> usuarioMapper.toDTOSemSenha(entity)).toList();
+
+
         return dtos;
     }
 
