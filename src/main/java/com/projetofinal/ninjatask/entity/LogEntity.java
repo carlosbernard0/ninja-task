@@ -16,8 +16,5 @@ public class LogEntity {
     private String id;
     private Integer idUsuario;
     private String nomeUsuario;
-    private String acao;
-    private Date timestamp;
-
-
+    private Date dataDeLogin;
 }

@@ -36,7 +36,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/usuario/**").hasAnyRole("DEV","CLIENTE") //ROLE_DEV
                         .requestMatchers("/caderno/**").hasAnyRole("DEV","CLIENTE") //ROLE_DEV
                         .requestMatchers("/tarefa/**").hasAnyRole("CLIENTE","DEV") //ROLE_DEV
-                        .requestMatchers("/historico/**").permitAll()
+                        .requestMatchers("/Controle de Logins/**").hasRole("DEV")
                 .anyRequest().authenticated()); //Só Acessa se tiver autenticado
         //authz.anyRequest().permitAll()); //Todos EndPoints permitidos
 

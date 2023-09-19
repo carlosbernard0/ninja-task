@@ -5,6 +5,7 @@ import com.projetofinal.ninjatask.entity.CargoEntity;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.UsuarioMapper;
+import com.projetofinal.ninjatask.repository.LogRepository;
 import com.projetofinal.ninjatask.repository.UsuarioCargoRepository;
 import com.projetofinal.ninjatask.repository.UsuarioRepository;
 import io.jsonwebtoken.Claims;
@@ -31,14 +32,16 @@ import java.util.Optional;
 
 @Service
 public class UsuarioService {
+    private final LogService logService;
     private final UsuarioRepository usuarioRepository;
     private final UsuarioCargoRepository usuarioCargoRepository;
     private final AuthenticationManager authenticationManager;
     private final UsuarioMapper usuarioMapper;
 
 
-    public UsuarioService(@Lazy UsuarioRepository usuarioRepository,
+    public UsuarioService(LogService logService, @Lazy UsuarioRepository usuarioRepository,
                           UsuarioCargoRepository usuarioCargoRepository, @Lazy AuthenticationManager authenticationManager, UsuarioMapper usuarioMapper){
+        this.logService = logService;
         this.usuarioRepository= usuarioRepository;
         this.usuarioCargoRepository = usuarioCargoRepository;
         this.authenticationManager = authenticationManager;
@@ -82,6 +85,9 @@ public class UsuarioService {
                     .signWith(SignatureAlgorithm.HS256, secret)
                     .compact();
 
+            //Inserir Log de usuários
+              logService.registrarLogin(usuarioEntity);
+            //--------------------------------------
             return jwtGerado;
         }catch (AuthenticationException ex){
             throw new BusinessException("E-mail e Senha Inválidos");

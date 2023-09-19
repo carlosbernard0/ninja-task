@@ -18,10 +18,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/historico")
+@RequestMapping("/Controle de Logins")
 @RequiredArgsConstructor
 public class LogController {
-    private final LogRepository logRepository;
     private final LogService logService;
 
 
