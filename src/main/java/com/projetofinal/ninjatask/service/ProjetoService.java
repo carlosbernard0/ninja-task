@@ -23,9 +23,11 @@ public class ProjetoService {
         return projetoDTO1;
     }
 
-    public List<ProjetoDTO> listar() {
-        List<ProjetoEntity> listaEntidade = projetoRepository.findAll();
+    public List<ProjetoDTO> listar(String nomeUsuario) {
+        List<ProjetoEntity> listaEntidade = projetoRepository.findByNomeUsuario(nomeUsuario);
         List<ProjetoDTO> listaDTO = listaEntidade.stream().map(entity ->projetoMapper.toDTO(entity)).toList();
         return listaDTO;
     }
+
+//    public
 }

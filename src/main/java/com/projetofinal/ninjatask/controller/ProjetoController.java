@@ -20,7 +20,12 @@ public class ProjetoController {
     }
 
     @GetMapping
-    public List<ProjetoDTO> listarProjetos(){
-        return projetoService.listar();
+    public List<ProjetoDTO> listarProjetos(String nomeUsuario){
+        return projetoService.listar(nomeUsuario);
     }
+
+//    @DeleteMapping
+//    public void delete(Integer Id){
+//        projetoService
+//    }
 }
