@@ -20,14 +20,13 @@ public class ProjetoService {
 
 
 
-    public ProjetoDTO criarProjeto(ProjetoDTO projetoDTO){
-        ProjetoEntity projetoEntity = new ProjetoEntity();
+    public ProjetoDTO criarProjeto(ProjetoDTO projeto){
         String nomeU = usuarioService.findByIdUsuario();
-        projetoEntity=projetoMapper.toEntity(projetoDTO);
+        ProjetoEntity projetoEntity =projetoMapper.toEntity(projeto);
         projetoEntity.setNomeUsuario(nomeU);
         ProjetoEntity entitySalvo = projetoRepository.save(projetoEntity);
-        ProjetoDTO  projetoDTO1 = projetoMapper.toDTO(entitySalvo);
-        return projetoDTO1;
+        ProjetoDTO  projetoDTO = projetoMapper.toDTO(entitySalvo);
+        return projetoDTO;
     }
 
 
