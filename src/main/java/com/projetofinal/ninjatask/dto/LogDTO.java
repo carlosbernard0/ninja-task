@@ -6,11 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
 public class LogDTO {
     private String id;
-    private int idUsuario;
+    private Integer idUsuario;
     private String nomeUsuario;
     private String acao;
     private Date timestamp;

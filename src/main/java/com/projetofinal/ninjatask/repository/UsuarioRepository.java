@@ -15,6 +15,7 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<UsuarioEntity ,Integer> {
     Optional<UsuarioEntity> findByEmailUsuarioAndSenhaUsuario(String emailUsuario, String senhaUsuario);
     Optional<UsuarioEntity> findByEmailUsuario(String emailUsuario);
+
     @Query("    Select new com.projetofinal.ninjatask.dto.RelatorioUsuariosCadernosDTO(u.idUsuario," +
             "           u.nomeUsuario," +
             "           c.idCaderno," +

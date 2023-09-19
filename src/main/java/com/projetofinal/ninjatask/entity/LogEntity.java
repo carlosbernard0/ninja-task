@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -13,8 +14,10 @@ import java.util.Date;
 public class LogEntity {
     @Id
     private String id;
-    private int idUsuario;
+    private Integer idUsuario;
     private String nomeUsuario;
     private String acao;
     private Date timestamp;
+
+
 }
