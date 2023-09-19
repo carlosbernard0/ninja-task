@@ -24,8 +24,13 @@ public class ProjetoController {
         return projetoService.listar(nomeUsuario);
     }
 
-//    @DeleteMapping
-//    public void delete(Integer Id){
-//        projetoService
-//    }
+    @DeleteMapping
+    public void delete(String id){
+        projetoService.excluir(id);
+    }
+
+    @PutMapping
+    public ProjetoDTO editarProjeto(@RequestBody ProjetoDTO projeto){
+        return projetoService.criarProjeto(projeto);
+    }
 }
