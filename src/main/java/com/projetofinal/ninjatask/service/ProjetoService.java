@@ -38,7 +38,7 @@ public class ProjetoService {
     }
     public void excluir(String id) {
         projetoRepository.deleteById(id);
-        
+
     }
 
 }

@@ -33,7 +33,7 @@ public class ProjetoController {
     public ProjetoDTO editarProjeto(@RequestBody ProjetoDTO projetoDTO){
         return projetoService.criarProjeto(projetoDTO);
     }
-    
-    
-    
+
+
+
 }
