@@ -29,5 +29,7 @@ public class ProjetoService {
         return listaDTO;
     }
 
-//    public
+    public void excluir(String id) {
+        projetoRepository.deleteById(id);
+    }
 }
