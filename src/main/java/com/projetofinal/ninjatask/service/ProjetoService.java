@@ -19,7 +19,7 @@ public class ProjetoService {
     public ProjetoDTO criarProjeto(ProjetoDTO projetoDTO){
         ProjetoEntity projetoEntity =projetoMapper.toEntity(projetoDTO);
         ProjetoEntity entitySalvo = projetoRepository.save(projetoEntity);
-        ProjetoDTO projetoDTO1 = projetoMapper.toDTO(entitySalvo);
+        ProjetoDTO  projetoDTO1 = projetoMapper.toDTO(entitySalvo);
         return projetoDTO1;
     }
 
@@ -29,7 +29,8 @@ public class ProjetoService {
         return listaDTO;
     }
 
-    public void excluir(String id) {
-        projetoRepository.deleteById(id);
+
+    public void excluir() {
+        
     }
 }
