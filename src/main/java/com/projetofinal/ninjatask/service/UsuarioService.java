@@ -5,7 +5,6 @@ import com.projetofinal.ninjatask.entity.CargoEntity;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.UsuarioMapper;
-import com.projetofinal.ninjatask.repository.LogRepository;
 import com.projetofinal.ninjatask.repository.UsuarioCargoRepository;
 import com.projetofinal.ninjatask.repository.UsuarioRepository;
 import io.jsonwebtoken.Claims;
@@ -38,6 +37,7 @@ public class UsuarioService {
     private final AuthenticationManager authenticationManager;
     private final UsuarioMapper usuarioMapper;
 
+    public Integer idLogado;
 
     public UsuarioService(LogService logService, @Lazy UsuarioRepository usuarioRepository,
                           UsuarioCargoRepository usuarioCargoRepository, @Lazy AuthenticationManager authenticationManager, UsuarioMapper usuarioMapper){
@@ -84,7 +84,8 @@ public class UsuarioService {
                     .setExpiration(dataExpiracao)
                     .signWith(SignatureAlgorithm.HS256, secret)
                     .compact();
-
+            //Inserir nome no Projeto
+              idLogado = usuarioEntity.getIdUsuario();
             //Inserir Log de usuários
               logService.registrarLogin(usuarioEntity);
             //--------------------------------------
@@ -239,6 +240,12 @@ public class UsuarioService {
     public Optional<UsuarioEntity> findByEmailUsuario(String emailUsuario){
         return usuarioRepository.findByEmailUsuario(emailUsuario);
     }
+
+    public String findByIdUsuario(){
+        Optional<UsuarioEntity> usuario =usuarioRepository.findByIdUsuario(idLogado);
+        return usuario.get().getNomeUsuario();
+    }
+
 
     public Integer recuperarIdUsuarioLogado(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

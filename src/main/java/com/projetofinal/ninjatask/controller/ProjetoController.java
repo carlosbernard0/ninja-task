@@ -25,8 +25,13 @@ public class ProjetoController {
     }
 
     @DeleteMapping
-    public void delete(Integer Id){
-        projetoService.excluir();
+    public void delete(String id){
+        projetoService.excluir(id);
+    }
+
+    @PutMapping
+    public ProjetoDTO editarProjeto(@RequestBody ProjetoDTO projetoDTO){
+        return projetoService.criarProjeto(projetoDTO);
     }
     
     

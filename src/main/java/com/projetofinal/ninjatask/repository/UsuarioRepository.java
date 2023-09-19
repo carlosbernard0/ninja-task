@@ -16,6 +16,8 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity ,Integer>
     Optional<UsuarioEntity> findByEmailUsuarioAndSenhaUsuario(String emailUsuario, String senhaUsuario);
     Optional<UsuarioEntity> findByEmailUsuario(String emailUsuario);
 
+    Optional<UsuarioEntity> findByIdUsuario(Integer idLogado);
+
     @Query("    Select new com.projetofinal.ninjatask.dto.RelatorioUsuariosCadernosDTO(u.idUsuario," +
             "           u.nomeUsuario," +
             "           c.idCaderno," +
