@@ -8,10 +8,7 @@ import com.projetofinal.ninjatask.repository.UsuarioRepository;
 import com.projetofinal.ninjatask.service.LogService;
 import com.projetofinal.ninjatask.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -25,9 +22,13 @@ public class LogController {
 
 
     @GetMapping
-    public List<LogDTO> retornarHistorico() throws SQLException {
-        List<LogDTO> lista = logService.historico();
+    public List<LogDTO> retornarLog() throws SQLException {
+        List<LogDTO> lista = logService.retornarLog();
         return lista;
+    }
+    @DeleteMapping
+    public void deletarTodos(){
+        logService.deletarTodos();
     }
 
 }

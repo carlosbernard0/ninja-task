@@ -22,10 +22,10 @@ public class LogService {
     private final LogMapper logMapper;
 
     UsuarioEntity usuarioEntity = new UsuarioEntity();
-    public List<LogDTO> historico()throws SQLException {
-        List<LogEntity> historico = logRepository.findAll();
-        List <LogDTO> historicoDto = historico.stream().map(entity -> logMapper.toDto(entity)).toList();
-        return historicoDto;
+    public List<LogDTO> retornarLog()throws SQLException {
+        List<LogEntity> log = logRepository.findAll();
+        List <LogDTO> logDTO = log.stream().map(entity -> logMapper.toDto(entity)).toList();
+        return logDTO;
     }
     public void registrarLogin(UsuarioEntity usuarioEntity){
         LogEntity logEntity = new LogEntity();
@@ -34,5 +34,8 @@ public class LogService {
         Date dataN = new Date();
         logEntity.setDataDeLogin(dataN);
         logRepository.save(logEntity);
+    }
+    public void deletarTodos(){
+        logRepository.deleteAll();
     }
 }
