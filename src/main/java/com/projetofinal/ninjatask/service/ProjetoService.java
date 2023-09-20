@@ -43,9 +43,8 @@ public class ProjetoService {
         projetoRepository.deleteById(id);
         
     }
-
-    public List<ProjetosPorTipoDTO> listarPorTipoAgregado(String nome) {
-        List<ProjetosPorTipoEntity> listaEntidade = projetoRepository.findProjetosPorTipoAgregados(nome);
+    public List<ProjetosPorTipoDTO> listarPorTipoAgregado() {
+        List<ProjetosPorTipoEntity> listaEntidade = projetoRepository.findProjetosPorTipoAgregados();
         List<ProjetosPorTipoDTO> listaDTO = listaEntidade.stream().map(entity ->projetosPorTipoMapper.toDTO(entity)).toList();
         return listaDTO;
     }
