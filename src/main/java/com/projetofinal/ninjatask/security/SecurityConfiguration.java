@@ -33,9 +33,10 @@ public class SecurityConfiguration {
                         //regras especificas acima das regras gerais
                         .requestMatchers(HttpMethod.DELETE, "/usuario/**").hasRole("DEV")// apenas o cargo DEV podera fazer DELETE no usuario
                         .requestMatchers(HttpMethod.POST, "/usuario/**").hasRole("DEV")// apenas o cargo DEV podera fazer DELETE no usuario
-                        .requestMatchers("/usuario/**").hasAnyRole("DEV","CLIENTE") //ROLE_DEV
-                        .requestMatchers("/caderno/**").hasAnyRole("DEV","CLIENTE") //ROLE_DEV
-                        .requestMatchers("/tarefa/**").hasAnyRole("CLIENTE","DEV") //ROLE_DEV
+                        .requestMatchers("/usuario/**").hasAnyRole("DEV","ADM") //ROLE_DEV
+                        .requestMatchers("/caderno/**").hasAnyRole("DEV","ADM", "USUARIO")
+                        .requestMatchers("/tarefa/**").hasAnyRole("DEV","ADM","USUARIO")
+                        .requestMatchers("/projeto/**").hasAnyRole("DEV", "ADM")
                         .requestMatchers("/Controle de Logins/**").hasRole("DEV")
                 .anyRequest().authenticated()); //Só Acessa se tiver autenticado
         //authz.anyRequest().permitAll()); //Todos EndPoints permitidos
