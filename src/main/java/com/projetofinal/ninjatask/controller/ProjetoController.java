@@ -1,7 +1,9 @@
 package com.projetofinal.ninjatask.controller;
 
 import com.projetofinal.ninjatask.dto.ProjetoDTO;
+import com.projetofinal.ninjatask.dto.ProjetosPorTipoDTO;
 import com.projetofinal.ninjatask.entity.ProjetoEntity;
+import com.projetofinal.ninjatask.entity.ProjetosPorTipoEntity;
 import com.projetofinal.ninjatask.service.ProjetoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +35,11 @@ public class ProjetoController {
     public ProjetoDTO editarProjeto(@RequestBody ProjetoDTO projetoDTO){
         return projetoService.criarProjeto(projetoDTO);
     }
-    
+
+    @GetMapping("/listarPorTipoAgregado")
+    public List<ProjetosPorTipoDTO> listarPorTipoAgregado(String nome){
+        return projetoService.listarPorTipoAgregado(nome);
+    }
     
     
 }
