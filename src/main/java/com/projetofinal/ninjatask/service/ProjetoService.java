@@ -1,8 +1,11 @@
 package com.projetofinal.ninjatask.service;
 
 import com.projetofinal.ninjatask.dto.ProjetoDTO;
+import com.projetofinal.ninjatask.dto.ProjetosPorTipoDTO;
 import com.projetofinal.ninjatask.entity.ProjetoEntity;
+import com.projetofinal.ninjatask.entity.ProjetosPorTipoEntity;
 import com.projetofinal.ninjatask.mapper.ProjetoMapper;
+import com.projetofinal.ninjatask.mapper.ProjetosPorTipoMapper;
 import com.projetofinal.ninjatask.repository.ProjetoRepository;
 import com.projetofinal.ninjatask.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
@@ -17,17 +20,17 @@ public class ProjetoService {
     private final ProjetoMapper projetoMapper;
     private final ProjetoRepository projetoRepository;
     private final UsuarioService usuarioService;
+    private final ProjetosPorTipoMapper projetosPorTipoMapper;
 
 
 
-    public ProjetoDTO criarProjeto(ProjetoDTO projetoDTO){
-        ProjetoEntity projetoEntity = new ProjetoEntity();
+    public ProjetoDTO criarProjeto(ProjetoDTO projeto){
         String nomeU = usuarioService.findByIdUsuario();
-        projetoEntity=projetoMapper.toEntity(projetoDTO);
+        ProjetoEntity projetoEntity =projetoMapper.toEntity(projeto);
         projetoEntity.setNomeUsuario(nomeU);
         ProjetoEntity entitySalvo = projetoRepository.save(projetoEntity);
-        ProjetoDTO  projetoDTO1 = projetoMapper.toDTO(entitySalvo);
-        return projetoDTO1;
+        ProjetoDTO  projetoDTO = projetoMapper.toDTO(entitySalvo);
+        return projetoDTO;
     }
 
 
@@ -38,7 +41,13 @@ public class ProjetoService {
     }
     public void excluir(String id) {
         projetoRepository.deleteById(id);
+        
+    }
 
+    public List<ProjetosPorTipoDTO> listarPorTipoAgregado(String nome) {
+        List<ProjetosPorTipoEntity> listaEntidade = projetoRepository.findProjetosPorTipoAgregados(nome);
+        List<ProjetosPorTipoDTO> listaDTO = listaEntidade.stream().map(entity ->projetosPorTipoMapper.toDTO(entity)).toList();
+        return listaDTO;
     }
 
 }
