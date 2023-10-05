@@ -14,7 +14,6 @@ public interface ProjetoRepository extends MongoRepository<ProjetoEntity, String
 
 
     @Aggregation(pipeline = {
-//            "{$match: {nomeProjeto: /.*?0.*/i}}",
             "{$group: {'_id': '$tipoProjeto', contagem: {$sum: 1}}}",
             "{$project: {'tipo': '$_id', 'quantidade': '$contagem'}}",
             "{$sort: {'tipo': 1}}"

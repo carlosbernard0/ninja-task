@@ -14,7 +14,7 @@ import java.util.Date;
 public class ProjetoEntity {
     @Id
     private String id;
-    private String nomeUsuario; //entidade usuario
+    private String nomeUsuario;
     private String nomeProjeto;
     private String descricao;
     private TipoProjeto tipoProjeto;

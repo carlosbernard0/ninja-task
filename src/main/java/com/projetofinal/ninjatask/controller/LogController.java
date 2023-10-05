@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/Controle de Logins")
+@RequestMapping("/controle-de-logins")
 @RequiredArgsConstructor
 public class LogController {
     private final LogService logService;

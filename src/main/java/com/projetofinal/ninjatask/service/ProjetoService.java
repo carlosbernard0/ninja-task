@@ -10,12 +10,13 @@ import com.projetofinal.ninjatask.repository.ProjetoRepository;
 import com.projetofinal.ninjatask.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProjetoService {
     private final ProjetoMapper projetoMapper;
     private final ProjetoRepository projetoRepository;
