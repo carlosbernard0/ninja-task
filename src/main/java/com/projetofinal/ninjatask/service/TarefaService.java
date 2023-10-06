@@ -2,6 +2,7 @@ package com.projetofinal.ninjatask.service;
 
 import com.projetofinal.ninjatask.dto.PaginaDTO;
 import com.projetofinal.ninjatask.dto.TarefaDTO;
+import com.projetofinal.ninjatask.dto.UsuarioDTO;
 import com.projetofinal.ninjatask.entity.TarefaEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.TarefaMapper;
@@ -23,7 +24,8 @@ public class TarefaService {
 
 
     public TarefaDTO salvarTarefa(TarefaDTO dto) throws BusinessException {
-        usuarioService.validarIdLogado(dto.getUsuario().getIdUsuario());
+        UsuarioDTO usuarioDTO = usuarioService.validarIdLogado();
+        dto.setUsuario(usuarioDTO);
         //converter para entity
         TarefaEntity entity = tarefaMapper.toEntity(dto);
 

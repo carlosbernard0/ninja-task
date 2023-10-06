@@ -201,7 +201,7 @@ public class UsuarioService {
         }
         return true;
     }
-    public UsuarioDTO validarIdLogado(Integer idLogado) throws BusinessException {
+    public UsuarioDTO validarIdLogado() throws BusinessException {
         Optional<UsuarioEntity> usuarioOptional = usuarioRepository.findById(idLogado);
         if (!usuarioOptional.isPresent()) {
             throw new BusinessException("ID inválido, usuário inexistente!");
@@ -217,9 +217,6 @@ public class UsuarioService {
     public List<UsuarioDTOSemSenha> listar() throws SQLException {
         List<UsuarioEntity> listaUsuario = usuarioRepository.findAll();
         List <UsuarioDTOSemSenha> dtos = listaUsuario.stream().map(entity -> usuarioMapper.toDTOSemSenha(entity)).toList();
-
-
-
         return dtos;
     }
 
