@@ -14,5 +14,5 @@ public class TarefaDTO {
     @Schema(description = "status da tarefa", example = "pendente")
     private String status;
 
-    private CadernoDTO caderno;
+    private UsuarioDTO usuario;
 }

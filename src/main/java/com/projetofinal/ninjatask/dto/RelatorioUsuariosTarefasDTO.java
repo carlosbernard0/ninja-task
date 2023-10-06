@@ -7,11 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RelatorioUsuariosCadernosDTO {
+public class RelatorioUsuariosTarefasDTO {
     private Integer idUsuario;
     private String nomeUsuario;
-    private Integer idCaderno;
-    private String nomeCaderno;
     private Integer idTarefa;
     private String nome;
 }

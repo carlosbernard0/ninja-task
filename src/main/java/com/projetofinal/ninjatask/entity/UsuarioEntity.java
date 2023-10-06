@@ -36,7 +36,7 @@ public class UsuarioEntity implements UserDetails {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-    private Set<CadernoEntity> cadernos;
+    private Set<TarefaEntity> tarefas;
 
 
     @ManyToMany

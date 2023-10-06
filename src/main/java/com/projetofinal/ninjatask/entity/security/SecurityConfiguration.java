@@ -1,4 +1,4 @@
-package com.projetofinal.ninjatask.security;
+package com.projetofinal.ninjatask.entity.security;
 
 import com.projetofinal.ninjatask.service.UsuarioService;
 import lombok.RequiredArgsConstructor;

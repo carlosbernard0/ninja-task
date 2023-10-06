@@ -24,8 +24,8 @@ public class TarefaEntity {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_caderno", referencedColumnName = "id_caderno")
-    private CadernoEntity caderno;
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+    private UsuarioEntity usuario;
 
 
 }

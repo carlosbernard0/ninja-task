@@ -84,11 +84,12 @@ public class UsuarioService {
                     .setExpiration(dataExpiracao)
                     .signWith(SignatureAlgorithm.HS256, secret)
                     .compact();
+
             //Inserir nome no Projeto
               idLogado = usuarioEntity.getIdUsuario();
             //Inserir Log de usuários
               logService.registrarLogin(usuarioEntity);
-            //--------------------------------------
+            //-------------------------------------------
             return jwtGerado;
         }catch (AuthenticationException ex){
             throw new BusinessException("E-mail e Senha Inválidos");
@@ -200,7 +201,19 @@ public class UsuarioService {
         }
         return true;
     }
+    public UsuarioDTO validarIdLogado(Integer idLogado) throws BusinessException {
+        Optional<UsuarioEntity> usuarioOptional = usuarioRepository.findById(idLogado);
+        if (!usuarioOptional.isPresent()) {
+            throw new BusinessException("ID inválido, usuário inexistente!");
+        }
+        UsuarioEntity usuarioEntity = usuarioOptional.get();
+        UsuarioDTO usuarioDTO = usuarioMapper.toDTO(usuarioEntity);
+        return usuarioDTO;
+    }
 
+    public Integer retornarIdLogado(){
+        return idLogado;
+    }
     public List<UsuarioDTOSemSenha> listar() throws SQLException {
         List<UsuarioEntity> listaUsuario = usuarioRepository.findAll();
         List <UsuarioDTOSemSenha> dtos = listaUsuario.stream().map(entity -> usuarioMapper.toDTOSemSenha(entity)).toList();
@@ -233,8 +246,8 @@ public class UsuarioService {
                 paginaRecuperada.getContent().stream().map(entity-> usuarioMapper.toDTO(entity)).toList());
     }
 
-    public List<RelatorioUsuariosCadernosDTO> relatorio() {
-        return usuarioRepository.buscarUsuariosCadernosETarefas();
+    public List<RelatorioUsuariosTarefasDTO> relatorio() {
+        return usuarioRepository.buscarUsuariosETarefas();
     }
 
     public Optional<UsuarioEntity> findByEmailUsuario(String emailUsuario){

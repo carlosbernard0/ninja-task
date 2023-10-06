@@ -33,6 +33,7 @@ public class LogService {
         logEntity.setNomeUsuario(usuarioEntity.getNomeUsuario());
         Date dataN = new Date();
         logEntity.setDataDeLogin(dataN);
+
         logRepository.save(logEntity);
     }
     public void deletarTodos(){

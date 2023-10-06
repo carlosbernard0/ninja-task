@@ -1,6 +1,6 @@
 package com.projetofinal.ninjatask.repository;
 
-import com.projetofinal.ninjatask.dto.RelatorioUsuariosCadernosDTO;
+import com.projetofinal.ninjatask.dto.RelatorioUsuariosTarefasDTO;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,16 +18,13 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity ,Integer>
 
     Optional<UsuarioEntity> findByIdUsuario(Integer idLogado);
 
-    @Query("    Select new com.projetofinal.ninjatask.dto.RelatorioUsuariosCadernosDTO(u.idUsuario," +
+    @Query("    Select new com.projetofinal.ninjatask.dto.RelatorioUsuariosTarefasDTO(u.idUsuario," +
             "           u.nomeUsuario," +
-            "           c.idCaderno," +
-            "           c.nomeCaderno," +
             "           t.idTarefa," +
             "           t.nome)" +
             "   from Usuario u" +
-            "   inner join u.cadernos c" +
-            "   inner join c.tarefas t")
-    List<RelatorioUsuariosCadernosDTO> buscarUsuariosCadernosETarefas();
+            "   inner join Tarefa t")
+    List<RelatorioUsuariosTarefasDTO> buscarUsuariosETarefas();
 
 //    Page<UsuarioEntity> findAllByAtivoTrue(Pageable paginacao);
 

@@ -1,7 +1,7 @@
 package com.projetofinal.ninjatask.controller;
 
 import com.projetofinal.ninjatask.dto.PaginaDTO;
-import com.projetofinal.ninjatask.dto.RelatorioUsuariosCadernosDTO;
+import com.projetofinal.ninjatask.dto.RelatorioUsuariosTarefasDTO;
 import com.projetofinal.ninjatask.dto.UsuarioDTO;
 import com.projetofinal.ninjatask.dto.UsuarioDTOSemSenha;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
@@ -131,7 +131,7 @@ public class UsuarioController {
 
 
     @GetMapping("/relatorio")
-    public List<RelatorioUsuariosCadernosDTO> gerarRelatorio(){
+    public List<RelatorioUsuariosTarefasDTO> gerarRelatorio(){
         return usuarioService.relatorio();
 
     }
