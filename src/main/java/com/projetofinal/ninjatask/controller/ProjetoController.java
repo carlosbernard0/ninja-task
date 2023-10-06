@@ -37,8 +37,8 @@ public class ProjetoController {
     }
 
     @GetMapping("/listarPorTipoAgregado")
-    public List<ProjetosPorTipoDTO> listarPorTipoAgregado(String nome){
-        return projetoService.listarPorTipoAgregado(nome);
+    public List<ProjetosPorTipoDTO> listarPorTipoAgregado(){
+        return projetoService.listarPorTipoAgregado();
     }
     
     
