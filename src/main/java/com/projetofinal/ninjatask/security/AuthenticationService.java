@@ -1,4 +1,4 @@
-package com.projetofinal.ninjatask.entity.security;
+package com.projetofinal.ninjatask.security;
 
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.service.UsuarioService;
