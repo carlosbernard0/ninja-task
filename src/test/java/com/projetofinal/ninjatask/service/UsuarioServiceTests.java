@@ -1,6 +1,7 @@
 package com.projetofinal.ninjatask.service;
 
 import com.projetofinal.ninjatask.dto.UsuarioDTO;
+import com.projetofinal.ninjatask.dto.UsuarioDTOSemSenha;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.UsuarioMapper;
@@ -18,11 +19,15 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.util.Assert;
 import org.springframework.util.ReflectionUtils;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class UsuarioServiceTests {
@@ -41,21 +46,10 @@ public class UsuarioServiceTests {
     @Test
     public void deveTestarInserirOuAtualizarComSucesso() throws BusinessException {
         //setup
-        UsuarioDTO dto = new UsuarioDTO();
-        dto.setIdUsuario(10);
-        dto.setNomeUsuario("Henrique");
-        dto.setEmailUsuario("henrique@gmail.com");
-        dto.setSenhaUsuario("senha123");
-        dto.setDataRegistro(new Date(2023-10-07));
-        dto.setAtivo(true);
+        UsuarioDTO dto = getUsuarioDTO();
 
-        UsuarioEntity entity = new UsuarioEntity();
-        entity.setIdUsuario(10);
-        entity.setNomeUsuario("Henrique");
-        entity.setEmailUsuario("henrique@gmail.com");
-        entity.setSenhaUsuario("senha123");
-        entity.setDataRegistro(new Date(2023-10-07));
-        entity.setAtivo(true);
+
+        UsuarioEntity entity = getUsuarioEntity();
 
         //comportamentos
         when(usuarioRepository.save(any())).thenReturn(entity);
@@ -65,12 +59,76 @@ public class UsuarioServiceTests {
 
         //assert
         Assertions.assertNotNull(retorno);
-        Assertions.assertEquals(10, retorno.getIdUsuario());
+        Assertions.assertEquals(4, retorno.getIdUsuario());
         Assertions.assertEquals("Henrique", retorno.getNomeUsuario());
         Assertions.assertEquals("henrique@gmail.com", retorno.getEmailUsuario());
         Assertions.assertEquals("senha123", retorno.getSenhaUsuario());
         Assertions.assertEquals(new Date(2023-10-07), retorno.getDataRegistro());
         Assertions.assertEquals(true, retorno.getAtivo());
 
+    }
+
+    @Test
+    public void deveTestarListarComSucesso() throws SQLException {
+        //setup
+        UsuarioEntity usuarioEntity = getUsuarioEntity();
+        List<UsuarioEntity> listaEntities = List.of(usuarioEntity);
+        when(usuarioRepository.findAll()).thenReturn(listaEntities);
+
+        //act
+        List<UsuarioDTOSemSenha> lista = usuarioService.listar();
+
+        //assert
+        Assertions.assertNotNull(lista);
+        Assertions.assertEquals(1,lista.size());
+    }
+
+    @Test
+    public void deveRemoverComSucesso() throws BusinessException {
+        //setup
+        UsuarioEntity usuarioEntity = getUsuarioEntity();
+        Optional<UsuarioEntity> usuarioEntityOptional = Optional.of(usuarioEntity);
+        when(usuarioRepository.findById(anyInt())).thenReturn(usuarioEntityOptional);
+
+
+        //act
+        usuarioService.excluirUsuario(4);
+
+        //assert
+        verify(usuarioRepository, times(1)).delete(any());
+    }
+
+    @Test
+    public void deveTestarRemoverComErro(){
+        //setup
+        Optional<UsuarioEntity> usuarioEntityOptional = Optional.empty();
+        when(usuarioRepository.findById(anyInt())).thenReturn(usuarioEntityOptional);
+
+        //act
+        Assertions.assertThrows(BusinessException.class, ()-> {
+            usuarioService.excluirUsuario(4);
+        });
+
+        //assert
+    }
+
+    private static UsuarioDTO getUsuarioDTO(){
+        UsuarioDTO dto = new UsuarioDTO();
+        dto.setIdUsuario(4);
+        dto.setNomeUsuario("Henrique");
+        dto.setEmailUsuario("henrique@gmail.com");
+        dto.setDataRegistro(new Date(2023-10-07));
+        dto.setAtivo(true);
+        return dto;
+    }
+
+    private static UsuarioEntity getUsuarioEntity(){
+        UsuarioEntity entity = new UsuarioEntity();
+        entity.setIdUsuario(4);
+        entity.setNomeUsuario("Henrique");
+        entity.setEmailUsuario("henrique@gmail.com");
+        entity.setDataRegistro(new Date(2023-10-07));
+        entity.setAtivo(true);
+        return entity;
     }
 }

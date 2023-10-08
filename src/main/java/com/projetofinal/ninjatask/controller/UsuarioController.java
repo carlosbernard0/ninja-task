@@ -4,7 +4,6 @@ import com.projetofinal.ninjatask.dto.PaginaDTO;
 import com.projetofinal.ninjatask.dto.RelatorioUsuariosTarefasDTO;
 import com.projetofinal.ninjatask.dto.UsuarioDTO;
 import com.projetofinal.ninjatask.dto.UsuarioDTOSemSenha;
-import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.repository.UsuarioRepository;
 import com.projetofinal.ninjatask.service.EmailService;
@@ -17,9 +16,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -106,21 +102,20 @@ public class UsuarioController {
         return usuarioService.editarUsuario(usuario);
     }
 
-    @Operation(summary = "desativar usuario", description = "este processo exclui um usuario na base de dados")
+    @Operation(summary = "excluir usuario", description = "este processo exclui um usuario na base de dados")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Deu certo"),
             @ApiResponse(responseCode = "400", description = "Erro na validação dos dados"),
             @ApiResponse(responseCode = "500", description = "deu erro no servidor")
     })
-
-//    @DeleteMapping("/{id_usuario}")
-//    public void removerUsuario(@PathVariable("id_usuario") Integer id){
-//         usuarioService.excluirUsuario(id);
-//    }
-
     @DeleteMapping("/{id_usuario}")
+    public void removerUsuario(@PathVariable("id_usuario") Integer id) throws BusinessException {
+         usuarioService.excluirUsuario(id);
+    }
+
+    @DeleteMapping("/desativarUsuario/{id_usuario}")
     public void desativarUsuario(@PathVariable("id_usuario") Integer id){
-        usuarioService.destivarUsuario(id);
+        usuarioService.desativarUsuario(id);
     }
 
     // FAZENDO COM O Service A PAGINAÇÃO

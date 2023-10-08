@@ -220,11 +220,26 @@ public class UsuarioService {
         return dtos;
     }
 
-    public void excluirUsuario(Integer idUsuario){
-        usuarioRepository.deleteById(idUsuario);
+    public void excluirUsuario(Integer idUsuario) throws BusinessException {
+        UsuarioEntity usuario = buscarPorId(idUsuario);
+        usuarioRepository.delete(usuario);
     }
 
-    public void destivarUsuario(Integer idUsuario){
+    private UsuarioEntity buscarPorId(Integer id) throws BusinessException {
+        UsuarioEntity entity = usuarioRepository.findById(id)
+                .orElseThrow(()-> new BusinessException("Usuario nao encontrado"));
+        return entity;
+    }
+
+    private UsuarioDTO buscarPorIdDTO(Integer id) throws BusinessException {
+        try{
+            return usuarioMapper.toDTO(buscarPorId(id));
+        }catch (BusinessException e) {
+            return null;
+        }
+    }
+
+    public void desativarUsuario(Integer idUsuario){
         UsuarioEntity usuario = usuarioRepository.getReferenceById(idUsuario);
         usuario.setAtivo(false);
         usuarioRepository.save(usuario);

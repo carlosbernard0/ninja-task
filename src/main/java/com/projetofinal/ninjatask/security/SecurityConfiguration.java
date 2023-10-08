@@ -34,7 +34,6 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.DELETE, "/usuario/**").hasRole("DEV")// apenas o cargo DEV podera fazer DELETE no usuario
                         .requestMatchers(HttpMethod.POST, "/usuario/**").hasRole("DEV")// apenas o cargo DEV podera fazer DELETE no usuario
                         .requestMatchers("/usuario/**").hasAnyRole("DEV","ADM") //ROLE_DEV
-                        .requestMatchers("/caderno/**").hasAnyRole("DEV","ADM", "USUARIO")
                         .requestMatchers("/tarefa/**").hasAnyRole("DEV","ADM","USUARIO")
                         .requestMatchers("/projeto/**").hasAnyRole("DEV", "ADM")
                         .requestMatchers("/Controle de Logins/**").hasRole("DEV")
