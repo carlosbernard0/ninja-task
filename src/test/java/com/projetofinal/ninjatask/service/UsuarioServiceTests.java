@@ -116,6 +116,7 @@ public class UsuarioServiceTests {
         UsuarioDTO dto = new UsuarioDTO();
         dto.setIdUsuario(4);
         dto.setNomeUsuario("Henrique");
+        dto.setSenhaUsuario("senha123");
         dto.setEmailUsuario("henrique@gmail.com");
         dto.setDataRegistro(new Date(2023-10-07));
         dto.setAtivo(true);
@@ -126,6 +127,7 @@ public class UsuarioServiceTests {
         UsuarioEntity entity = new UsuarioEntity();
         entity.setIdUsuario(4);
         entity.setNomeUsuario("Henrique");
+        entity.setSenhaUsuario("senha123");
         entity.setEmailUsuario("henrique@gmail.com");
         entity.setDataRegistro(new Date(2023-10-07));
         entity.setAtivo(true);
