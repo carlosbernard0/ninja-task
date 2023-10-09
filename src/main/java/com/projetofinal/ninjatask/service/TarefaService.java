@@ -4,6 +4,7 @@ import com.projetofinal.ninjatask.dto.PaginaDTO;
 import com.projetofinal.ninjatask.dto.TarefaDTO;
 import com.projetofinal.ninjatask.dto.UsuarioDTO;
 import com.projetofinal.ninjatask.entity.TarefaEntity;
+import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.TarefaMapper;
 import com.projetofinal.ninjatask.repository.TarefaRepository;
@@ -22,10 +23,10 @@ public class TarefaService {
     private final TarefaRepository tarefaRepository;
     private final TarefaMapper tarefaMapper;
 
-
     public TarefaDTO salvarTarefa(TarefaDTO dto) throws BusinessException {
         UsuarioDTO usuarioDTO = usuarioService.validarIdLogado();
         dto.setUsuario(usuarioDTO);
+
         //converter para entity
         TarefaEntity entity = tarefaMapper.toEntity(dto);
 
@@ -69,8 +70,9 @@ public class TarefaService {
                 .orElseThrow(()-> new BusinessException("Mentoria não existe")); // caso colocar id: 4 vai retornar a mensagem
     }
 
-    public void excluirTarefa(Integer id){
-        tarefaRepository.deleteById(id);
+    public void excluirTarefa(Integer id) throws BusinessException {
+        TarefaEntity tarefa = buscarPorId(id);
+        tarefaRepository.delete(tarefa);
     }
 
     public PaginaDTO<TarefaDTO> listarPaginado(Integer paginaSolicitada, Integer tamanhoPorPagina){

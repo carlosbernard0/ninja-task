@@ -5,6 +5,7 @@ import com.projetofinal.ninjatask.dto.PaginaDTO;
 import com.projetofinal.ninjatask.dto.TarefaDTO;
 import com.projetofinal.ninjatask.entity.TarefaEntity;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
+import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.service.TarefaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -72,7 +73,7 @@ public class TarefaController {
             @ApiResponse(responseCode = "500", description = "deu erro no servidor")
     })
     @DeleteMapping("/{id_tarefa}")
-    public void removerTarefa(@PathVariable("id_tarefa") Integer id){
+    public void removerTarefa(@PathVariable("id_tarefa") Integer id) throws BusinessException {
         tarefaService.excluirTarefa(id);
     }
 
