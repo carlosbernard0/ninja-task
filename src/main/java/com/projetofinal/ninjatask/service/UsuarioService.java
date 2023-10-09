@@ -37,7 +37,6 @@ public class UsuarioService {
     private final AuthenticationManager authenticationManager;
     private final UsuarioMapper usuarioMapper;
 
-    public Integer idLogado;
 
     public UsuarioService(LogService logService, @Lazy UsuarioRepository usuarioRepository,
                           UsuarioCargoRepository usuarioCargoRepository, @Lazy AuthenticationManager authenticationManager, UsuarioMapper usuarioMapper){
@@ -85,8 +84,6 @@ public class UsuarioService {
                     .signWith(SignatureAlgorithm.HS256, secret)
                     .compact();
 
-            //Inserir nome no Projeto
-              idLogado = usuarioEntity.getIdUsuario();
             //Inserir Log de usuários
               logService.registrarLogin(usuarioEntity);
             //-------------------------------------------
@@ -201,8 +198,8 @@ public class UsuarioService {
         }
         return true;
     }
-    public UsuarioDTO validarIdLogado() throws BusinessException {
-        Optional<UsuarioEntity> usuarioOptional = usuarioRepository.findById(idLogado);
+    public UsuarioDTO validarIdLogado(Integer recuperarIdLogado) throws BusinessException {
+        Optional<UsuarioEntity> usuarioOptional = usuarioRepository.findById(recuperarIdLogado);
         if (!usuarioOptional.isPresent()) {
             throw new BusinessException("ID inválido, usuário inexistente!");
         }
@@ -211,9 +208,6 @@ public class UsuarioService {
         return usuarioDTO;
     }
 
-    public Integer retornarIdLogado(){
-        return idLogado;
-    }
     public List<UsuarioDTOSemSenha> listar() throws SQLException {
         List<UsuarioEntity> listaUsuario = usuarioRepository.findAll();
         List <UsuarioDTOSemSenha> dtos = listaUsuario.stream().map(entity -> usuarioMapper.toDTOSemSenha(entity)).toList();
@@ -266,8 +260,9 @@ public class UsuarioService {
         return usuarioRepository.findByEmailUsuario(emailUsuario);
     }
 
-    public String findByIdUsuario(){
-        Optional<UsuarioEntity> usuario =usuarioRepository.findByIdUsuario(idLogado);
+    public String recuperarNomeUsuarioLogado(){
+        Integer idUsuarioLogado = recuperarIdUsuarioLogado();
+        Optional<UsuarioEntity> usuario =usuarioRepository.findByIdUsuario(idUsuarioLogado);
         return usuario.get().getNomeUsuario();
     }
 

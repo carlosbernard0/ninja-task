@@ -24,7 +24,7 @@ public class TarefaService {
     private final TarefaMapper tarefaMapper;
 
     public TarefaDTO salvarTarefa(TarefaDTO dto) throws BusinessException {
-        UsuarioDTO usuarioDTO = usuarioService.validarIdLogado();
+        UsuarioDTO usuarioDTO = usuarioService.recuperarUsuarioLogado();
         dto.setUsuario(usuarioDTO);
 
         //converter para entity

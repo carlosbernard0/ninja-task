@@ -2,12 +2,13 @@ package com.projetofinal.ninjatask.service;
 
 import com.projetofinal.ninjatask.dto.TarefaDTO;
 import com.projetofinal.ninjatask.dto.UsuarioDTO;
-import com.projetofinal.ninjatask.dto.UsuarioDTOSemSenha;
 import com.projetofinal.ninjatask.entity.TarefaEntity;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.TarefaMapper;
 import com.projetofinal.ninjatask.repository.TarefaRepository;
+import lombok.Getter;
+import lombok.Setter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.sql.SQLException;
@@ -40,7 +47,10 @@ public class TarefaServiceTests {
     public void init(){
         ReflectionTestUtils.setField(tarefaService, "tarefaMapper", tarefaMapper);
     }
+
+
     @Test
+    @WithMockUser(username = "jefte@gmail.com", password = "senha123")
     public void deveTestarInserirOuAtualizarComSucesso() throws BusinessException {
         //setup
         TarefaDTO dto = getTarefaDTO();

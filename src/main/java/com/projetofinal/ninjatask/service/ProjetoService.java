@@ -26,7 +26,7 @@ public class ProjetoService {
 
 
     public ProjetoDTO criarProjeto(ProjetoDTO projeto){
-        String nomeU = usuarioService.findByIdUsuario();
+        String nomeU = usuarioService.recuperarNomeUsuarioLogado();
         ProjetoEntity projetoEntity =projetoMapper.toEntity(projeto);
         projetoEntity.setNomeUsuario(nomeU);
         ProjetoEntity entitySalvo = projetoRepository.save(projetoEntity);
