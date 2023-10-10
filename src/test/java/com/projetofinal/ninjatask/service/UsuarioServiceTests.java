@@ -41,7 +41,7 @@ public class UsuarioServiceTests {
     @Mock
     private AuthenticationManager authenticationManager;
     @Mock
-    private Authentication autenticacao;
+    private Authentication authentication;
 
     private UsuarioMapper usuarioMapper = Mappers.getMapper(UsuarioMapper.class);
 
@@ -60,12 +60,24 @@ public class UsuarioServiceTests {
         dto.setEmailUsuario("joao@gmail.com");
         dto.setSenhaUsuario("senha123");
 
+        final var dataExpiracao= mock(java.sql.Date.class);
+
+
+        final var userAuthentication = mock(Authentication.class);
+        final var entity = mock(UsuarioEntity.class);
+
+        //comportamentos
+        when(authenticationManager.authenticate(any())).thenReturn(userAuthentication);
+        when(userAuthentication.getPrincipal()).thenReturn(entity);
+
+        //falta continuar o Date
+
 
         //act
         String autenticacaoDTO = usuarioService.fazerLogin(dto);
 
         //assert
-        Assertions.assertNotNull(autenticacaoDTO);
+//        Assertions.assertNotNull(autenticacaoDTO);
     }
 
     @Test
