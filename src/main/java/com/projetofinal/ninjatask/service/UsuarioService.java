@@ -69,7 +69,6 @@ public class UsuarioService {
 
             List<String> nomeDosCargos = usuarioEntity.getCargos().stream()
                     .map(cargo -> cargo.getNome()).toList();
-
             Date dataAtual = new Date();
             Date dataExpiracao = new Date(dataAtual.getTime() + Long.parseLong(validadeJWT));
 

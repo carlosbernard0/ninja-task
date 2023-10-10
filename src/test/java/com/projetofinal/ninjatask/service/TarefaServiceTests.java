@@ -40,8 +40,6 @@ public class TarefaServiceTests {
     @Mock
     private TarefaRepository tarefaRepository;
 
-    @Autowired
-    private MockMvc mockMvc;
 
     @BeforeEach
     public void init(){
