@@ -191,6 +191,7 @@ public class UsuarioService {
         String senhaCriptografada = bCryptPasswordEncoder.encode(senha);
         return senhaCriptografada;
     }
+    //retirar --
     public boolean validarIdUsuario(Integer id) throws BusinessException {
         Optional<UsuarioEntity> usuarioOptional = usuarioRepository.findById(id);
         if (!usuarioOptional.isPresent()) {
@@ -198,6 +199,7 @@ public class UsuarioService {
         }
         return true;
     }
+    //retirar --
     public UsuarioDTO validarIdLogado(Integer recuperarIdLogado) throws BusinessException {
         Optional<UsuarioEntity> usuarioOptional = usuarioRepository.findById(recuperarIdLogado);
         if (!usuarioOptional.isPresent()) {

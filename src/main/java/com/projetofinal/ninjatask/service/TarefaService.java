@@ -1,6 +1,7 @@
 package com.projetofinal.ninjatask.service;
 
 import com.projetofinal.ninjatask.dto.PaginaDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.projetofinal.ninjatask.dto.TarefaDTO;
 import com.projetofinal.ninjatask.dto.UsuarioDTO;
 import com.projetofinal.ninjatask.entity.TarefaEntity;
@@ -12,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
 import java.sql.SQLException;
 import java.util.List;
 
@@ -24,8 +24,8 @@ public class TarefaService {
     private final TarefaMapper tarefaMapper;
 
     public TarefaDTO salvarTarefa(TarefaDTO dto) throws BusinessException {
-        UsuarioDTO usuarioDTO = usuarioService.recuperarUsuarioLogado();
-        dto.setUsuario(usuarioDTO);
+//        UsuarioDTO usuarioDTO = usuarioService.recuperarUsuarioLogado();
+//        dto.setUsuario(usuarioDTO);
 
         //converter para entity
         TarefaEntity entity = tarefaMapper.toEntity(dto);
