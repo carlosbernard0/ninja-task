@@ -46,19 +46,8 @@ public class TarefaService {
                 .map(entity -> tarefaMapper.toDto((TarefaEntity) entity))
                 .toList();
         return listaDtos;
-//        return null;
     }
 
-//    FAZER O LISTAR POR CADERNO
-//
-//    public TarefaDto listarPorCadernoDto(Integer caderno) throws SQLException {
-//        List<TarefaEntity> entity = listarPorCaderno(caderno);
-//        return tarefaMapper.toDto((TarefaEntity) entity);
-//    }
-//
-//    private List<TarefaEntity> listarPorCaderno(Integer caderno) throws SQLException {
-//        return tarefaRepository.findBycaderno(caderno);
-//    }
 
     public TarefaDTO buscarPorIdDto(Integer id) throws BusinessException{
         TarefaEntity entity = buscarPorId(id);

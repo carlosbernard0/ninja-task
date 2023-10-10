@@ -1,5 +1,6 @@
 package com.projetofinal.ninjatask.service;
 
+import com.projetofinal.ninjatask.dto.AutenticacaoDTO;
 import com.projetofinal.ninjatask.dto.UsuarioDTO;
 import com.projetofinal.ninjatask.dto.UsuarioDTOSemSenha;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
@@ -15,6 +16,9 @@ import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.util.Assert;
 import org.springframework.util.ReflectionUtils;
@@ -34,6 +38,11 @@ public class UsuarioServiceTests {
     @InjectMocks
     private UsuarioService usuarioService;
 
+    @Mock
+    private AuthenticationManager authenticationManager;
+    @Mock
+    private Authentication autenticacao;
+
     private UsuarioMapper usuarioMapper = Mappers.getMapper(UsuarioMapper.class);
 
     @Mock
@@ -43,6 +52,22 @@ public class UsuarioServiceTests {
     public void init(){
         ReflectionTestUtils.setField(usuarioService, "usuarioMapper", usuarioMapper);
     }
+
+    @Test
+    public void deveTestarFazerLoginComSucesso() throws BusinessException {
+        //setup
+        AutenticacaoDTO dto = new AutenticacaoDTO();
+        dto.setEmailUsuario("joao@gmail.com");
+        dto.setSenhaUsuario("senha123");
+
+
+        //act
+        String autenticacaoDTO = usuarioService.fazerLogin(dto);
+
+        //assert
+        Assertions.assertNotNull(autenticacaoDTO);
+    }
+
     @Test
     public void deveTestarInserirOuAtualizarComSucesso() throws BusinessException {
         //setup
@@ -104,12 +129,11 @@ public class UsuarioServiceTests {
         Optional<UsuarioEntity> usuarioEntityOptional = Optional.empty();
         when(usuarioRepository.findById(anyInt())).thenReturn(usuarioEntityOptional);
 
-        //act
+        //assert
         Assertions.assertThrows(BusinessException.class, ()-> {
+            //act
             usuarioService.excluirUsuario(4);
         });
-
-        //assert
     }
 
     private static UsuarioDTO getUsuarioDTO(){
