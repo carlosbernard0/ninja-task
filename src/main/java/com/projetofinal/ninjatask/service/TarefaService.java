@@ -48,13 +48,7 @@ public class TarefaService {
         return listaDtos;
     }
 
-
-    public TarefaDTO buscarPorIdDto(Integer id) throws BusinessException{
-        TarefaEntity entity = buscarPorId(id);
-        return tarefaMapper.toDto(entity);
-    }
-
-    private TarefaEntity buscarPorId(Integer id) throws BusinessException {
+    public TarefaEntity buscarPorId(Integer id) throws BusinessException {
         return tarefaRepository.findById(id)
                 .orElseThrow(()-> new BusinessException("Mentoria não existe")); // caso colocar id: 4 vai retornar a mensagem
     }
