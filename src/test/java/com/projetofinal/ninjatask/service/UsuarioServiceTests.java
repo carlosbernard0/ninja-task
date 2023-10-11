@@ -7,6 +7,8 @@ import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.UsuarioMapper;
 import com.projetofinal.ninjatask.repository.UsuarioRepository;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.Assert;
@@ -65,6 +68,13 @@ public class UsuarioServiceTests {
     @Mock
     private LogService logService;
 
+    @Mock
+    private Claims claims;
+    @Mock
+    private Jwts jwts;
+
+    @Mock
+    private SimpleGrantedAuthority simpleGrantedAuthority;
 
     @BeforeEach
     public void init(){
@@ -85,15 +95,32 @@ public class UsuarioServiceTests {
         //comportamentos
         when(authenticationManager.authenticate(any())).thenReturn(userAuthentication);
         when(userAuthentication.getPrincipal()).thenReturn(entity);
+
 //        when(logService.usuarioEntity).thenReturn(entity);
-
-
 
         //act
         String autenticacaoDTO = usuarioService.fazerLogin(dto);
 
         //assert
-//        Assertions.assertNotNull(autenticacaoDTO);
+        Assertions.assertNotNull(autenticacaoDTO);
+    }
+
+    @Test
+    public void deveTestarValidarTokenComSucesso(){
+        //setup
+        String token ="eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJuaW5qYS10YXNrIiwiQ0FSR09TIjpbIlJPTEVfREVWIl0sInN1YiI6IjEiLCJpYXQiOjE2OTcwMzcxOTgsImV4cCI6MTY5NzEyMzU5OH0.--0Dpz0v7zR0GN0m3qi9bhxPNDXLX8hJ6isBgoRzbow";
+//        String token2 ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.4G9C-bKyaU99StClaF1GOKtLUgfn18opJrIyTPHEm6c";
+
+//        List<String> cargos =
+        //comportamentos
+
+
+        //act
+        UsernamePasswordAuthenticationToken user = usuarioService.validarToken(token);
+        //assert
+
+        Assertions.assertNotNull(token);
+
     }
 
     @Test
