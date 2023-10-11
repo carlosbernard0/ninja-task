@@ -238,7 +238,6 @@ public class UsuarioService {
         UsuarioEntity usuario = usuarioRepository.getReferenceById(idUsuario);
         usuario.setAtivo(false);
         usuarioRepository.save(usuario);
-
     }
 
 

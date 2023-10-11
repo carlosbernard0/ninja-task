@@ -1,8 +1,7 @@
 package com.projetofinal.ninjatask.service;
 
-import com.projetofinal.ninjatask.dto.AutenticacaoDTO;
-import com.projetofinal.ninjatask.dto.UsuarioDTO;
-import com.projetofinal.ninjatask.dto.UsuarioDTOSemSenha;
+import com.projetofinal.ninjatask.dto.*;
+import com.projetofinal.ninjatask.entity.TarefaEntity;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.UsuarioMapper;
@@ -20,6 +19,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,10 +32,12 @@ import org.springframework.util.ReflectionUtils;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import static com.projetofinal.ninjatask.service.TarefaServiceTests.elementos;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
@@ -51,11 +54,12 @@ public class UsuarioServiceTests {
 
 
     @BeforeEach
-    public void initJWT(){
+    public void initJWT() {
         ReflectionTestUtils.setField(usuarioService, "validadeJWT", "86400000");
     }
+
     @BeforeEach
-    public void initSecret(){
+    public void initSecret() {
         ReflectionTestUtils.setField(usuarioService, "secret", "MinhaChaveSecreta");
     }
 
@@ -77,7 +81,7 @@ public class UsuarioServiceTests {
     private SimpleGrantedAuthority simpleGrantedAuthority;
 
     @BeforeEach
-    public void init(){
+    public void init() {
         ReflectionTestUtils.setField(usuarioService, "usuarioMapper", usuarioMapper);
     }
 
@@ -88,7 +92,7 @@ public class UsuarioServiceTests {
         dto.setEmailUsuario("joao@gmail.com");
         dto.setSenhaUsuario("senha123");
 
-        final var dataExpiracao= mock(java.sql.Date.class);
+        final var dataExpiracao = mock(java.sql.Date.class);
         final var userAuthentication = mock(Authentication.class);
         final var entity = mock(UsuarioEntity.class);
 
@@ -106,14 +110,9 @@ public class UsuarioServiceTests {
     }
 
     @Test
-    public void deveTestarValidarTokenComSucesso(){
+    public void deveTestarValidarTokenComSucesso() {
         //setup
-        String token ="eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJuaW5qYS10YXNrIiwiQ0FSR09TIjpbIlJPTEVfREVWIl0sInN1YiI6IjEiLCJpYXQiOjE2OTcwMzcxOTgsImV4cCI6MTY5NzEyMzU5OH0.--0Dpz0v7zR0GN0m3qi9bhxPNDXLX8hJ6isBgoRzbow";
-//        String token2 ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.4G9C-bKyaU99StClaF1GOKtLUgfn18opJrIyTPHEm6c";
-
-//        List<String> cargos =
-        //comportamentos
-
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJuaW5qYS10YXNrIiwiQ0FSR09TIjpbIlJPTEVfREVWIl0sInN1YiI6IjEiLCJpYXQiOjE2OTcwMzcxOTgsImV4cCI6MTY5NzEyMzU5OH0.--0Dpz0v7zR0GN0m3qi9bhxPNDXLX8hJ6isBgoRzbow";
 
         //act
         UsernamePasswordAuthenticationToken user = usuarioService.validarToken(token);
@@ -121,6 +120,29 @@ public class UsuarioServiceTests {
 
         Assertions.assertNotNull(token);
 
+    }
+
+    @Test
+    public void deveTestarValidarUsuarioComSucesso() throws BusinessException {
+        //setup
+        UsuarioDTO usuario = new UsuarioDTO();
+        usuario.setEmailUsuario("joao@gmail.com");
+
+        //act
+        usuarioService.validarUsuario(usuario);
+        //assert
+        Assertions.assertNotNull(usuario);
+    }
+
+    @Test
+    public void deveTestarValidarEmailComSucesso() throws BusinessException {
+        //setup
+        String email = "joao@gmail.com";
+
+        //act
+        usuarioService.validarEmailExistente(email);
+        //assert
+        Assertions.assertNotNull(email);
     }
 
     @Test
@@ -143,7 +165,7 @@ public class UsuarioServiceTests {
         Assertions.assertEquals("Henrique", retorno.getNomeUsuario());
         Assertions.assertEquals("henrique@gmail.com", retorno.getEmailUsuario());
         Assertions.assertEquals("senha123", retorno.getSenhaUsuario());
-        Assertions.assertEquals(new Date(2023-10-07), retorno.getDataRegistro());
+        Assertions.assertEquals(new Date(2023 - 10 - 07), retorno.getDataRegistro());
         Assertions.assertEquals(true, retorno.getAtivo());
 
     }
@@ -160,7 +182,7 @@ public class UsuarioServiceTests {
 
         //assert
         Assertions.assertNotNull(lista);
-        Assertions.assertEquals(1,lista.size());
+        Assertions.assertEquals(1, lista.size());
     }
 
     @Test
@@ -179,37 +201,80 @@ public class UsuarioServiceTests {
     }
 
     @Test
-    public void deveTestarRemoverComErro(){
+    public void deveTestarRemoverComErro() {
         //setup
         Optional<UsuarioEntity> usuarioEntityOptional = Optional.empty();
         when(usuarioRepository.findById(anyInt())).thenReturn(usuarioEntityOptional);
 
         //assert
-        Assertions.assertThrows(BusinessException.class, ()-> {
+        Assertions.assertThrows(BusinessException.class, () -> {
             //act
             usuarioService.excluirUsuario(4);
         });
     }
 
-    private static UsuarioDTO getUsuarioDTO(){
+    @Test
+    public void deteTestarDesativarUsuarioComSucesso() {
+        //setup
+        UsuarioEntity usuario = getUsuarioEntity();
+
+        //comportamentos
+        when(usuarioRepository.getReferenceById(anyInt())).thenReturn(usuario);
+
+        //act
+        usuarioService.desativarUsuario(4);
+
+        //assert
+        verify(usuarioRepository, times(1)).save(any());
+    }
+
+    @Test
+    public void deveTestarListarPaginadoComSucesso() {
+        // Setup
+        PaginaDTO<UsuarioDTO> paginaDTO = getPaginaDTO(); // Obtenha uma instância de PaginaDTO com elementos
+        PageRequest pageRequest = PageRequest.of(1, 2);
+
+        List<UsuarioEntity> usuarioEntities = new ArrayList<>();
+
+        when(usuarioRepository.findAll(pageRequest))
+                .thenReturn(new PageImpl<>(usuarioEntities, pageRequest, usuarioEntities.size()));
+
+        PaginaDTO<UsuarioDTO> paginaRecuperada = usuarioService.listarPaginado(1, 2);
+
+        // Verificar os resultados
+        Assertions.assertNotNull(paginaRecuperada);
+        Assertions.assertEquals(paginaDTO.getPagina(), paginaRecuperada.getPagina());
+        Assertions.assertEquals(paginaDTO.getTamanho(), paginaRecuperada.getTamanho());
+    }
+
+    private static UsuarioDTO getUsuarioDTO() {
         UsuarioDTO dto = new UsuarioDTO();
         dto.setIdUsuario(4);
         dto.setNomeUsuario("Henrique");
         dto.setSenhaUsuario("senha123");
         dto.setEmailUsuario("henrique@gmail.com");
-        dto.setDataRegistro(new Date(2023-10-07));
+        dto.setDataRegistro(new Date(2023 - 10 - 07));
         dto.setAtivo(true);
         return dto;
     }
 
-    private static UsuarioEntity getUsuarioEntity(){
+    private static UsuarioEntity getUsuarioEntity() {
         UsuarioEntity entity = new UsuarioEntity();
         entity.setIdUsuario(4);
         entity.setNomeUsuario("Henrique");
         entity.setSenhaUsuario("senha123");
         entity.setEmailUsuario("henrique@gmail.com");
-        entity.setDataRegistro(new Date(2023-10-07));
+        entity.setDataRegistro(new Date(2023 - 10 - 07));
         entity.setAtivo(true);
         return entity;
+    }
+
+    private static PaginaDTO getPaginaDTO() {
+        PaginaDTO paginaDTO = new PaginaDTO();
+        paginaDTO.setTotalPaginas(3);
+        paginaDTO.setPagina(1);
+        paginaDTO.setTamanho(2);
+        paginaDTO.setElementos(elementos);
+        return paginaDTO;
     }
 }
