@@ -247,6 +247,67 @@ public class UsuarioServiceTests {
         Assertions.assertEquals(paginaDTO.getTamanho(), paginaRecuperada.getTamanho());
     }
 
+    @Test
+    public void deveTestarRelatorioComSucesso(){
+        //setup
+        RelatorioUsuariosTarefasDTO relatorio = new RelatorioUsuariosTarefasDTO();
+        //act
+        usuarioService.relatorio();
+        //assert
+        Assertions.assertNotNull(relatorio);
+    }
+
+    @Test
+    public void deveTestarFindByEmailUsuarioComSucesso(){
+        //setup
+        String emailUsuario = "joao@gmail.com";
+
+        //act
+        usuarioService.findByEmailUsuario(emailUsuario);
+        //assert
+
+        Assertions.assertNotNull(emailUsuario);
+    }
+    @Test
+    public void deveTestarRecuperarNomeUsuarioLogadoComSucesso(){
+        //setup
+        String nome = "joao";
+        final var userAuthentication = mock(Authentication.class);
+
+//        when(usuarioRepository.findByIdUsuario().thenReturn(entity);
+//
+//        when(userAuthentication.getPrincipal()).thenReturn(entity);
+
+
+        //act
+        usuarioService.recuperarNomeUsuarioLogado();
+        //assert
+
+        Assertions.assertNotNull(nome);
+    }
+
+    public void deveTestarRecuperarIdUsuarioLogadoComSucesso(){
+        //setup
+
+        final var userAuthentication = mock(Authentication.class);
+
+
+        //act
+        usuarioService.recuperarIdUsuarioLogado();
+        //assert
+
+//        Assertions.assertNotNull();
+    }
+
+    @Test
+    public void deveTestarRecuperarUsuarioLogado(){
+        //setup
+        //act
+        //assert
+    }
+
+
+
     private static UsuarioDTO getUsuarioDTO() {
         UsuarioDTO dto = new UsuarioDTO();
         dto.setIdUsuario(4);
