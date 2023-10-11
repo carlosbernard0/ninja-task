@@ -46,13 +46,25 @@ public class UsuarioServiceTests {
     @Mock
     private Authentication authentication;
 
-    @Value("${jwt.validade.token}")
-    private String validadeJWT;
+
+    @BeforeEach
+    public void initJWT(){
+        ReflectionTestUtils.setField(usuarioService, "validadeJWT", "86400000");
+    }
+    @BeforeEach
+    public void initSecret(){
+        ReflectionTestUtils.setField(usuarioService, "secret", "MinhaChaveSecreta");
+    }
+
 
     private UsuarioMapper usuarioMapper = Mappers.getMapper(UsuarioMapper.class);
 
     @Mock
     private UsuarioRepository usuarioRepository;
+
+    @Mock
+    private LogService logService;
+
 
     @BeforeEach
     public void init(){
@@ -73,9 +85,8 @@ public class UsuarioServiceTests {
         //comportamentos
         when(authenticationManager.authenticate(any())).thenReturn(userAuthentication);
         when(userAuthentication.getPrincipal()).thenReturn(entity);
+//        when(logService.usuarioEntity).thenReturn(entity);
 
-        //falta continuar o Date
-        validadeJWT = "86400000";
 
 
         //act
