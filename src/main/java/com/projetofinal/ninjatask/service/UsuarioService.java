@@ -260,18 +260,18 @@ public class UsuarioService {
         return usuarioRepository.findByEmailUsuario(emailUsuario);
     }
 
-    public String recuperarNomeUsuarioLogado(){
-        Integer idUsuarioLogado = recuperarIdUsuarioLogado();
-        Optional<UsuarioEntity> usuario =usuarioRepository.findByIdUsuario(idUsuarioLogado);
-        return usuario.get().getNomeUsuario();
-    }
-
-
     public Integer recuperarIdUsuarioLogado(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object idUsuario = authentication.getPrincipal();
         String idUsuarioString = (String) idUsuario;
         return Integer.parseInt(idUsuarioString);
+    }
+
+
+    public String recuperarNomeUsuarioLogado(){
+        Integer idUsuarioLogado = recuperarIdUsuarioLogado();
+        Optional<UsuarioEntity> usuario =usuarioRepository.findByIdUsuario(idUsuarioLogado);
+        return usuario.get().getNomeUsuario();
     }
 
     public UsuarioDTO recuperarUsuarioLogado() throws BusinessException {

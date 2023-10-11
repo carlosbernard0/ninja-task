@@ -8,6 +8,7 @@ import com.projetofinal.ninjatask.mapper.UsuarioMapper;
 import com.projetofinal.ninjatask.repository.UsuarioRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +27,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.Assert;
@@ -99,8 +103,6 @@ public class UsuarioServiceTests {
         //comportamentos
         when(authenticationManager.authenticate(any())).thenReturn(userAuthentication);
         when(userAuthentication.getPrincipal()).thenReturn(entity);
-
-//        when(logService.usuarioEntity).thenReturn(entity);
 
         //act
         String autenticacaoDTO = usuarioService.fazerLogin(dto);
@@ -268,14 +270,39 @@ public class UsuarioServiceTests {
 
         Assertions.assertNotNull(emailUsuario);
     }
+
+    @Test
+    public void deveTestarRecuperarIdUsuarioLogadoComSucesso(){
+        //setup
+        Integer idUsuario = 4;
+        final var userAuthentication = mock(Authentication.class);
+
+//        when(userAuthentication.getPrincipal()).thenReturn(idUsuario);
+//        when(userAuthentication.getPrincipal()).thenReturn(userAuthentication);
+//        when(securityContext.getAuthentication().getPrincipal()).thenReturn(userAuthentication);
+        //MOSTRAR NA MENTORIA
+        //MOSTRAR NA MENTORIA
+        //MOSTRAR NA MENTORIA
+        //MOSTRAR NA MENTORIA
+        //MOSTRAR NA MENTORIA
+        //MOSTRAR NA MENTORIA
+        //MOSTRAR NA MENTORIA
+
+
+        //act
+        usuarioService.recuperarIdUsuarioLogado();
+        //assert
+
+//        Assertions.assertNotNull();
+    }
     @Test
     public void deveTestarRecuperarNomeUsuarioLogadoComSucesso(){
         //setup
         String nome = "joao";
         final var userAuthentication = mock(Authentication.class);
+        UsuarioEntity entity = getUsuarioEntity();
 
-//        when(usuarioRepository.findByIdUsuario().thenReturn(entity);
-//
+//        when(usuarioRepository.findByIdUsuario(any())).thenReturn(entity);
 //        when(userAuthentication.getPrincipal()).thenReturn(entity);
 
 
@@ -286,18 +313,7 @@ public class UsuarioServiceTests {
         Assertions.assertNotNull(nome);
     }
 
-    public void deveTestarRecuperarIdUsuarioLogadoComSucesso(){
-        //setup
 
-        final var userAuthentication = mock(Authentication.class);
-
-
-        //act
-        usuarioService.recuperarIdUsuarioLogado();
-        //assert
-
-//        Assertions.assertNotNull();
-    }
 
     @Test
     public void deveTestarRecuperarUsuarioLogado(){
