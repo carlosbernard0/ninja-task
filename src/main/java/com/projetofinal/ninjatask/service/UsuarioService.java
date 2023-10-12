@@ -163,13 +163,6 @@ public class UsuarioService {
         return usuarioRetornado;
     }
 
-//    public UsuarioCargoEntity cargoAutomatico(UsuarioEntity usuarioEntitySalvo){
-//        UsuarioCargoEntity usuarioCargoEntity = null;
-//        usuarioCargoEntity.setIdUsuario(usuarioEntitySalvo.getIdUsuario());
-//        usuarioCargoEntity.setIdCargo(String.valueOf(3));
-//        usuarioCargoRepository.save(usuarioCargoEntity);
-//        return usuarioCargoEntity;
-//    }
 
     public UsuarioDTO editarUsuario(UsuarioDTO usuario) throws BusinessException{
         validarUsuario(usuario);
