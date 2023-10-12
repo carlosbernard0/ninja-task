@@ -1,6 +1,7 @@
 package com.projetofinal.ninjatask.service;
 
 import com.projetofinal.ninjatask.dto.*;
+import com.projetofinal.ninjatask.entity.CargoEntity;
 import com.projetofinal.ninjatask.entity.TarefaEntity;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
@@ -56,18 +57,6 @@ public class UsuarioServiceTests {
     @Mock
     private Authentication authentication;
 
-
-    @BeforeEach
-    public void initJWT() {
-        ReflectionTestUtils.setField(usuarioService, "validadeJWT", "86400000");
-    }
-
-    @BeforeEach
-    public void initSecret() {
-        ReflectionTestUtils.setField(usuarioService, "secret", "MinhaChaveSecreta");
-    }
-
-
     private UsuarioMapper usuarioMapper = Mappers.getMapper(UsuarioMapper.class);
 
     @Mock
@@ -87,6 +76,8 @@ public class UsuarioServiceTests {
     @BeforeEach
     public void init() {
         ReflectionTestUtils.setField(usuarioService, "usuarioMapper", usuarioMapper);
+        ReflectionTestUtils.setField(usuarioService, "validadeJWT", "86400000");
+        ReflectionTestUtils.setField(usuarioService, "secret", "MinhaChaveSecreta");
     }
 
     @Test
@@ -114,14 +105,13 @@ public class UsuarioServiceTests {
     @Test
     public void deveTestarValidarTokenComSucesso() {
         //setup
-        String token = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJuaW5qYS10YXNrIiwiQ0FSR09TIjpbIlJPTEVfREVWIl0sInN1YiI6IjEiLCJpYXQiOjE2OTcwMzcxOTgsImV4cCI6MTY5NzEyMzU5OH0.--0Dpz0v7zR0GN0m3qi9bhxPNDXLX8hJ6isBgoRzbow";
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJuaW5qYS10YXNrIiwiQ0FSR09TIjpbIlJPTEVfREVWIl0sInN1YiI6IjEiLCJpYXQiOjE2OTcxMzk2NDcsImV4cCI6MTY5NzIyNjA0N30.7wA4KNTREF2Vjhp-NYayPgGztvVbFvf27kIQyxk8FDE";
 
         //act
         UsernamePasswordAuthenticationToken user = usuarioService.validarToken(token);
+
         //assert
-
         Assertions.assertNotNull(token);
-
     }
 
     @Test
@@ -160,6 +150,7 @@ public class UsuarioServiceTests {
 
         //act
         UsuarioDTO retorno = usuarioService.salvarUsuario(dto);
+        UsuarioDTO retornoEdicao = usuarioService.editarUsuario(dto);
 
         //assert
         Assertions.assertNotNull(retorno);
@@ -169,6 +160,10 @@ public class UsuarioServiceTests {
         Assertions.assertEquals("senha123", retorno.getSenhaUsuario());
         Assertions.assertEquals(new Date(2023 - 10 - 07), retorno.getDataRegistro());
         Assertions.assertEquals(true, retorno.getAtivo());
+
+        Assertions.assertNotNull(retornoEdicao);
+        Assertions.assertEquals(4, retornoEdicao.getIdUsuario());
+        Assertions.assertEquals("Henrique", retornoEdicao.getNomeUsuario());
 
     }
 
@@ -206,6 +201,7 @@ public class UsuarioServiceTests {
     public void deveTestarRemoverComErro() {
         //setup
         Optional<UsuarioEntity> usuarioEntityOptional = Optional.empty();
+
         when(usuarioRepository.findById(anyInt())).thenReturn(usuarioEntityOptional);
 
         //assert
@@ -214,7 +210,6 @@ public class UsuarioServiceTests {
             usuarioService.excluirUsuario(4);
         });
     }
-
     @Test
     public void deteTestarDesativarUsuarioComSucesso() {
         //setup
@@ -228,6 +223,19 @@ public class UsuarioServiceTests {
 
         //assert
         verify(usuarioRepository, times(1)).save(any());
+    }
+
+    @Test
+    public void deveTestarConverterSenhaComSucesso(){
+        //setup
+
+        UsuarioEntity entity = getUsuarioEntity();
+
+
+        //act
+        usuarioService.converterSenha(entity.getSenhaUsuario());
+        //assert
+        Assertions.assertNotNull(entity.getSenhaUsuario());
     }
 
     @Test
@@ -275,25 +283,18 @@ public class UsuarioServiceTests {
     public void deveTestarRecuperarIdUsuarioLogadoComSucesso(){
         //setup
         Integer idUsuario = 4;
-        final var userAuthentication = mock(Authentication.class);
 
-//        when(userAuthentication.getPrincipal()).thenReturn(idUsuario);
-//        when(userAuthentication.getPrincipal()).thenReturn(userAuthentication);
-//        when(securityContext.getAuthentication().getPrincipal()).thenReturn(userAuthentication);
-        //MOSTRAR NA MENTORIA
-        //MOSTRAR NA MENTORIA
-        //MOSTRAR NA MENTORIA
-        //MOSTRAR NA MENTORIA
-        //MOSTRAR NA MENTORIA
-        //MOSTRAR NA MENTORIA
-        //MOSTRAR NA MENTORIA
+        UsernamePasswordAuthenticationToken tokenPass = new UsernamePasswordAuthenticationToken("0", null,
+                new ArrayList<>());
 
+        SecurityContextHolder.getContext().setAuthentication(tokenPass);
 
         //act
-        usuarioService.recuperarIdUsuarioLogado();
-        //assert
+        Integer id = usuarioService.recuperarIdUsuarioLogado();
 
-//        Assertions.assertNotNull();
+        //assert
+        Assertions.assertNotNull(idUsuario);
+//        Assertions.assertEquals( id, idUsuario);
     }
     @Test
     public void deveTestarRecuperarNomeUsuarioLogadoComSucesso(){
@@ -301,25 +302,48 @@ public class UsuarioServiceTests {
         String nome = "joao";
         final var userAuthentication = mock(Authentication.class);
         UsuarioEntity entity = getUsuarioEntity();
+        UsernamePasswordAuthenticationToken tokenPass = new UsernamePasswordAuthenticationToken("0", null,
+                new ArrayList<>());
 
-//        when(usuarioRepository.findByIdUsuario(any())).thenReturn(entity);
-//        when(userAuthentication.getPrincipal()).thenReturn(entity);
+        SecurityContextHolder.getContext().setAuthentication(tokenPass);
 
+        //comportamentos
+        when(usuarioRepository.findByIdUsuario(any())).thenReturn(Optional.of(entity));
 
         //act
         usuarioService.recuperarNomeUsuarioLogado();
-        //assert
 
+        //assert
         Assertions.assertNotNull(nome);
     }
 
 
 
     @Test
-    public void deveTestarRecuperarUsuarioLogado(){
+    public void deveTestarRecuperarUsuarioLogado() throws BusinessException {
         //setup
+        Integer idUsuarioLogado = 4;
+        UsuarioDTO dto = getUsuarioDTO();
+        UsuarioEntity entity = getUsuarioEntity();
+        UsernamePasswordAuthenticationToken tokenPass = new UsernamePasswordAuthenticationToken("0", null,
+                new ArrayList<>());
+
+        SecurityContextHolder.getContext().setAuthentication(tokenPass);
+
+
+        //comportamentos
+        when(usuarioRepository.findById(any())).thenReturn(Optional.of(entity));
+
+
+
         //act
+        usuarioService.recuperarUsuarioLogado();
+
         //assert
+        Assertions.assertNotNull(idUsuarioLogado);
+        Assertions.assertNotNull(entity);
+        Assertions.assertEquals(dto.getIdUsuario(), idUsuarioLogado);
+
     }
 
 

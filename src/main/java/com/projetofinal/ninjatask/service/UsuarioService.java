@@ -190,24 +190,7 @@ public class UsuarioService {
         String senhaCriptografada = bCryptPasswordEncoder.encode(senha);
         return senhaCriptografada;
     }
-    //retirar --
-    public boolean validarIdUsuario(Integer id) throws BusinessException {
-        Optional<UsuarioEntity> usuarioOptional = usuarioRepository.findById(id);
-        if (!usuarioOptional.isPresent()) {
-            throw new BusinessException("ID inválido, usuário inexistente!");
-        }
-        return true;
-    }
-    //retirar --
-    public UsuarioDTO validarIdLogado(Integer recuperarIdLogado) throws BusinessException {
-        Optional<UsuarioEntity> usuarioOptional = usuarioRepository.findById(recuperarIdLogado);
-        if (!usuarioOptional.isPresent()) {
-            throw new BusinessException("ID inválido, usuário inexistente!");
-        }
-        UsuarioEntity usuarioEntity = usuarioOptional.get();
-        UsuarioDTO usuarioDTO = usuarioMapper.toDTO(usuarioEntity);
-        return usuarioDTO;
-    }
+
 
     public List<UsuarioDTOSemSenha> listar() throws SQLException {
         List<UsuarioEntity> listaUsuario = usuarioRepository.findAll();
@@ -224,14 +207,6 @@ public class UsuarioService {
         UsuarioEntity entity = usuarioRepository.findById(id)
                 .orElseThrow(()-> new BusinessException("Usuario nao encontrado"));
         return entity;
-    }
-
-    private UsuarioDTO buscarPorIdDTO(Integer id) throws BusinessException {
-        try{
-            return usuarioMapper.toDTO(buscarPorId(id));
-        }catch (BusinessException e) {
-            return null;
-        }
     }
 
     public void desativarUsuario(Integer idUsuario){
