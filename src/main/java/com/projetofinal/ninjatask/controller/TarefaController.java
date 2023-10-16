@@ -45,10 +45,10 @@ public class TarefaController {
 //        return lista;
     }
 
-//    @GetMapping("/listar-por-id")
-//    public List<TarefaDTO> listarTarefasPorId(Integer id) throws SQLException, BusinessException {
-//        return
-//    }
+    @GetMapping("/listar-por-id")
+    public List<TarefaDTO> listarTarefasPorId(Integer id) throws SQLException, JsonProcessingException {
+        return tarefaService.listarPorId(id);
+    }
 
     @Operation(summary = "editar tarefa", description = "este processo edita a tarefa da base de dados")
     @ApiResponses(value = {

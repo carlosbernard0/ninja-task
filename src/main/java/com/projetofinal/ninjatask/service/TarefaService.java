@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -68,6 +69,17 @@ public class TarefaService {
         List<TarefaDTO> listaDtos = listaTarefas.stream()
                 .map(entity -> tarefaMapper.toDto((TarefaEntity) entity))
                 .toList();
+        return listaDtos;
+    }
+
+    public List<TarefaDTO> listarPorId(Integer id) throws SQLException, JsonProcessingException {
+        Optional<TarefaEntity> listaTarefas = tarefaRepository.findById(id);
+        List<TarefaDTO> listaDtos = listaTarefas.stream()
+                .map(entity -> tarefaMapper.toDto(entity))
+                .toList();
+        //salvar na log
+        salvarLog((TarefaDTO) listaDtos,"LISTAGEM");
+
         return listaDtos;
     }
 
