@@ -2,13 +2,12 @@ package com.projetofinal.ninjatask.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.projetofinal.ninjatask.dto.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.projetofinal.ninjatask.entity.TarefaEntity;
-import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.TarefaMapper;
 import com.projetofinal.ninjatask.repository.TarefaRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -19,6 +18,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class TarefaService {
     private final UsuarioService usuarioService;
     private final ProdutorService produtorService;
@@ -77,8 +77,10 @@ public class TarefaService {
         List<TarefaDTO> listaDtos = listaTarefas.stream()
                 .map(entity -> tarefaMapper.toDto(entity))
                 .toList();
+
         //salvar na log
-        salvarLog((TarefaDTO) listaDtos,"LISTAGEM");
+        TarefaDTO tarefaDto = tarefaMapper.toDto(listaTarefas.get());
+        salvarLog(tarefaDto,"LISTAGEM");
 
         return listaDtos;
     }
@@ -114,5 +116,6 @@ public class TarefaService {
 
         produtorService.enviarMensagemAoTopico(tarefaLogDTO);
     }
+
 
 }
