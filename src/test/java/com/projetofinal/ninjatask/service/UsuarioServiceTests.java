@@ -85,7 +85,7 @@ public class UsuarioServiceTests {
         //setup
         AutenticacaoDTO dto = new AutenticacaoDTO();
         dto.setEmailUsuario("joao@gmail.com");
-        dto.setSenhaUsuario("senha123");
+        dto.setSenhaUsuario("senha1a23");
 
         final var dataExpiracao = mock(java.sql.Date.class);
         final var userAuthentication = mock(Authentication.class);

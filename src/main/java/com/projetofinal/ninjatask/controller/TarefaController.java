@@ -1,6 +1,7 @@
 package com.projetofinal.ninjatask.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.projetofinal.ninjatask.dto.PaginaDTO;
 import com.projetofinal.ninjatask.dto.TarefaDTO;
 import com.projetofinal.ninjatask.entity.TarefaEntity;
@@ -44,15 +45,9 @@ public class TarefaController {
 //        return lista;
     }
 
-//    @Operation(summary = "listar tarefas por caderno", description = "este processo mostra as tarefas que esta no caderno selecionado na base de dados")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "Deu certo"),
-//            @ApiResponse(responseCode = "400", description = "Erro na validação dos dados"),
-//            @ApiResponse(responseCode = "500", description = "deu erro no servidor")
-//    })
-//    @GetMapping("listar-tarefas-por-caderno")
-//    public List<TarefaDto> retornarTarefasPorCaderno(@RequestParam("caderno") Integer caderno) throws SQLException {
-//        return (List<TarefaDto>) tarefaService.listarPorCadernoDto(caderno);
+//    @GetMapping("/listar-por-id")
+//    public List<TarefaDTO> listarTarefasPorId(Integer id) throws SQLException, BusinessException {
+//        return
 //    }
 
     @Operation(summary = "editar tarefa", description = "este processo edita a tarefa da base de dados")
@@ -63,7 +58,7 @@ public class TarefaController {
     })
     @PutMapping
     public TarefaDTO atualizarTarefa(@RequestBody TarefaDTO dto) throws Exception {
-        return tarefaService.salvarTarefa(dto);
+        return tarefaService.editarTarefa(dto);
     }
 
     @Operation(summary = "excluir tarefa", description = "este processo exclui a tarefa da base de dados")
@@ -73,7 +68,7 @@ public class TarefaController {
             @ApiResponse(responseCode = "500", description = "deu erro no servidor")
     })
     @DeleteMapping("/{id_tarefa}")
-    public void removerTarefa(@PathVariable("id_tarefa") Integer id) throws BusinessException {
+    public void removerTarefa(@PathVariable("id_tarefa") Integer id) throws BusinessException, JsonProcessingException {
         tarefaService.excluirTarefa(id);
     }
 

@@ -1,4 +1,5 @@
 package com.projetofinal.ninjatask.service;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.projetofinal.ninjatask.dto.PaginaDTO;
 import com.projetofinal.ninjatask.dto.TarefaDTO;
 import com.projetofinal.ninjatask.dto.UsuarioDTO;
@@ -47,7 +48,7 @@ public class TarefaServiceTests {
     }
 
     @Test
-    public void deveTestarInserirOuAtualizarComSucesso() throws BusinessException {
+    public void deveTestarInserirOuAtualizarComSucesso() throws BusinessException, JsonProcessingException {
         //Talvez faremos um Login aqui --
 
         //setup
@@ -99,7 +100,7 @@ public class TarefaServiceTests {
         Assertions.assertEquals(retornoB,tarefaDTO);
     }
     @Test
-    public void deveRemoverComSucesso() throws BusinessException {
+    public void deveRemoverComSucesso() throws BusinessException, JsonProcessingException {
         //setup
         TarefaEntity tarefaEntity = getTarefaEntity();
         Optional<TarefaEntity> tarefaEntityOptional = Optional.of(tarefaEntity);
