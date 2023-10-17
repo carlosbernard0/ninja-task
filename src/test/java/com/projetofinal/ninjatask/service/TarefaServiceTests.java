@@ -2,6 +2,7 @@ package com.projetofinal.ninjatask.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.projetofinal.ninjatask.dto.PaginaDTO;
 import com.projetofinal.ninjatask.dto.TarefaDTO;
+import com.projetofinal.ninjatask.dto.TarefaLogDTO;
 import com.projetofinal.ninjatask.dto.UsuarioDTO;
 import com.projetofinal.ninjatask.entity.TarefaEntity;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
@@ -41,6 +42,10 @@ public class TarefaServiceTests {
     @Mock
     private TarefaRepository tarefaRepository;
 
+    @Mock
+    private UsuarioService usuarioService;
+    @Mock
+    private ProdutorService produtorService;
 
     @BeforeEach
     public void init(){
@@ -55,12 +60,16 @@ public class TarefaServiceTests {
 
         TarefaDTO dto = getTarefaDTO();
         TarefaEntity entity = getTarefaEntity();
+        TarefaLogDTO logDTO = new TarefaLogDTO();
 
         //comportamentos
         when(tarefaRepository.save(any())).thenReturn(entity);
 
         //act
+        UsuarioDTO usuarioDTO =usuarioService.recuperarUsuarioLogado();
         TarefaDTO retorno = tarefaService.salvarTarefa(dto);
+        TarefaDTO retornoEdicao = tarefaService.editarTarefa(dto);
+        produtorService.enviarMensagemAoTopico(logDTO);
 
         //assert
         Assertions.assertNotNull(retorno);
@@ -84,6 +93,21 @@ public class TarefaServiceTests {
         Assertions.assertNotNull(lista);
         Assertions.assertEquals(1,lista.size());
     }
+    @Test
+    public void deveTestarListarPorIdComSucesso() throws SQLException, JsonProcessingException {
+        //setup
+        Integer id = 4;
+        TarefaEntity tarefaEntity = getTarefaEntity();
+        when(tarefaRepository.findById(tarefaEntity.getIdTarefa())).thenReturn(Optional.of(tarefaEntity));
+
+        //act
+        tarefaService.listarPorId(tarefaEntity.getIdTarefa());
+
+        //assert
+        Assertions.assertNotNull(tarefaEntity.getIdTarefa());
+        Assertions.assertEquals(tarefaEntity.getIdTarefa(), id );
+    }
+
     @Test
     public void deveTestarBuscarPorIdComSucesso() throws SQLException, BusinessException {
         //setup
@@ -146,6 +170,18 @@ public class TarefaServiceTests {
         Assertions.assertEquals(paginaDTO.getTamanho(), paginaRecuperada.getTamanho());
     }
 
+    @Test
+    public void deveTestarSalvarLogComSucesso() throws JsonProcessingException {
+        //setup
+        TarefaLogDTO tarefaLogDTO = new TarefaLogDTO();
+
+        //act
+        produtorService.enviarMensagemAoTopico(tarefaLogDTO);
+
+        //assert
+        Assertions.assertNotNull(tarefaLogDTO);
+    }
+
 
     private static TarefaEntity getTarefaEntity(){
         TarefaEntity Entity = new TarefaEntity();
@@ -171,7 +207,7 @@ public class TarefaServiceTests {
         UsuarioDTO dto = new UsuarioDTO();
         dto.setIdUsuario(4);
         dto.setNomeUsuario("Henrique");
-        dto.setSenhaUsuario("senha123");
+        dto.setSenhaUsuario(null);
         dto.setEmailUsuario("henrique@gmail.com");
         dto.setAtivo(true);
         return dto;
@@ -181,7 +217,7 @@ public class TarefaServiceTests {
         UsuarioEntity entity = new UsuarioEntity();
         entity.setIdUsuario(4);
         entity.setNomeUsuario("Henrique");
-        entity.setSenhaUsuario("senha123");
+        entity.setSenhaUsuario(null);
         entity.setEmailUsuario("henrique@gmail.com");
         entity.setAtivo(true);
         return entity;

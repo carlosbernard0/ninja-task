@@ -105,7 +105,8 @@ public class UsuarioServiceTests {
     @Test
     public void deveTestarValidarTokenComSucesso() {
         //setup
-        String token = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJuaW5qYS10YXNrIiwiQ0FSR09TIjpbIlJPTEVfREVWIl0sInN1YiI6IjEiLCJpYXQiOjE2OTcxMzk2NDcsImV4cCI6MTY5NzIyNjA0N30.7wA4KNTREF2Vjhp-NYayPgGztvVbFvf27kIQyxk8FDE";
+        String token2 = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJuaW5qYS10YXNrIiwiQ0FSR09TIjpbIlJPTEVfREVWIl0sInN1YiI6IjEiLCJpYXQiOjE2OTcxMzk2NDcsImV4cCI6MTY5NzIyNjA0N30.7wA4KNTREF2Vjhp-NYayPgGztvVbFvf27kIQyxk8FDE";
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJuaW5qYS10YXNrIiwiQ0FSR09TIjpbIlJPTEVfREVWIl0sInN1YiI6IjEiLCJpYXQiOjE2OTc1NjUxMjQsImV4cCI6MTY5NzY1MTUyNH0.PoNKq3k9y6lzy4wEMvRJSosbavuHIB_T3khzRzHHrKs";
 
         //act
         UsernamePasswordAuthenticationToken user = usuarioService.validarToken(token);
