@@ -39,6 +39,7 @@ public class TarefaService {
         TarefaDTO salvoDto = tarefaMapper.toDto(salvo);
 
         //Salvar no TAREFA-LOG
+        salvoDto.getUsuario().setSenhaUsuario(null);
         salvarLog(salvoDto,"CRIACAO");
 
         return salvoDto;
@@ -58,6 +59,7 @@ public class TarefaService {
         TarefaDTO salvoDto = tarefaMapper.toDto(salvo);
 
         //Salvar no TAREFA-LOG
+        salvoDto.getUsuario().setSenhaUsuario(null);
         salvarLog(salvoDto,"EDICAO");
 
         return salvoDto;
@@ -80,6 +82,7 @@ public class TarefaService {
 
         //salvar na log
         TarefaDTO tarefaDto = tarefaMapper.toDto(listaTarefas.get());
+        tarefaDto.getUsuario().setSenhaUsuario(null);
         salvarLog(tarefaDto,"LISTAGEM");
 
         return listaDtos;
@@ -96,6 +99,7 @@ public class TarefaService {
 
         //Transformar em DTO e salvar
         TarefaDTO exDTO = tarefaMapper.toDto(tarefa);
+        exDTO.getUsuario().setSenhaUsuario(null);
         salvarLog(exDTO,"REMOCAO");
     }
 
