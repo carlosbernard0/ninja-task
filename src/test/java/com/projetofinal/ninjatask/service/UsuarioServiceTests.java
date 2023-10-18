@@ -1,44 +1,31 @@
 package com.projetofinal.ninjatask.service;
 
 import com.projetofinal.ninjatask.dto.*;
-import com.projetofinal.ninjatask.entity.CargoEntity;
-import com.projetofinal.ninjatask.entity.TarefaEntity;
 import com.projetofinal.ninjatask.entity.UsuarioEntity;
 import com.projetofinal.ninjatask.exceptions.BusinessException;
 import com.projetofinal.ninjatask.mapper.UsuarioMapper;
 import com.projetofinal.ninjatask.repository.UsuarioRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.util.Assert;
-import org.springframework.util.ReflectionUtils;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -87,7 +74,7 @@ public class UsuarioServiceTests {
         //setup
         AutenticacaoDTO dto = new AutenticacaoDTO();
         dto.setEmailUsuario("joao@gmail.com");
-        dto.setSenhaUsuario("senha1a23");
+        dto.setSenhaUsuario("senha123");
 
         final var userAuthentication = mock(Authentication.class);
         final var entity = mock(UsuarioEntity.class);
@@ -124,10 +111,10 @@ public class UsuarioServiceTests {
     @Test
     public void deveTestarValidarTokenComSucesso() throws BusinessException {
         //setup
-        String token = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJuaW5qYS10YXNrIiwiQ0FSR09TIjpbIlJPTEVfREVWIl0sInN1YiI6IjEiLCJpYXQiOjE2OTc1NjUxMjQsImV4cCI6MTY5NzY1MTUyNH0.PoNKq3k9y6lzy4wEMvRJSosbavuHIB_T3khzRzHHrKs";
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJuaW5qYS10YXNrIiwiQ0FSR09TIjpbIlJPTEVfREVWIl0sInN1YiI6IjEiLCJpYXQiOjE2OTc2NjU2NTUsImV4cCI6MTY5Nzc1MjA1NX0.gwY0GuhLXMczNe1P2lSDPy-FonF3c445ynftBujr-vs";
 
         //act
-        UsernamePasswordAuthenticationToken user = usuarioService.validarToken(token);
+        usuarioService.validarToken(token);
 
         //assert
         Assertions.assertNotNull(token);

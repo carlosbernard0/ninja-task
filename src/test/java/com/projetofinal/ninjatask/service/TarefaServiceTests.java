@@ -173,13 +173,15 @@ public class TarefaServiceTests {
     @Test
     public void deveTestarSalvarLogComSucesso() throws JsonProcessingException {
         //setup
-        TarefaLogDTO tarefaLogDTO = new TarefaLogDTO();
+        TarefaDTO dto = new TarefaDTO();
+        String operacao = "CRIACAO";
 
         //act
-        produtorService.enviarMensagemAoTopico(tarefaLogDTO);
+        tarefaService.salvarLog(dto,operacao);
 
         //assert
-        Assertions.assertNotNull(tarefaLogDTO);
+        Assertions.assertNotNull(dto);
+        Assertions.assertNotNull(operacao);
     }
 
 
