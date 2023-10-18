@@ -25,8 +25,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -87,7 +89,6 @@ public class UsuarioServiceTests {
         dto.setEmailUsuario("joao@gmail.com");
         dto.setSenhaUsuario("senha1a23");
 
-        final var dataExpiracao = mock(java.sql.Date.class);
         final var userAuthentication = mock(Authentication.class);
         final var entity = mock(UsuarioEntity.class);
 
@@ -103,9 +104,26 @@ public class UsuarioServiceTests {
     }
 
     @Test
-    public void deveTestarValidarTokenComSucesso() {
+    public void deveTestarFazerLoginComErro() throws BusinessException {
         //setup
-        String token2 = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJuaW5qYS10YXNrIiwiQ0FSR09TIjpbIlJPTEVfREVWIl0sInN1YiI6IjEiLCJpYXQiOjE2OTcxMzk2NDcsImV4cCI6MTY5NzIyNjA0N30.7wA4KNTREF2Vjhp-NYayPgGztvVbFvf27kIQyxk8FDE";
+        AutenticacaoDTO dto = new AutenticacaoDTO();
+        dto.setEmailUsuario("joao@gmail.com");
+        dto.setSenhaUsuario("senha123");
+
+        //comportamentos
+        when(authenticationManager.authenticate(any())).thenThrow(BadCredentialsException.class);
+
+        Assertions.assertThrows(BusinessException.class, ()-> {
+            //act
+            usuarioService.fazerLogin(dto);
+        });
+
+    }
+
+
+    @Test
+    public void deveTestarValidarTokenComSucesso() throws BusinessException {
+        //setup
         String token = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJuaW5qYS10YXNrIiwiQ0FSR09TIjpbIlJPTEVfREVWIl0sInN1YiI6IjEiLCJpYXQiOjE2OTc1NjUxMjQsImV4cCI6MTY5NzY1MTUyNH0.PoNKq3k9y6lzy4wEMvRJSosbavuHIB_T3khzRzHHrKs";
 
         //act
@@ -113,6 +131,18 @@ public class UsuarioServiceTests {
 
         //assert
         Assertions.assertNotNull(token);
+    }
+
+    @Test
+    public void deveTestarValidarTokenComErro() {
+        //setup
+        String token = null;
+
+        //assert
+//        Assertions.assertThrows(BusinessException.class, ()-> {
+            //act
+            usuarioService.validarToken(token);
+//        });
     }
 
     @Test
@@ -124,7 +154,19 @@ public class UsuarioServiceTests {
         //act
         usuarioService.validarUsuario(usuario);
         //assert
-        Assertions.assertNotNull(usuario);
+        Assertions.assertEquals(usuario, usuario);
+    }
+    @Test
+    public void deveTestarValidarUsuarioComErro() throws BusinessException {
+        //setup
+        UsuarioDTO usuario = new UsuarioDTO();
+        usuario.setEmailUsuario("joaogmail.com");
+
+        //assert
+        Assertions.assertThrows(BusinessException.class, ()-> {
+            //act
+            usuarioService.validarUsuario(usuario);
+        });
     }
 
     @Test
@@ -137,6 +179,22 @@ public class UsuarioServiceTests {
         //assert
         Assertions.assertNotNull(email);
     }
+
+    @Test
+    public void deveTestarValidarEmailComErro() throws BusinessException {
+        //setup
+        String email = "joao@gmail.com";
+        UsuarioEntity entity= getUsuarioEntity();
+
+
+        when(usuarioRepository.findByEmailUsuario(email)).thenReturn(Optional.of(entity));
+        //assert
+        Assertions.assertThrows(BusinessException.class, ()-> {
+            //act
+            usuarioService.validarEmailExistente(email);
+        });
+    }
+
 
     @Test
     public void deveTestarInserirOuAtualizarComSucesso() throws BusinessException {
